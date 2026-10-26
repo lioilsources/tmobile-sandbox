@@ -1,0 +1,4 @@
+kirian:
+  task: kirian_clear
+  run: {envs: 8, eval_envs: 0, debug: False, train_ratio: 32, steps: 3e7, log_every: 120, report_every: 900, save_every: 1800, episode_timeout: 600}
+  logger.outputs: [jsonl]
