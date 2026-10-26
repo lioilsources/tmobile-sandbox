@@ -1,0 +1,29 @@
+# Demo 2 — AI API pro více tenantů: gateway (AiStack + tenanti) → LiteLLM → vLLM / Whisper (profil B).
+# Jen 127.0.0.1 — ven přes SSH tunel (nebo později přes reverzní proxy s TLS).
+name: api
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:v1.104.2
+    container_name: litellm
+    restart: unless-stopped
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "4"]
+    environment: { LITELLM_MASTER_KEY: "${LITELLM_MASTER_KEY:?./up.sh ho vygeneruje do .env}" }
+    volumes: ["./litellm.yaml:/app/config.yaml:ro"]
+    networks: [tms]
+  gateway:
+    build: ./gateway
+    image: tmobile/ai-gateway:latest
+    container_name: ai-gateway
+    restart: unless-stopped
+    depends_on: [litellm]
+    environment:
+      LITELLM_URL: http://litellm:4000
+      AUDIO_API_URL: http://litellm:4000
+      TENANTS_FILE: /config/tenants.json
+      USAGE_LEDGER: /data/usage.jsonl
+      UPSTREAM_API_KEY: ${LITELLM_MASTER_KEY}
+    volumes: ["./tenants.json:/config/tenants.json:ro", "/srv/work/demo2:/data"]
+    ports: ["127.0.0.1:8080:8080"]
+    networks: [tms]
+    healthcheck: { test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"], interval: 10s, start_period: 10s }
+networks: { tms: { external: true } }

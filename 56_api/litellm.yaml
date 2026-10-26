@@ -1,0 +1,26 @@
+# LiteLLM router pro demo 2 — veřejné názvy modelů → backendy profilu B (vLLM + Whisper).
+litellm_settings:
+  drop_params: true
+router_settings:
+  num_retries: 0
+  timeout: 300
+model_list:
+  - model_name: chat
+    litellm_params:
+      model: openai/qwen3-30b-a3b
+      api_base: http://vllm:8000/v1
+      api_key: dummy
+  - model_name: embed
+    litellm_params:
+      model: openai/qwen3-embed
+      api_base: http://vllm-embed:8000/v1
+      api_key: dummy
+    model_info:
+      mode: embedding
+  - model_name: whisper
+    litellm_params:
+      model: openai/deepdml/faster-whisper-large-v3-turbo-ct2
+      api_base: http://whisper:8000/v1
+      api_key: dummy
+    model_info:
+      mode: audio_transcription

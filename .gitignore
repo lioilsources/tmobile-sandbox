@@ -1,0 +1,10 @@
+# tajné hodnoty – existují jen na VM / lokálně
+.env
+*.env
+!*.example.env
+56_api/tenants.json
+# build / cache
+__pycache__/
+*.pyc
+.DS_Store
+56_api/gateway/gateway

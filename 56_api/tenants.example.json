@@ -1,0 +1,13 @@
+{
+  "_poznamka": "Klíče generuje ./up.sh do tenants.json (jen na VM, mimo repo). Ceník je ilustrativní, Kč.",
+  "tenants": [
+    {"name": "A-chatbot", "keys": ["sk-a-…"], "max_concurrency": 48, "models": ["chat", "embed"]},
+    {"name": "B-rag",     "keys": ["sk-b-…"], "max_concurrency": 32, "models": ["chat", "embed"]},
+    {"name": "C-batch",   "keys": ["sk-c-…"], "max_concurrency": 16, "models": ["chat", "whisper"]}
+  ],
+  "prices": {
+    "chat":    {"in_per_m": 5,   "out_per_m": 20},
+    "embed":   {"in_per_m": 0.5, "out_per_m": 0},
+    "whisper": {"per_audio_min": 0.10}
+  }
+}

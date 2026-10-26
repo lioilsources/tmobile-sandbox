@@ -1,0 +1,20 @@
+# Český TTS na CPU (Piper + Kokoro) z AiStacku — nedrží GPU, běží v každém profilu. Build: ./up.sh
+# Hlasy: piper-cs-kasandra-medium (žena, CC BY 4.0, komerčně OK s uvedením autora),
+#        piper-cs-jirka-medium (muž, licence neověřená → jen pokusy). Viz AiStack services/audio/LICENSES.md.
+name: tts
+services:
+  tts:
+    image: aistack/audio-tts:latest
+    container_name: tts
+    restart: unless-stopped
+    environment:
+      TTS_MODELS_DIR: /models
+      TTS_PORT: "8003"
+      TTS_CPU_THREADS: "2"
+      TTS_PRELOAD: piper-cs-kasandra-medium,piper-cs-jirka-medium
+    volumes: ["/srv/audio/models:/models:ro"]
+    ports: ["127.0.0.1:8102:8003"]
+    mem_limit: 3g
+    cpus: 6
+    networks: [tms]
+networks: { tms: { external: true } }

@@ -1,0 +1,48 @@
+# Monitoring od prvního dne + Open WebUI. Vše na 127.0.0.1 → SSH tunel.
+name: mon
+services:
+  dcgm:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:${DCGM_TAG:-4.4.1-4.6.0-ubuntu22.04}
+    restart: unless-stopped
+    cap_add: [SYS_ADMIN]
+    deploy: { resources: { reservations: { devices: [{ driver: nvidia, count: all, capabilities: [gpu] }] } } }
+    networks: [tms]
+  node:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    command: ["--path.rootfs=/host"]
+    networks: [tms]
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports: ["127.0.0.1:9090:9090"]
+    volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro", "prom:/prometheus"]
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=60d"]
+    networks: [tms]
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports: ["127.0.0.1:3001:3000"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?nastav v .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/sandbox.json
+    volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro", "./grafana/dashboards:/var/lib/grafana/dashboards:ro", "grafana:/var/lib/grafana"]
+    networks: [tms]
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    restart: unless-stopped
+    ports: ["127.0.0.1:3000:8080"]
+    environment:
+      OPENAI_API_BASE_URLS: "http://vllm:8000/v1;http://vllm-embed:8000/v1"
+      OPENAI_API_KEYS: "none;none"
+      ENABLE_OLLAMA_API: "false"
+      AUDIO_STT_ENGINE: openai
+      AUDIO_STT_OPENAI_API_BASE_URL: http://whisper:8000/v1
+      AUDIO_STT_MODEL: deepdml/faster-whisper-large-v3-turbo-ct2
+    volumes: ["openwebui:/app/backend/data"]
+    networks: [tms]
+volumes: { prom: {}, grafana: {}, openwebui: {} }
+networks: { tms: { external: true } }

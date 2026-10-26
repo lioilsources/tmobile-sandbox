@@ -1,0 +1,161 @@
+<title>Sdílené AI API na L40S</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~760px) — verdict, architecture, the 3-phase story in charts, tables, bill, limits */
+:root {
+  --bg: #f6f7f8; --surface: #ffffff; --fg: #1b2430; --muted: #5b6676; --line: #dde2e8;
+  --accent: #0f6b74; --accent-soft: #e2f0f1; --good: #2f7d4a; --warn: #a2611a; --ta: #0f6b74; --tb: #5a6bb0; --tc: #b4701a; --phase: #eef1f4;
+  --display: "IBM Plex Serif", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; --ta: #5cc2cb; --tb: #95a3e6; --tc: #e3a24f; --phase: #1f2731; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; --ta: #5cc2cb; --tb: #95a3e6; --tc: #e3a24f; --phase: #1f2731; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); }
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 48px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 40px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 600 clamp(28px, 5vw, 40px)/1.15 var(--display); margin: 10px 0 14px; text-wrap: balance; }
+h2 { font: 600 22px/1.25 var(--display); margin: 0 0 14px; text-wrap: balance; }
+p { margin: 0 0 12px; max-width: 66ch; }
+.lede { font-size: 18px; color: var(--fg); }
+.muted { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 4px; }
+.stat b { font: 500 28px/1.1 var(--mono); font-variant-numeric: tabular-nums; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 120px; gap: 12px; align-items: center; font-size: 14px; }
+.bar-lab { font: 13px var(--mono); color: var(--muted); }
+.bar-track { height: 14px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar { height: 100%; background: var(--muted); opacity: .55; }
+.rec .bar { background: var(--accent); opacity: 1; }
+.rec .bar-lab { color: var(--fg); font-weight: 500; }
+.bar-val { font: 500 14px var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.bar-val span { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.sample { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.sample img { width: 100%; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+.sample figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+dl { margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.kv { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 6px 12px; border-top: 1px solid var(--line); font-size: 14px; }
+.kv:first-child { border-top: 0; }
+dt { color: var(--muted); } dd { margin: 0; font-family: var(--mono); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.ok { color: var(--good); font-family: var(--body); }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px; }
+th, td { padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+th:first-child, td:first-child { text-align: left; }
+tr:last-child td { border-bottom: 0; }
+tr.rec td { background: var(--accent-soft); font-weight: 500; }
+.pill { display: inline-block; font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 4px 7px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+.recs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.rec-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 6px; }
+.rec-card b { font: 500 20px var(--mono); }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 66ch; }
+code { font: 13px var(--mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+.err td:nth-child(3) { color: var(--good); } .err td:nth-child(4) { color: var(--warn); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 560px) {
+  .bar-row { grid-template-columns: 1fr auto; } .bar-track { grid-column: 1 / -1; grid-row: 2; }
+  .sample { grid-template-columns: 1fr; } .sample figure { max-width: 220px; }
+  .kv { grid-template-columns: 110px 1fr; }
+}
+
+.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.chart text { fill: var(--muted); font: 11px var(--mono); }
+.chart .ph { fill: var(--phase); }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; margin-top: 8px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.arch { font: 13px/1.5 var(--mono); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; overflow-x: auto; white-space: pre; margin: 0; }
+td.l { text-align: left; white-space: normal; }
+h3 { font: 500 15px var(--body); margin: 16px 0 8px; }
+</style>
+<main class="wrap">
+<header>
+  <div class="eyebrow">Demo 2 · L40S sandbox · 25. 10. 2026</div>
+  <h1>Jedna GPU, tři zákazníci, jedno API</h1>
+  <p class="lede">Tři tenanti sdílejí jeden NVIDIA L40S přes OpenAI‑kompatibilní API s vlastními klíči, limity a účtováním po tokenech. Když dávkový tenant spustil nápor, zákaznický chatbot dál odpovídal do 0,13 s.</p>
+</header>
+
+<section class="stats" aria-label="Klíčová čísla">
+  <div class="stat"><b>133 ms</b><span>první token chatbotu (p95) během náporu</span></div>
+  <div class="stat"><b>~1 000</b><span>výstupních tokenů za sekundu celkem</span></div>
+  <div class="stat"><b>16</b><span>souběžných požadavků, na kterých limit zastavil dávkového tenanta</span></div>
+  <div class="stat"><b>16,00 Kč</b><span>vyúčtováno za 6 minut testu (ilustrativní ceník)</span></div>
+</section>
+
+<section>
+  <h2>Jak to funguje</h2>
+<pre class="arch">klient ─► gateway ─► LiteLLM ─► vLLM: chat (Qwen3‑30B‑A3B), embed
+           │                  └─► Whisper (přepis řeči)
+           ├ API klíč → tenant, povolené modely
+           ├ limit souběhu → HTTP 429
+           ├ měření tokenů (i ze streamu) a audia
+           ├─► kniha pro účtování
+           └─► metriky → Prometheus → Grafana</pre>
+  <p class="muted" style="margin-top:10px">Gateway je brána z AiStacku rozšířená o tenanty, napsaná v Go bez závislostí a pokrytá testy. Klíč tenanta dál neputuje, LiteLLM dostává vlastní master klíč.</p>
+</section>
+
+<section>
+  <h2>Tři zákazníci</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Tenant</th><th>Provoz</th><th>Modely</th><th>Limit</th></tr></thead>
+    <tbody>
+      <tr><td>A-chatbot</td><td class="l">zákaznický chat, streamování, 4 požadavky/s</td><td>chat, embed</td><td>48</td></tr>
+      <tr><td>B-rag</td><td class="l">interní vyhledávání: embeddingy a dotazy s ~3 000 tokeny kontextu, 2 požadavky/s</td><td>chat, embed</td><td>32</td></tr>
+      <tr><td>C-batch</td><td class="l">dávky: dlouhé reporty a přepisy hovorů, nárazově 40 souběžně</td><td>chat, whisper</td><td>16</td></tr>
+    </tbody></table></div>
+  <p class="muted" style="margin-top:10px">Ilustrativní ceník: chat 5 Kč za 1M vstupních a 20 Kč za 1M výstupních tokenů, embeddingy 0,50 Kč za 1M, přepis 0,10 Kč za minutu.</p>
+</section>
+
+<section>
+  <h2>Průběh testu</h2>
+  <p class="muted">Tři fáze po dvou minutách. Uprostřed spustil tenant C nápor 40 souběžných úloh.</p>
+  <h3>Výstupní tokeny za sekundu</h3>
+  <div class="chart"><svg viewBox="0 0 720 230" role="img" aria-label="Výstupní tokeny za sekundu podle tenanta"><rect class="ph" x="267.3" y="12" width="221.3" height="190"/><text x="378.0" y="24" text-anchor="middle">nápor C</text><line class="grid" x1="46" x2="710" y1="202.0" y2="202.0"/><text x="40" y="206.0" text-anchor="end">0</text><line class="grid" x1="46" x2="710" y1="147.7" y2="147.7"/><text x="40" y="151.7" text-anchor="end">400</text><line class="grid" x1="46" x2="710" y1="93.4" y2="93.4"/><text x="40" y="97.4" text-anchor="end">800</text><line class="grid" x1="46" x2="710" y1="39.1" y2="39.1"/><text x="40" y="43.1" text-anchor="end">1200</text><text x="46.0" y="222" text-anchor="middle">0:00</text><text x="156.7" y="222" text-anchor="middle">1:00</text><text x="267.3" y="222" text-anchor="middle">2:00</text><text x="378.0" y="222" text-anchor="middle">3:00</text><text x="488.7" y="222" text-anchor="middle">4:00</text><text x="599.3" y="222" text-anchor="middle">5:00</text><text x="710.0" y="222" text-anchor="middle">6:00</text><polygon points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0 710.0,202.0 691.6,202.0 673.1,202.0 654.7,202.0 636.2,202.0 617.8,202.0 599.3,202.0 580.9,202.0 562.4,202.0 544.0,202.0 525.6,202.0 507.1,202.0 488.7,202.0 470.2,202.0 451.8,202.0 433.3,202.0 414.9,202.0 396.4,202.0 378.0,202.0 359.6,202.0 341.1,202.0 322.7,202.0 304.2,202.0 285.8,202.0 267.3,202.0 248.9,202.0 230.4,202.0 212.0,202.0 193.6,202.0 175.1,202.0 156.7,202.0 138.2,202.0 119.8,202.0 101.3,202.0 82.9,202.0 64.4,202.0 46.0,202.0" style="fill:var(--ta);opacity:.75"/><polygon points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0 710.0,202.0 691.6,202.0 673.1,202.0 654.7,202.0 636.2,202.0 617.8,202.0 599.3,202.0 580.9,202.0 562.4,202.0 544.0,202.0 525.6,202.0 507.1,202.0 488.7,202.0 470.2,202.0 451.8,202.0 433.3,202.0 414.9,202.0 396.4,202.0 378.0,202.0 359.6,202.0 341.1,202.0 322.7,202.0 304.2,202.0 285.8,202.0 267.3,202.0 248.9,202.0 230.4,202.0 212.0,202.0 193.6,202.0 175.1,202.0 156.7,202.0 138.2,202.0 119.8,202.0 101.3,202.0 82.9,202.0 64.4,202.0 46.0,202.0" style="fill:var(--tb);opacity:.75"/><polygon points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0 710.0,202.0 691.6,202.0 673.1,202.0 654.7,202.0 636.2,202.0 617.8,202.0 599.3,202.0 580.9,202.0 562.4,202.0 544.0,202.0 525.6,202.0 507.1,202.0 488.7,202.0 470.2,202.0 451.8,202.0 433.3,202.0 414.9,202.0 396.4,202.0 378.0,202.0 359.6,202.0 341.1,202.0 322.7,202.0 304.2,202.0 285.8,202.0 267.3,202.0 248.9,202.0 230.4,202.0 212.0,202.0 193.6,202.0 175.1,202.0 156.7,202.0 138.2,202.0 119.8,202.0 101.3,202.0 82.9,202.0 64.4,202.0 46.0,202.0" style="fill:var(--tc);opacity:.75"/></svg><div class="legend"><span style="--c:var(--ta)">A-chatbot</span><span style="--c:var(--tb)">B-rag</span><span style="--c:var(--tc)">C-batch</span></div></div>
+  <h3>Souběžné požadavky</h3>
+  <div class="chart"><svg viewBox="0 0 720 230" role="img" aria-label="Souběžné požadavky podle tenanta"><rect class="ph" x="267.3" y="12" width="221.3" height="190"/><text x="378.0" y="24" text-anchor="middle">nápor C</text><line class="grid" x1="46" x2="710" y1="202.0" y2="202.0"/><text x="40" y="206.0" text-anchor="end">0</text><line class="grid" x1="46" x2="710" y1="154.5" y2="154.5"/><text x="40" y="158.5" text-anchor="end">10</text><line class="grid" x1="46" x2="710" y1="107.0" y2="107.0"/><text x="40" y="111.0" text-anchor="end">20</text><line class="grid" x1="46" x2="710" y1="59.5" y2="59.5"/><text x="40" y="63.5" text-anchor="end">30</text><line class="grid" x1="46" x2="710" y1="12.0" y2="12.0"/><text x="40" y="16.0" text-anchor="end">40</text><text x="46.0" y="222" text-anchor="middle">0:00</text><text x="156.7" y="222" text-anchor="middle">1:00</text><text x="267.3" y="222" text-anchor="middle">2:00</text><text x="378.0" y="222" text-anchor="middle">3:00</text><text x="488.7" y="222" text-anchor="middle">4:00</text><text x="599.3" y="222" text-anchor="middle">5:00</text><text x="710.0" y="222" text-anchor="middle">6:00</text><line x1="46" x2="710" y1="126.0" y2="126.0" style="stroke:var(--tc);stroke-dasharray:4 4;stroke-width:1.5"/><text x="706" y="121.0" text-anchor="end" style="fill:var(--tc)">limit C = 16</text><polyline points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0" style="fill:none;stroke:var(--ta);stroke-width:2"/><polyline points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0" style="fill:none;stroke:var(--tb);stroke-width:2"/><polyline points="46.0,202.0 64.4,202.0 82.9,202.0 101.3,202.0 119.8,202.0 138.2,202.0 156.7,202.0 175.1,202.0 193.6,202.0 212.0,202.0 230.4,202.0 248.9,202.0 267.3,202.0 285.8,202.0 304.2,202.0 322.7,202.0 341.1,202.0 359.6,202.0 378.0,202.0 396.4,202.0 414.9,202.0 433.3,202.0 451.8,202.0 470.2,202.0 488.7,202.0 507.1,202.0 525.6,202.0 544.0,202.0 562.4,202.0 580.9,202.0 599.3,202.0 617.8,202.0 636.2,202.0 654.7,202.0 673.1,202.0 691.6,202.0 710.0,202.0" style="fill:none;stroke:var(--tc);stroke-width:2"/></svg><div class="legend"><span style="--c:var(--ta)">A-chatbot</span><span style="--c:var(--tb)">B-rag</span><span style="--c:var(--tc)">C-batch</span></div></div>
+  <p class="muted" style="margin-top:10px">Tenant C se zastavil na svém limitu 16 a zbytek jeho požadavků dostal HTTP 429 (asi 15 odmítnutí za sekundu). GPU běželo po celou dobu na 93–100 %, KV cache nepřesáhla 26 %, takže úzkým místem je výpočet, ne paměť.</p>
+</section>
+
+<section>
+  <h2>Latence po fázích</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Tenant · fáze</th><th>Požadavků</th><th>Chyb</th><th>TTFT p50 / p95</th><th>Doba p50 / p95</th></tr></thead>
+    <tbody><tr><td>A-chatbot · 1 klid</td><td>489</td><td>0</td><td>74 / 94 ms</td><td>4,0 / 6,6 s</td></tr><tr class=rec><td>A-chatbot · 2 nápor C</td><td>482</td><td>0</td><td>98 / 133 ms</td><td>5,1 / 8,5 s</td></tr><tr><td>A-chatbot · 3 klid</td><td>481</td><td>0</td><td>89 / 112 ms</td><td>4,9 / 7,8 s</td></tr><tr><td>B-rag · 1 / 2 / 3</td><td>220 / 218 / 237</td><td>0</td><td>–</td><td>p95 4,8 / 6,3 / 5,6 s</td></tr><tr><td>C-batch · 2</td><td>114</td><td>24 × 429</td><td>–</td><td>25 / 159 s</td></tr></tbody></table></div>
+  <p class="muted" style="margin-top:10px">Během náporu se chatbotu prodloužila doba odpovědi asi o čtvrtinu, první token zůstal pod 0,15 s. Dvacet čtyři úloh tenanta C se nevešlo ani po 60 opakováních: limit funguje jako pojistka, ne jako fronta.</p>
+</section>
+
+<section>
+  <h2>Vyúčtování testu</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Tenant</th><th>Model</th><th>Požadavků</th><th>Vstup tok.</th><th>Výstup tok.</th><th>Audio min</th><th>Kč</th></tr></thead>
+    <tbody><tr><td>A-chatbot</td><td>chat</td><td>1 452</td><td>74 914</td><td>252 751</td><td>–</td><td>5,43</td></tr><tr><td>B-rag</td><td>chat</td><td>336</td><td>1 360 569</td><td>44 061</td><td>–</td><td>7,68</td></tr><tr><td>B-rag</td><td>embed</td><td>339</td><td>437 658</td><td>–</td><td>–</td><td>0,22</td></tr><tr><td>C-batch</td><td>chat</td><td>80</td><td>4 232</td><td>64 000</td><td>–</td><td>1,30</td></tr><tr><td>C-batch</td><td>whisper</td><td>10</td><td>–</td><td>–</td><td>13,7</td><td>1,37</td></tr><tr class="rec"><td>Celkem</td><td></td><td>2 217</td><td>1 877 373</td><td>360 812</td><td>13,7</td><td>16,00</td></tr></tbody></table></div>
+  <p class="muted" style="margin-top:10px">Spočítáno z knihy gateway, kde je každý požadavek jedním řádkem. Při tomto provozu to odpovídá zhruba 160 Kč za hodinu na jednu GPU. Předpokládaný náklad VM je asi 55 Kč za hodinu za celý systém, takže tento provoz by při ilustrativním ceníku pokryl náklad zhruba třikrát.</p>
+</section>
+
+<section>
+  <h2>Incident během testu</h2>
+  <p>Při prvním plném běhu se VM jednou tvrdě zastavila a sama nenaběhla. V logu není žádný nedostatek paměti, pád jádra ani chyba GPU. Paměť byla obsazená na 13,5 z 23 GB, GPU mělo 49 °C a 250 W. Opakovaný test se záznamem stavu každé dvě sekundy doběhl bez problému. Příčina je pravděpodobně mimo VM.</p>
+</section>
+
+<section>
+  <h2>Omezení a další kroky</h2>
+  <ul>
+    <li>Ceník je ilustrativní. Počítáme s předpokládaným nákladem asi 55 Kč za hodinu za celou VM (GPU, 8 vCPU, 23 GB RAM, disky). S větší RAM nebo diskem cena roste.</li>
+    <li>Limit souběhu je jednoduchá pojistka. Pro produkci přidat férové frontování s prioritami a limit na tokeny za minutu.</li>
+    <li>Klíče teď leží v souboru na stroji. Produkce potřebuje správu klíčů s rotací a přístup přes TLS místo SSH tunelu.</li>
+    <li>Rozšíření gateway vrátit do AiStacku.</li>
+  </ul>
+</section>
+
+<footer>Reprodukce: <code>~/tmobile-sandbox/56_api/up.sh</code> a <code>~/tmobile-sandbox/demos/02_api/run.sh 120</code> v profilu B. Kniha: <code>/srv/work/demo2/usage.jsonl</code>.</footer>
+</main>
