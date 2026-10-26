@@ -1,4 +1,4 @@
-# GPU služby, rozdělené do VRAM profilů (48 GB neudrží vše naráz). Přepínání: ./switch.sh A|B|C|D|off
+# GPU služby, rozdělené do VRAM profilů (48 GB neudrží vše naráz). Přepínání: ./switch.sh A|B|C|D|L|O|off
 # Všechny porty jen na 127.0.0.1 (Docker obchází ufw) → přístup přes SSH tunel.
 name: gpu
 x-vllm: &vllm
@@ -53,6 +53,17 @@ services:
       --model Qwen/Qwen3-VL-32B-Instruct-FP8 --served-model-name qwen3-vl-32b
       --max-model-len 16384 --gpu-memory-utilization 0.93 --kv-cache-dtype fp8
       --limit-mm-per-prompt '{"image":4,"video":0}'
+
+  # --- L „Batch“: MoE 30B-A3B samotný, velký batch pro UC9 (dávková extrakce, prefix caching)
+  llm-l:
+    <<: *vllm
+    profiles: [L]
+    container_name: vllm
+    ports: ["127.0.0.1:8000:8000"]
+    command: >-
+      --model Qwen/Qwen3-30B-A3B-Instruct-2507-FP8 --served-model-name qwen3-30b-a3b
+      --max-model-len ${L_MAXLEN:-4096} --gpu-memory-utilization ${L_GPU:-0.93} --kv-cache-dtype fp8
+      --max-num-seqs ${L_SEQS:-256} --max-num-batched-tokens ${L_BATCHTOK:-16384} --enable-prefix-caching ${L_ARGS:-}
 
   # --- O „OCR engine“: libovolný VLM pro UC1 (OCR_MODEL=… ./switch.sh O)
   ocr-o:
