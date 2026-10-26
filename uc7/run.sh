@@ -5,7 +5,7 @@
 # Dataset: crop_eyes.py → select_caption.py (/srv/work/uc7/dataset/{train,ref}).
 set -euo pipefail
 cd "$(dirname "$0")"; W=/srv/work/uc7; R=$W/run1; D=$W/dataset; N_GEN=${N_GEN:-300}
-CK=/srv/comfy/ComfyUI/models/checkpoints; IMG=finetune-kohya:latest; PY=/srv/work/uc1/ft-venv/bin/python
+CK=$(dirname "$(readlink -f /srv/comfy/ComfyUI/models/checkpoints/sd_xl_base_1.0.safetensors)"); IMG=finetune-kohya:latest; PY=/srv/work/uc1/ft-venv/bin/python
 [ -f $D/train/$(ls $D/train | head -1) ] || { echo "chybí dataset $D/train"; exit 1; }
 docker image inspect $IMG >/dev/null || { echo "chybí obraz $IMG (docker build FineTuneGallery/train)"; exit 1; }
 [ "$(cat /srv/work/.gpu_profile 2>/dev/null)" = off ] || ../50_vllm/switch.sh off >/dev/null
