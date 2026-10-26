@@ -1,0 +1,183 @@
+<title>Registr smluv na L40S</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~760px) — verdict first, then evidence: numbers, sample, table, errors, limits */
+:root {
+  --bg: #f6f7f8; --surface: #ffffff; --fg: #1b2430; --muted: #5b6676; --line: #dde2e8;
+  --accent: #0f6b74; --accent-soft: #e2f0f1; --good: #2f7d4a; --warn: #a2611a;
+  --display: "IBM Plex Serif", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); }
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 48px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 40px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 600 clamp(28px, 5vw, 40px)/1.15 var(--display); margin: 10px 0 14px; text-wrap: balance; }
+h2 { font: 600 22px/1.25 var(--display); margin: 0 0 14px; text-wrap: balance; }
+p { margin: 0 0 12px; max-width: 66ch; }
+.lede { font-size: 18px; color: var(--fg); }
+.muted { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 4px; }
+.stat b { font: 500 28px/1.1 var(--mono); font-variant-numeric: tabular-nums; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 120px; gap: 12px; align-items: center; font-size: 14px; }
+.bar-lab { font: 13px var(--mono); color: var(--muted); }
+.bar-track { height: 14px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar { height: 100%; background: var(--muted); opacity: .55; }
+.rec .bar { background: var(--accent); opacity: 1; }
+.rec .bar-lab { color: var(--fg); font-weight: 500; }
+.bar-val { font: 500 14px var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.bar-val span { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.sample { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.sample img { width: 100%; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+.sample figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+dl { margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.kv { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 6px 12px; border-top: 1px solid var(--line); font-size: 14px; }
+.kv:first-child { border-top: 0; }
+dt { color: var(--muted); } dd { margin: 0; font-family: var(--mono); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.ok { color: var(--good); font-family: var(--body); }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px; }
+th, td { padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+th:first-child, td:first-child { text-align: left; }
+tr:last-child td { border-bottom: 0; }
+tr.rec td { background: var(--accent-soft); font-weight: 500; }
+.pill { display: inline-block; font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 4px 7px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+.recs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.rec-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 6px; }
+.rec-card b { font: 500 20px var(--mono); }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 66ch; }
+code { font: 13px var(--mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+.err td:nth-child(3) { color: var(--good); } .err td:nth-child(4) { color: var(--warn); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 560px) {
+  .bar-row { grid-template-columns: 1fr auto; } .bar-track { grid-column: 1 / -1; grid-row: 2; }
+  .sample { grid-template-columns: 1fr; } .sample figure { max-width: 220px; }
+  .kv { grid-template-columns: 110px 1fr; }
+}
+</style>
+<main class="wrap">
+<header>
+  <div class="eyebrow">UC9 · L40S sandbox · 26. 10. 2026</div>
+  <h1>Půl milionu smluv za tři a půl hodiny na jedné GPU</h1>
+  <p class="lede">Qwen3‑30B‑A3B prošel všech 568 766 smluv z Registru smluv za duben až září 2026. Ke každé určil typ dokumentu, plnění, odvětví, dodavatele a souvislost s IT a připsal krátký popis. Neudělal přitom jedinou chybu ani nevalidní výstup. Náklad VM vyšel na 34 haléřů za tisíc smluv.</p>
+</header>
+
+<section class="stats" aria-label="Klíčová čísla">
+  <div class="stat"><b>162 800</b><span>smluv za hodinu (45 za sekundu)</span></div>
+  <div class="stat"><b>0,34 Kč</b><span>za 1 000 smluv, celkem ≈ 192 Kč</span></div>
+  <div class="stat"><b>0</b><span>chyb a nevalidních výstupů z 568 766</span></div>
+  <div class="stat"><b>929 Wh</b><span>energie GPU za celý běh</span></div>
+</section>
+
+<section>
+  <h2>Ladění propustnosti</h2>
+  <p class="muted">Smluv za sekundu v pilotu na 2–6 tisících smluv. Zvýrazněné je zvolené nastavení.</p>
+  <div class="bars">
+    <div class="bar-row"><div class="bar-lab">schéma vždy · 256</div><div class="bar-track"><div class="bar" style="width:46%"></div></div><div class="bar-val">20,0 <span>GPU 41 %</span></div></div>
+    <div class="bar-row"><div class="bar-lab">volný JSON · 256</div><div class="bar-track"><div class="bar" style="width:76.5%"></div></div><div class="bar-val">33,3 <span>3 % mimo výčet</span></div></div>
+    <div class="bar-row rec"><div class="bar-lab">JSON + oprava · 512</div><div class="bar-track"><div class="bar" style="width:100%"></div></div><div class="bar-val">43,5 <span>0 nevalidních</span></div></div>
+    <div class="bar-row"><div class="bar-lab">JSON + oprava · 768</div><div class="bar-track"><div class="bar" style="width:88.7%"></div></div><div class="bar-val">38,6 <span>7 % selhání</span></div></div>
+  </div>
+  <p style="margin-top:14px">Vynucené JSON schéma u každého dotazu stálo 40 % výkonu, protože gramatiku hlídá CPU a VM má jen 8 vCPU. Odpovědi proto kontrolujeme až po vygenerování. Jen ta 2,4 %, která vybočí z výčtu, se pošlou znovu s vynuceným schématem. Při 768 souběžných sekvencích se už nevejde KV cache a vLLM začne rozpracované požadavky odkládat.</p>
+</section>
+
+<section>
+  <h2>Ostrý běh</h2>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><td>Smluv</td><td>568 766 (0 chyb, 0 nevalidních)</td></tr>
+      <tr><td>Doba</td><td>3 h 30 min (12 576 s)</td></tr>
+      <tr><td>Tokeny vstup / výstup</td><td>37 400 / 4 300 tok/s · 827 / 95 na smlouvu</td></tr>
+      <tr><td>Prefix cache</td><td>86 % zásahů</td></tr>
+      <tr><td>Latence p50 / p95</td><td>17 s / 25 s při frontě 768</td></tr>
+      <tr><td>GPU</td><td>průměr 75 %, p95 100 %, 279 W, max 58 °C</td></tr>
+      <tr><td>Opraveno schématem</td><td>13 574 (2,4 %)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Kvalita: shoda s větším modelem</h2>
+  <p>Ruční anotace zatím chybí. Stejnou extrakci jsme proto na 600 náhodných smlouvách nechali udělat i Qwen3‑32B a měřili, jak často se oba modely shodnou. Větší model není neomylný, ale ukáže, kde je výsledek nejistý.</p>
+  <div class="bars">
+    <div class="bar-row"><div class="bar-lab">IT ano/ne</div><div class="bar-track"><div class="bar" style="width:95.8%"></div></div><div class="bar-val">96 %</div></div>
+    <div class="bar-row"><div class="bar-lab">IČO dodavatele</div><div class="bar-track"><div class="bar" style="width:92.8%"></div></div><div class="bar-val">93 %</div></div>
+    <div class="bar-row"><div class="bar-lab">typ dokumentu</div><div class="bar-track"><div class="bar" style="width:89.2%"></div></div><div class="bar-val">89 %</div></div>
+    <div class="bar-row"><div class="bar-lab">druh plnění</div><div class="bar-track"><div class="bar" style="width:75.7%"></div></div><div class="bar-val">76 %</div></div>
+    <div class="bar-row"><div class="bar-lab">relevance IT 0–3</div><div class="bar-track"><div class="bar" style="width:75.7%"></div></div><div class="bar-val">76 %</div></div>
+    <div class="bar-row"><div class="bar-lab">odvětví (20 tříd)</div><div class="bar-track"><div class="bar" style="width:73.7%"></div></div><div class="bar-val">74 %</div></div>
+  </div>
+  <p style="margin-top:14px">IČO dodavatele je v 99,7 % případů skutečně jednou ze stran smlouvy. U odvětví se modely nejčastěji neshodnou na otázce „konkrétní obor, nebo jiné“. Menší model navíc značí IT velkoryseji. Ze 48 smluv, které označil jako IT, uznal větší model jen 26. Pro leady proto bereme jen nejvyšší stupeň IT relevance a seznam je třeba před oslovením projít.</p>
+</section>
+
+<section>
+  <h2>Co databáze ukazuje</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Odvětví</th><th>Smluv</th><th>Hodnota, mld. Kč</th></tr></thead>
+    <tbody>
+      <tr><td>zdravotnictví a léčiva</td><td>196 232</td><td>106,9</td></tr>
+      <tr><td>stavebnictví a údržba</td><td>104 333</td><td>450,5</td></tr>
+      <tr><td>kultura, sport a volný čas</td><td>33 290</td><td>11,4</td></tr>
+      <tr class="rec"><td>IT a software</td><td>32 625</td><td>41,9</td></tr>
+      <tr><td>kancelář a spotřební materiál</td><td>27 416</td><td>9,8</td></tr>
+      <tr><td>doprava a vozidla</td><td>21 673</td><td>758,9</td></tr>
+      <tr><td>telekomunikace</td><td>5 756</td><td>3,9</td></tr>
+    </tbody>
+  </table></div>
+  <ul style="margin-top:14px">
+    <li><b>Vývoj SW, data, AI, kyberbezpečnost a cloud:</b> 9 118 smluv za 29,8 mld. Kč. Hardware, licence, sítě a servis: dalších 44 860 smluv za 74,7 mld. Kč.</li>
+    <li><b>Nejvíc smluv na vývoj a data uzavřeli:</b> ČVUT (208), Ministerstvo vnitra (171), Grantová agentura ČR (165), VUT v Brně (162), Univerzita Karlova (130), hl. m. Praha (127), Masarykova univerzita, Dopravní podnik hl. m. Prahy, Správa železnic a Česká televize.</li>
+    <li><b>Největší objemy mají:</b> MPO (2,7 mld. Kč), TA ČR (1,9), GA ČR (1,5), Ministerstvo vnitra (1,4) a Digitální a informační agentura (1,2).</li>
+    <li><b>Nejčastější IT dodavatelé:</b> CENDIS (80 smluv u 72 zadavatelů), Aricoma Systems, Seyfor, GORDIC a Asseco.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Cena proti API</h2>
+  <p class="muted">Stejný objem tokenů (470 M vstupních a 54 M výstupních) přes Claude API, při kurzu 23 Kč za dolar. Kvalitu Clauda jsme na téhle úloze neměřili, porovnáváme jen cenu.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Varianta</th><th>Cena</th></tr></thead>
+    <tbody>
+      <tr class="rec"><td>L40S, náklad VM za 3,5 h</td><td>≈ 192 Kč</td></tr>
+      <tr><td>Claude Haiku 5.5, Batch API</td><td>≈ 850 Kč</td></tr>
+      <tr><td>Claude Haiku 5.5, standardně</td><td>≈ 1 700 Kč</td></tr>
+      <tr><td>Claude Sonnet 5.5, Batch API</td><td>≈ 17 000 Kč</td></tr>
+      <tr><td>Claude Sonnet 5.5, standardně</td><td>≈ 34 000 Kč</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Omezení</h2>
+  <ul>
+    <li>Model vidí jen metadata, ne plné texty smluv. Předmět bývá krátký, třeba „objednávka spotřebního materiálu“.</li>
+    <li>Kvalitu měříme shodou s větším modelem, ne proti ruční anotaci.</li>
+    <li>Hodnoty smluv jsou tak, jak je zadavatelé vyplnili, včetně extrémů.</li>
+    <li>GPU nejela na 100 % po celou dobu, průměr byl 75 %. Brzdou je osm vCPU, které se dělí o tokenizaci, plánování a klienta.</li>
+    <li>Cena vychází z předpokládaného nákladu VM 55 Kč za hodinu za celý systém.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Další kroky</h2>
+  <ul>
+    <li>Ručně zkontrolovat 200 smluv a podle výsledku upřesnit stupně IT relevance.</li>
+    <li>U segmentu vývoje a dat stáhnout plné texty a vytěžit rozpočty a termíny přes Qwen3‑VL, stejně jako v Demu 3.</li>
+    <li>Měsíční přírůstek kolem 100 tisíc smluv zpracuje L40S zhruba za 40 minut.</li>
+  </ul>
+</section>
+
+<footer>Reprodukce: <code>uc9/parse.py</code> → <code>uc9/run_full.sh</code> (profil L) → <code>uc9/post_full.sh</code>. Data: <code>/srv/work/uc9/</code>, databáze <code>leads.sqlite</code>. Veřejná otevřená data Registru smluv, žádná data T‑Mobile.</footer>
+</main>
