@@ -1,7 +1,8 @@
 """UC4: Kirian jako RL prostředí.
 
 Každé prostředí = jeden proces `flutter test test/rl/rl_server_test.dart` (bezhlavá hra, větev
-rl-headless v repu Kiran), se kterým mluvíme JSON řádky přes TCP. Hra se krokuje synchronně,
+rl-headless v repu lioilsources/Kiran, commit 47e39a7; snímek téže změny je uc4/kiran-rl.patch,
+`git am` nad Kiran main bd5c64c), se kterým mluvíme JSON řádky přes TCP. Hra se krokuje synchronně,
 takže běží stovkykrát rychleji než reálný čas.
 
 Pozorování (vektor 145): loď (pozice, HP, štít, generátor), 12 nejbližších nepřátel, 16 nejbližších
