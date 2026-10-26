@@ -130,14 +130,17 @@ def update_shop(shop, opt, data, epochs=4, mb=128):
     x = torch.tensor(np.stack([d[0] for d in data])); m = torch.tensor(np.stack([d[1] for d in data]))
     a = torch.tensor([d[2] for d in data]); lp = torch.tensor([d[3] for d in data]); v = torch.tensor([d[4] for d in data])
     G = torch.tensor([d[5] for d in data], dtype=torch.float32); adv = G - v
+    adv = (adv - adv.mean()) / (adv.std(unbiased=False) + 1e-8)  # přes celou dávku: minidávka s 1 prvkem dávala std NaN
     idx = np.arange(len(data))
     for _ in range(epochs):
         np.random.shuffle(idx)
         for s in range(0, len(idx), mb):
             j = idx[s:s + mb]
+            if len(j) < 8: continue
             _, nl, ent, nv = shop(x[j], m[j], a[j]); ratio = (nl - lp[j]).exp()
-            ad = (adv[j] - adv[j].mean()) / (adv[j].std() + 1e-8)
-            loss = torch.max(-ad * ratio, -ad * ratio.clamp(0.8, 1.2)).mean() + 0.5 * ((nv - G[j]) ** 2).mean() - 0.01 * ent.mean()
+            ad = adv[j]
+            loss = (torch.max(-ad * ratio, -ad * ratio.clamp(0.8, 1.2)).mean() + 0.5 * nn.functional.smooth_l1_loss(nv, G[j])
+                    - 0.01 * ent.mean())
             opt.zero_grad(); loss.backward(); nn.utils.clip_grad_norm_(shop.parameters(), 0.5); opt.step()
     return loss.item(), ent.mean().item()
 
