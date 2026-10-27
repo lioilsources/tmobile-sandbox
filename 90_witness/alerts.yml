@@ -1,0 +1,54 @@
+# Alerty z WITNESS_PLAN §5 (vmalert, syntaxe Prometheus rules).
+groups:
+  - name: l40s
+    rules:
+      - alert: L40SDown
+        expr: up{job="node"} == 0 or absent(up{job="node"})
+        for: 2m
+        labels: { severity: critical }
+        annotations: { summary: "L40S VM nedostupná (node_exporter neodpovídá > 2 min)" }
+      - alert: ServiceDown
+        # profil GPU střídá služby (vLLM / ComfyUI), proto jen služba, která byla poslední hodinu nahoře
+        expr: probe_success{job="http"} == 0 and max_over_time(probe_success{job="http"}[1h]) == 1
+        for: 3m
+        labels: { severity: warning }
+        annotations: { summary: "Služba {{ $labels.service }} neodpovídá > 3 min" }
+      - alert: DiskLow
+        expr: node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} < 0.15
+        for: 5m
+        labels: { severity: warning }
+        annotations: { summary: "Disk {{ $labels.mountpoint }}: volno {{ $value | humanizePercentage }}" }
+      - alert: DiskFullIn24h
+        expr: predict_linear(node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"}[6h], 24 * 3600) < 0
+        for: 30m
+        labels: { severity: critical }
+        annotations: { summary: "Disk {{ $labels.mountpoint }} se podle trendu 6 h zaplní do 24 h" }
+      - alert: GpuHot
+        expr: DCGM_FI_DEV_GPU_TEMP > 85
+        for: 5m
+        labels: { severity: critical }
+        annotations: { summary: "GPU {{ $value }} °C" }
+      - alert: GpuIdle
+        expr: max_over_time(DCGM_FI_DEV_GPU_UTIL[2h]) < 5
+        labels: { severity: info }
+        annotations: { summary: "GPU 2 h bez práce — sandbox se nevyužívá" }
+      - alert: VramFull
+        expr: DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) > 0.95
+        for: 10m
+        labels: { severity: warning }
+        annotations: { summary: "VRAM > 95 % po 10 min" }
+      - alert: RamLow
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.05
+        for: 2m
+        labels: { severity: critical }
+        annotations: { summary: "Dostupná RAM {{ $value | humanizePercentage }} — hrozí OOM / zamrznutí" }
+      - alert: OomKill
+        expr: increase(node_vmstat_oom_kill[10m]) > 0
+        labels: { severity: critical }
+        annotations: { summary: "OOM killer ukončil proces" }
+  - name: witness
+    rules:
+      - alert: Watchdog  # vždy aktivní → Alertmanager ho posílá na HEARTBEAT_URL; když ping přestane chodit, alarmuje healthchecks
+        expr: vector(1)
+        labels: { severity: none }
+        annotations: { summary: "witness žije" }

@@ -1,0 +1,17 @@
+# Šablona: render.sh doplní Telegram a heartbeat z witness.env.
+route:
+  receiver: telegram
+  group_by: [alertname, mountpoint, service]
+  group_wait: 30s
+  repeat_interval: 4h
+  routes:
+    - { matchers: ['alertname="Watchdog"'], receiver: heartbeat, repeat_interval: 5m, group_interval: 5m }
+receivers:
+  - name: telegram
+    telegram_configs:
+      - bot_token: "${TELEGRAM_BOT_TOKEN}"
+        chat_id: ${TELEGRAM_CHAT_ID}
+        parse_mode: HTML
+        message: '{{ range .Alerts }}{{ if eq .Status "firing" }}🔴{{ else }}✅{{ end }} <b>{{ .Labels.alertname }}</b> {{ .Annotations.summary }}{{ "\n" }}{{ end }}'
+  - name: heartbeat
+    webhook_configs: [{ url: "${HEARTBEAT_URL}", send_resolved: false }]

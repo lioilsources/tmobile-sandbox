@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     cap_add: [SYS_ADMIN]
     deploy: { resources: { reservations: { devices: [{ driver: nvidia, count: all, capabilities: [gpu] }] } } }
+    ports: ["127.0.0.1:9400:9400"]   # pro witness přes 91_witness_proxy
     networks: [tms]
   node:
     image: prom/node-exporter:latest
@@ -13,6 +14,7 @@ services:
     pid: host
     volumes: ["/:/host:ro,rslave"]
     command: ["--path.rootfs=/host"]
+    ports: ["127.0.0.1:9100:9100"]
     networks: [tms]
   prometheus:
     image: prom/prometheus:latest

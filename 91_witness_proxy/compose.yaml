@@ -1,0 +1,11 @@
+# Na L40S: zpřístupní exportéry a služby (jinak jen na 127.0.0.1) pouze na VLAN adrese pro witness.
+# Spuštění až po přidání VLAN NIC (WITNESS_PLAN fáze 3):  VLAN_IP=10.10.0.10 docker compose up -d
+name: witness-proxy
+services:
+  proxy:
+    image: haproxy:3.0-alpine
+    restart: unless-stopped
+    network_mode: host
+    environment: { VLAN_IP: "${VLAN_IP:?nastav VLAN IP L40S}" }
+    volumes: ["./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"]
+    mem_limit: 64m

@@ -1,0 +1,43 @@
+# Monitoring na witness (2 vCPU / 4 GB): VictoriaMetrics + vmalert + Alertmanager + Grafana + blackbox.
+# Vše jen na 127.0.0.1 → přístup SSH tunelem přes witness. Limity paměti dohromady ~2,2 GB.
+name: witness
+services:
+  vm:
+    image: victoriametrics/victoria-metrics:v1.106.1
+    restart: unless-stopped
+    command: ["-promscrape.config=/etc/vm/scrape.yml", "-retentionPeriod=90d", "-storageDataPath=/storage",
+              "-memory.allowedPercent=40", "-selfScrapeInterval=30s"]
+    volumes: ["./scrape.yml:/etc/vm/scrape.yml:ro", "vm:/storage"]
+    ports: ["127.0.0.1:8428:8428"]
+    mem_limit: 900m
+  vmalert:
+    image: victoriametrics/vmalert:v1.106.1
+    restart: unless-stopped
+    command: ["-datasource.url=http://vm:8428", "-remoteWrite.url=http://vm:8428", "-remoteRead.url=http://vm:8428",
+              "-notifier.url=http://alertmanager:9093", "-rule=/etc/vmalert/alerts.yml", "-evaluationInterval=30s"]
+    volumes: ["./alerts.yml:/etc/vmalert/alerts.yml:ro"]
+    mem_limit: 150m
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    restart: unless-stopped
+    command: ["--config.file=/etc/am/alertmanager.yml", "--storage.path=/data"]
+    volumes: ["./alertmanager.yml:/etc/am/alertmanager.yml:ro", "am:/data"]
+    ports: ["127.0.0.1:9093:9093"]
+    mem_limit: 100m
+  blackbox:
+    image: prom/blackbox-exporter:v0.25.0
+    restart: unless-stopped
+    command: ["--config.file=/etc/bb/blackbox.yml"]
+    volumes: ["./blackbox.yml:/etc/bb/blackbox.yml:ro"]
+    mem_limit: 64m
+  grafana:
+    image: grafana/grafana:11.3.0
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?nastav v witness.env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/sandbox.json
+    volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro", "./grafana/dashboards:/var/lib/grafana/dashboards:ro", "grafana:/var/lib/grafana"]
+    ports: ["127.0.0.1:3001:3000"]
+    mem_limit: 400m
+volumes: { vm: {}, am: {}, grafana: {} }

@@ -1,0 +1,3 @@
+modules:
+  icmp: { prober: icmp, timeout: 5s }
+  http_2xx: { prober: http, timeout: 10s, http: { preferred_ip_protocol: ip4 } }

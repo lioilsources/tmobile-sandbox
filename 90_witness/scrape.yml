@@ -1,0 +1,23 @@
+# Šablona (render.sh doplní ${L40S_VLAN_IP}). Exportéry na L40S poslouchají jen na VLAN IP (70_monitoring, WITNESS_BIND).
+global: { scrape_interval: 15s }
+scrape_configs:
+  - { job_name: node, static_configs: [{ targets: ["${L40S_VLAN_IP}:9100"], labels: { host: ubuntu-l40s } }] }
+  - { job_name: dcgm, static_configs: [{ targets: ["${L40S_VLAN_IP}:9400"], labels: { host: ubuntu-l40s } }] }
+  - { job_name: vllm, static_configs: [{ targets: ["${L40S_VLAN_IP}:8000"], labels: { host: ubuntu-l40s } }] }
+  # dostupnost: ICMP ping VM a TCP/HTTP na služby (blackbox běží na witness)
+  - job_name: ping
+    metrics_path: /probe
+    params: { module: [icmp] }
+    static_configs: [{ targets: ["${L40S_VLAN_IP}"] }]
+    relabel_configs: &bb
+      - { source_labels: [__address__], target_label: __param_target }
+      - { source_labels: [__param_target], target_label: instance }
+      - { target_label: __address__, replacement: "blackbox:9115" }
+  - job_name: http
+    metrics_path: /probe
+    params: { module: [http_2xx] }
+    static_configs:
+      - { targets: ["http://${L40S_VLAN_IP}:8000/health"], labels: { service: vllm } }
+      - { targets: ["http://${L40S_VLAN_IP}:8188/system_stats"], labels: { service: comfyui } }
+      - { targets: ["http://${L40S_VLAN_IP}:8080/healthz"], labels: { service: ai-gateway } }
+    relabel_configs: *bb
