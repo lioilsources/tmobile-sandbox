@@ -15,6 +15,10 @@ import open_clip
 import torch
 from cleanfid import fid
 from PIL import Image, ImageDraw
+import scipy.linalg
+
+_sqrtm = scipy.linalg.sqrtm  # clean-fid volá sqrtm(..., disp=False); novější scipy argument disp nezná
+scipy.linalg.sqrtm = lambda A, disp=True, **kw: (_sqrtm(A, **kw), 0.0) if not disp else _sqrtm(A, **kw)
 
 
 @torch.no_grad()
