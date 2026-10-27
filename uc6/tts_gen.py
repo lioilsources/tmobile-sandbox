@@ -29,10 +29,9 @@ def sentences(text):
 
 class Xtts:
     def __init__(self, ref, ref_text):
-        from huggingface_hub import snapshot_download
         from TTS.tts.configs.xtts_config import XttsConfig
         from TTS.tts.models.xtts import Xtts as M
-        d = snapshot_download("coqui/XTTS-v2")
+        d = "/srv/work/uc6/xtts_model"  # kopie coqui/XTTS-v2 mimo HF cache: coqui při načtení přepisuje model.pth, symlink do blobs neotevře
         cfg = XttsConfig(); cfg.load_json(f"{d}/config.json")
         self.m = M.init_from_config(cfg); self.m.load_checkpoint(cfg, checkpoint_dir=d, use_deepspeed=False); self.m.cuda().eval()
         self.lat, self.spk = self.m.get_conditioning_latents(audio_path=[ref], gpt_cond_len=30, max_ref_length=30)

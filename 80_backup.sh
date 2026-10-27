@@ -10,7 +10,9 @@ DST=${DST:?nastav DST=/cesta/k/zaloze}
 mkdir -p "$DST/work" "$DST/snapshots"
 echo "== $(date -Is)"
 rsync -a --delete --stats -e "ssh -i $HOME/.ssh/tmobile_backup -o BatchMode=yes" \
-  --exclude '/AiStack/' --exclude 'venv/' --exclude '*-venv/' --exclude '__pycache__/' --delete-excluded "$VM:" "$DST/work/" | grep -E "Number of (regular )?files transferred|Total transferred file size"
+  --exclude '/AiStack/' --exclude 'venv/' --exclude '*-venv/' --exclude '__pycache__/' \
+  --exclude '/.hf/' --exclude '/.uv-cache/' --exclude '/uc4/dreamer/runs/*/replay/' --exclude '/uc7/ffhq/' --exclude '/uc6/xtts_model/' --exclude 'uvenv/' \
+  --delete-excluded "$VM:" "$DST/work/" | grep -E "Number of (regular )?files transferred|Total transferred file size"
 # týdenní hardlink snapshot (neděle), drží 8 týdnů
 if [ "$(date +%u)" = 7 ]; then
   cp -al "$DST/work" "$DST/snapshots/$(date +%F)"
