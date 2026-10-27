@@ -1,0 +1,7489 @@
+{
+ "model": "qwen3-30b-a3b",
+ "runs": 313,
+ "cells": 124,
+ "cells_expected": 135,
+ "metric_notes": {
+  "revenue_ratio": "(finální cena + všechny bid fees) / retail cena",
+  "conversion": "podíl bidderů, kteří aspoň jednou zaplatili (bid/fee)",
+  "gini_outlay": "Gini útrat (cena + fees) přes bidery v běhu",
+  "win_gini_roles": "Gini výher per role normalizovaných podílem role v populaci",
+  "emotion_mean": "satisfied +1, calm/determined 0, frustrated −0,5, panicked −1 (engine mění emoci jen při platbě/odchodu → v Dutch/Vickrey ≈ 1/16 = jen vítěz; slabý proxy)",
+  "bidder_welfare": "průměrný čistý výsledek bidderů / retail (vítěz: valuace − cena − fees, ostatní: −fees)",
+  "hit_max_ticks": "podíl běhů useknutých stropem ticků (penny) → výnos je dolní odhad"
+ },
+ "by_format": {
+  "DUTCH": {
+   "n": 118,
+   "revenue_ratio": 1.4644,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3538,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.012,
+   "efficiency": 0.2712,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.6949,
+   "decisions": 45.2119,
+   "revenue_ratio_ci95": [
+    1.4258,
+    1.5042
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0169,
+    -0.0067
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 61,
+    "GAMBLER": 27,
+    "INTERESTED": 23,
+    "COLLECTOR": 7
+   }
+  },
+  "PENNY": {
+   "n": 62,
+   "revenue_ratio": 1.5939,
+   "sold": 1.0,
+   "conversion": 0.3377,
+   "gini_outlay": 0.9019,
+   "leave_rate": 0.3337,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0298,
+   "efficiency": 0.129,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.1935,
+   "fallback_rate": 0.0,
+   "ticks": 81.1129,
+   "decisions": 1059.7097,
+   "revenue_ratio_ci95": [
+    1.519,
+    1.679
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0353,
+    -0.0242
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8921,
+    "determined": 0.0454,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 25,
+    "SOCIAL": 17,
+    "SNIPER": 16,
+    "INTERESTED": 4
+   }
+  },
+  "VICKREY": {
+   "n": 133,
+   "revenue_ratio": 1.3899,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0479,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0224,
+   "efficiency": 0.4436,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3499,
+    1.4293
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0166,
+    0.0284
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 56,
+    "COLLECTOR": 49,
+    "INTERESTED": 17,
+    "SNIPER": 7,
+    "SOCIAL": 3,
+    "CAUTIOUS": 1
+   }
+  }
+ },
+ "by_format_value": {
+  "DUTCH|high": {
+   "n": 37,
+   "revenue_ratio": 1.4778,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3159,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0055,
+   "efficiency": 0.2973,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.1892,
+   "decisions": 47.2432,
+   "revenue_ratio_ci95": [
+    1.4097,
+    1.5465
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0155,
+    0.0059
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 21,
+    "GAMBLER": 6,
+    "INTERESTED": 6,
+    "COLLECTOR": 4
+   }
+  },
+  "DUTCH|low": {
+   "n": 42,
+   "revenue_ratio": 1.461,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3497,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0191,
+   "efficiency": 0.2143,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 5.0952,
+   "decisions": 44.9286,
+   "revenue_ratio_ci95": [
+    1.3917,
+    1.5302
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0273,
+    -0.0119
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 22,
+    "GAMBLER": 12,
+    "INTERESTED": 7,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|mid": {
+   "n": 39,
+   "revenue_ratio": 1.4554,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3942,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0104,
+   "efficiency": 0.3077,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.7436,
+   "decisions": 43.5897,
+   "revenue_ratio_ci95": [
+    1.3979,
+    1.5195
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0172,
+    -0.0028
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 18,
+    "INTERESTED": 10,
+    "GAMBLER": 9,
+    "COLLECTOR": 2
+   }
+  },
+  "PENNY|high": {
+   "n": 22,
+   "revenue_ratio": 1.5332,
+   "sold": 1.0,
+   "conversion": 0.2841,
+   "gini_outlay": 0.9062,
+   "leave_rate": 0.3239,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0257,
+   "efficiency": 0.1364,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.1818,
+   "fallback_rate": 0.0001,
+   "ticks": 77.9091,
+   "decisions": 1015.7273,
+   "revenue_ratio_ci95": [
+    1.4214,
+    1.6477
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0339,
+    -0.017
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.892,
+    "determined": 0.0455,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 10,
+    "SOCIAL": 6,
+    "SNIPER": 5,
+    "INTERESTED": 1
+   }
+  },
+  "PENNY|low": {
+   "n": 15,
+   "revenue_ratio": 1.566,
+   "sold": 1.0,
+   "conversion": 0.3917,
+   "gini_outlay": 0.9009,
+   "leave_rate": 0.3708,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0268,
+   "efficiency": 0.2,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.2,
+   "fallback_rate": 0.0,
+   "ticks": 84.7333,
+   "decisions": 1084.2667,
+   "revenue_ratio_ci95": [
+    1.4207,
+    1.708
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0373,
+    -0.0153
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8917,
+    "determined": 0.0458,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 6,
+    "SNIPER": 5,
+    "SOCIAL": 4
+   }
+  },
+  "PENNY|mid": {
+   "n": 25,
+   "revenue_ratio": 1.664,
+   "sold": 1.0,
+   "conversion": 0.3525,
+   "gini_outlay": 0.8987,
+   "leave_rate": 0.32,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0352,
+   "efficiency": 0.08,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.2,
+   "fallback_rate": 0.0,
+   "ticks": 81.76,
+   "decisions": 1083.68,
+   "revenue_ratio_ci95": [
+    1.5275,
+    1.8092
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0458,
+    -0.0256
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8925,
+    "determined": 0.045,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 9,
+    "SOCIAL": 7,
+    "SNIPER": 6,
+    "INTERESTED": 3
+   }
+  },
+  "VICKREY|high": {
+   "n": 49,
+   "revenue_ratio": 1.3873,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0523,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0139,
+   "efficiency": 0.3265,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3296,
+    1.4498
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0052,
+    0.0236
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 27,
+    "COLLECTOR": 14,
+    "INTERESTED": 4,
+    "SNIPER": 3,
+    "SOCIAL": 1
+   }
+  },
+  "VICKREY|low": {
+   "n": 47,
+   "revenue_ratio": 1.3774,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0359,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0199,
+   "efficiency": 0.3404,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3153,
+    1.4411
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0113,
+    0.0286
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 17,
+    "GAMBLER": 16,
+    "INTERESTED": 8,
+    "SNIPER": 4,
+    "SOCIAL": 1,
+    "CAUTIOUS": 1
+   }
+  },
+  "VICKREY|mid": {
+   "n": 37,
+   "revenue_ratio": 1.4092,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0574,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0368,
+   "efficiency": 0.7297,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3351,
+    1.4876
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0258,
+    0.0484
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 18,
+    "GAMBLER": 13,
+    "INTERESTED": 5,
+    "SOCIAL": 1
+   }
+  }
+ },
+ "by_format_population": {
+  "DUTCH|balanced": {
+   "n": 23,
+   "revenue_ratio": 1.5513,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3207,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0115,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.5217,
+   "decisions": 32.8261,
+   "revenue_ratio_ci95": [
+    1.4909,
+    1.6135
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0226,
+    0.0023
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 18,
+    "COLLECTOR": 3,
+    "GAMBLER": 2
+   },
+   "win_gini_roles": 0.7702
+  },
+  "DUTCH|bargain": {
+   "n": 22,
+   "revenue_ratio": 1.4086,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6278,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0091,
+   "efficiency": 0.5455,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 6.3182,
+   "decisions": 46.7273,
+   "revenue_ratio_ci95": [
+    1.3027,
+    1.5132
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0174,
+    -0.0017
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 22
+   },
+   "win_gini_roles": 0.75
+  },
+  "DUTCH|hobby": {
+   "n": 28,
+   "revenue_ratio": 1.5454,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1406,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0158,
+   "efficiency": 0.0714,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.5714,
+   "decisions": 36.8571,
+   "revenue_ratio_ci95": [
+    1.4825,
+    1.6096
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0299,
+    0.0001
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 24,
+    "COLLECTOR": 4
+   },
+   "win_gini_roles": 0.7065
+  },
+  "DUTCH|rational": {
+   "n": 23,
+   "revenue_ratio": 1.2248,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6549,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0042,
+   "efficiency": 0.7391,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 9.6522,
+   "decisions": 69.4348,
+   "revenue_ratio_ci95": [
+    1.1696,
+    1.2752
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.002,
+    0.0072
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 23
+   },
+   "win_gini_roles": 0.75
+  },
+  "DUTCH|thrill": {
+   "n": 22,
+   "revenue_ratio": 1.5768,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.071,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0275,
+   "efficiency": 0.0455,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.8636,
+   "decisions": 41.9545,
+   "revenue_ratio_ci95": [
+    1.5186,
+    1.6418
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0343,
+    -0.0212
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 19,
+    "GAMBLER": 3
+   },
+   "win_gini_roles": 0.7051
+  },
+  "PENNY|balanced": {
+   "n": 16,
+   "revenue_ratio": 1.7012,
+   "sold": 1.0,
+   "conversion": 0.3828,
+   "gini_outlay": 0.8885,
+   "leave_rate": 0.3359,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0334,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3125,
+   "fallback_rate": 0.0,
+   "ticks": 88.8125,
+   "decisions": 1180.375,
+   "revenue_ratio_ci95": [
+    1.5437,
+    1.8594
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0455,
+    -0.0209
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.832,
+    "determined": 0.1055,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 14,
+    "SOCIAL": 2
+   },
+   "win_gini_roles": 0.8214
+  },
+  "PENNY|bargain": {
+   "n": 14,
+   "revenue_ratio": 1.5664,
+   "sold": 1.0,
+   "conversion": 0.3125,
+   "gini_outlay": 0.91,
+   "leave_rate": 0.5536,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0282,
+   "efficiency": 0.3571,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.1429,
+   "fallback_rate": 0.0001,
+   "ticks": 77.1429,
+   "decisions": 783.4286,
+   "revenue_ratio_ci95": [
+    1.4142,
+    1.73
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0359,
+    -0.0208
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9196,
+    "determined": 0.0179,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 9,
+    "GAMBLER": 5
+   },
+   "win_gini_roles": 0.5625
+  },
+  "PENNY|hobby": {
+   "n": 15,
+   "revenue_ratio": 1.5653,
+   "sold": 1.0,
+   "conversion": 0.1958,
+   "gini_outlay": 0.9155,
+   "leave_rate": 0.1125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.033,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.1333,
+   "fallback_rate": 0.0,
+   "ticks": 79.0,
+   "decisions": 1219.3333,
+   "revenue_ratio_ci95": [
+    1.3939,
+    1.7354
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0465,
+    -0.0193
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 15
+   },
+   "win_gini_roles": 0.75
+  },
+  "PENNY|rational": {
+   "n": 11,
+   "revenue_ratio": 1.4745,
+   "sold": 1.0,
+   "conversion": 0.3807,
+   "gini_outlay": 0.9094,
+   "leave_rate": 0.4943,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0202,
+   "efficiency": 0.2727,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0909,
+   "fallback_rate": 0.0,
+   "ticks": 75.4545,
+   "decisions": 859.1818,
+   "revenue_ratio_ci95": [
+    1.3372,
+    1.6382
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.03,
+    -0.0122
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 7,
+    "INTERESTED": 4
+   },
+   "win_gini_roles": 0.5417
+  },
+  "PENNY|thrill": {
+   "n": 6,
+   "revenue_ratio": 1.6617,
+   "sold": 1.0,
+   "conversion": 0.5521,
+   "gini_outlay": 0.8706,
+   "leave_rate": 0.0729,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0337,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3333,
+   "fallback_rate": 0.0,
+   "ticks": 85.5,
+   "decisions": 1351.1667,
+   "revenue_ratio_ci95": [
+    1.3883,
+    1.9183
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0609,
+    -0.0075
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.7917,
+    "determined": 0.1458,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 6
+   },
+   "win_gini_roles": 0.75
+  },
+  "VICKREY|balanced": {
+   "n": 27,
+   "revenue_ratio": 1.3756,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0671,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0536,
+   "efficiency": 0.4074,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3385,
+    1.417
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0391,
+    0.0682
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 23,
+    "GAMBLER": 3,
+    "SOCIAL": 1
+   },
+   "win_gini_roles": 0.8042
+  },
+  "VICKREY|bargain": {
+   "n": 30,
+   "revenue_ratio": 1.1947,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1083,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0039,
+   "efficiency": 0.5667,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.167,
+    1.2227
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0005,
+    0.0072
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 25,
+    "SNIPER": 5
+   },
+   "win_gini_roles": 0.7187
+  },
+  "VICKREY|hobby": {
+   "n": 26,
+   "revenue_ratio": 1.7431,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0575,
+   "efficiency": 0.2308,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.6823,
+    1.7996
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0489,
+    0.0654
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 26
+   },
+   "win_gini_roles": 0.75
+  },
+  "VICKREY|rational": {
+   "n": 19,
+   "revenue_ratio": 1.2032,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0691,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0059,
+   "efficiency": 0.7895,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.1537,
+    1.2516
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0039,
+    0.0083
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 16,
+    "SNIPER": 2,
+    "CAUTIOUS": 1
+   },
+   "win_gini_roles": 0.6697
+  },
+  "VICKREY|thrill": {
+   "n": 31,
+   "revenue_ratio": 1.4097,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0063,
+   "efficiency": 0.3226,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3616,
+    1.4626
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0108,
+    -0.0021
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 28,
+    "SOCIAL": 2,
+    "INTERESTED": 1
+   },
+   "win_gini_roles": 0.6416
+  }
+ },
+ "best_format": [
+  {
+   "value": "high",
+   "elasticity": "elastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.62,
+     "ci95": [
+      1.54,
+      1.7
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.338,
+     "ci95": [
+      1.2638,
+      1.432
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.315,
+     "ci95": [
+      1.23,
+      1.4
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.24,
+   "margin_ci95": [
+    0.24,
+    0.24
+   ],
+   "significant": true
+  },
+  {
+   "value": "high",
+   "elasticity": "elastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.705,
+     "ci95": [
+      1.44,
+      1.97
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.34,
+     "ci95": [
+      1.14,
+      1.54
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.12,
+     "ci95": [
+      1.06,
+      1.18
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "elastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.7,
+     "ci95": [
+      1.7,
+      1.7
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5633,
+     "ci95": [
+      1.42,
+      1.77
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.5333,
+     "ci95": [
+      1.25,
+      1.75
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "elastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.36,
+     "ci95": [
+      1.36,
+      1.36
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.14,
+     "ci95": [
+      0.97,
+      1.31
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "elastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.58,
+     "ci95": [
+      1.46,
+      1.7
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.375,
+     "ci95": [
+      1.345,
+      1.4175
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.225,
+   "margin_ci95": [
+    0.07,
+    0.38
+   ],
+   "significant": true
+  },
+  {
+   "value": "high",
+   "elasticity": "inelastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.5325,
+     "ci95": [
+      1.365,
+      1.7575
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.31,
+     "ci95": [
+      1.31,
+      1.31
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.3,
+     "ci95": [
+      1.3,
+      1.3
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "inelastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 2.15,
+     "ci95": [
+      2.15,
+      2.15
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.43,
+     "ci95": [
+      1.43,
+      1.43
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.22,
+     "ci95": [
+      1.1725,
+      1.2812
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "inelastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.8425,
+     "ci95": [
+      1.7325,
+      1.915
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5325,
+     "ci95": [
+      1.3275,
+      1.72
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.4167,
+     "ci95": [
+      1.14,
+      1.67
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.22,
+   "margin_ci95": [
+    0.2200000000000002,
+    0.2200000000000002
+   ],
+   "significant": true
+  },
+  {
+   "value": "high",
+   "elasticity": "inelastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.32,
+     "ci95": [
+      1.32,
+      1.32
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.32,
+     "ci95": [
+      1.32,
+      1.32
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.19,
+     "ci95": [
+      1.19,
+      1.19
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "inelastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.68,
+     "ci95": [
+      1.68,
+      1.68
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.53,
+     "ci95": [
+      1.53,
+      1.53
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.476,
+     "ci95": [
+      1.37,
+      1.628
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "unit",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.96,
+     "ci95": [
+      1.96,
+      1.96
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5967,
+     "ci95": [
+      1.46,
+      1.78
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.42,
+     "ci95": [
+      1.3,
+      1.585
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "unit",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.66,
+     "ci95": [
+      1.66,
+      1.66
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.38,
+     "ci95": [
+      1.04,
+      1.72
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.206,
+     "ci95": [
+      1.136,
+      1.276
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "unit",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.76,
+     "ci95": [
+      1.76,
+      1.76
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.4833,
+     "ci95": [
+      1.3117,
+      1.61
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.32,
+   "margin_ci95": [
+    0.32000000000000006,
+    0.32000000000000006
+   ],
+   "significant": true
+  },
+  {
+   "value": "high",
+   "elasticity": "unit",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.48,
+     "ci95": [
+      1.48,
+      1.48
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.2533,
+     "ci95": [
+      1.12,
+      1.38
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.055,
+     "ci95": [
+      0.99,
+      1.12
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "high",
+   "elasticity": "unit",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.66,
+     "ci95": [
+      1.56,
+      1.73
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.522,
+     "ci95": [
+      1.432,
+      1.648
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.01,
+   "margin_ci95": [
+    -0.22,
+    0.24
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "elastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.55,
+     "ci95": [
+      1.55,
+      1.55
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5,
+     "ci95": [
+      1.5,
+      1.5
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.394,
+     "ci95": [
+      1.348,
+      1.45
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.05,
+   "margin_ci95": [
+    0.050000000000000044,
+    0.050000000000000044
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "elastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.565,
+     "ci95": [
+      1.47,
+      1.66
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.54,
+     "ci95": [
+      1.21,
+      1.92
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.16,
+     "ci95": [
+      1.11,
+      1.23
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": -0.42,
+   "margin_ci95": [
+    -0.41999999999999993,
+    -0.41999999999999993
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "elastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.83,
+     "ci95": [
+      1.83,
+      1.83
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.6075,
+     "ci95": [
+      1.51,
+      1.72
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.445,
+     "ci95": [
+      1.32,
+      1.57
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "elastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.0467,
+     "ci95": [
+      1.01,
+      1.11
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 0.99,
+     "ci95": [
+      0.94,
+      1.04
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.08,
+   "margin_ci95": [
+    0.08000000000000007,
+    0.08000000000000007
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "elastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5933,
+     "ci95": [
+      1.44,
+      1.7
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.27,
+     "ci95": [
+      1.27,
+      1.27
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.17,
+   "margin_ci95": [
+    0.16999999999999993,
+    0.16999999999999993
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "inelastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.548,
+     "ci95": [
+      1.422,
+      1.674
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.4633,
+     "ci95": [
+      1.4,
+      1.56
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.22,
+   "margin_ci95": [
+    0.13,
+    0.31
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "inelastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.496,
+     "ci95": [
+      1.386,
+      1.614
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.2167,
+     "ci95": [
+      1.2,
+      1.24
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "inelastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.86,
+     "ci95": [
+      1.86,
+      1.86
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.7675,
+     "ci95": [
+      1.685,
+      1.85
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.1,
+     "ci95": [
+      1.1,
+      1.1
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": -0.02,
+   "margin_ci95": [
+    -0.019999999999999796,
+    -0.019999999999999796
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "inelastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.266,
+     "ci95": [
+      1.22,
+      1.306
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.2233,
+     "ci95": [
+      1.08,
+      1.32
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.01,
+   "margin_ci95": [
+    0.010000000000000009,
+    0.010000000000000009
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "inelastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.54,
+     "ci95": [
+      1.37,
+      1.78
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.52,
+     "ci95": [
+      1.38,
+      1.66
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.1,
+     "ci95": [
+      1.1,
+      1.1
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.09,
+   "margin_ci95": [
+    0.09000000000000008,
+    0.09000000000000008
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "unit",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.51,
+     "ci95": [
+      1.51,
+      1.51
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.44,
+     "ci95": [
+      1.44,
+      1.44
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.43,
+     "ci95": [
+      1.43,
+      1.43
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "unit",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.555,
+     "ci95": [
+      1.41,
+      1.7
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.1933,
+     "ci95": [
+      1.1,
+      1.32
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.0233,
+     "ci95": [
+      0.95,
+      1.09
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.405,
+   "margin_ci95": [
+    0.23,
+    0.58
+   ],
+   "significant": true
+  },
+  {
+   "value": "low",
+   "elasticity": "unit",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 2.03,
+     "ci95": [
+      2.03,
+      2.03
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.7175,
+     "ci95": [
+      1.65,
+      1.7975
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.68,
+     "ci95": [
+      1.49,
+      1.87
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "unit",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.74,
+     "ci95": [
+      1.74,
+      1.74
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.29,
+     "ci95": [
+      1.25,
+      1.33
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.145,
+     "ci95": [
+      1.12,
+      1.17
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "low",
+   "elasticity": "unit",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.87,
+     "ci95": [
+      1.87,
+      1.87
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.5425,
+     "ci95": [
+      1.42,
+      1.7
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.3525,
+     "ci95": [
+      1.2525,
+      1.465
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "elastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 2.105,
+     "ci95": [
+      1.94,
+      2.27
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.64,
+     "ci95": [
+      1.54,
+      1.83
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.245,
+     "ci95": [
+      1.22,
+      1.27
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "elastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.51,
+     "ci95": [
+      1.51,
+      1.51
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.29,
+     "ci95": [
+      1.29,
+      1.29
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.11,
+     "ci95": [
+      1.11,
+      1.11
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "elastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.865,
+     "ci95": [
+      1.59,
+      2.14
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.81,
+     "ci95": [
+      1.67,
+      1.95
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.565,
+     "ci95": [
+      1.53,
+      1.6
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "elastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.605,
+     "ci95": [
+      1.12,
+      2.09
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.25,
+     "ci95": [
+      1.18,
+      1.35
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.16,
+     "ci95": [
+      1.16,
+      1.16
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.91,
+   "margin_ci95": [
+    0.9099999999999999,
+    0.9099999999999999
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "elastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.925,
+     "ci95": [
+      1.69,
+      2.16
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.555,
+     "ci95": [
+      1.34,
+      1.77
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.3,
+     "ci95": [
+      1.28,
+      1.32
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "inelastic",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.8833,
+     "ci95": [
+      1.48,
+      2.38
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.6767,
+     "ci95": [
+      1.53,
+      1.81
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.35,
+     "ci95": [
+      1.35,
+      1.35
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.57,
+   "margin_ci95": [
+    0.5699999999999998,
+    0.5699999999999998
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "inelastic",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.48,
+     "ci95": [
+      1.48,
+      1.48
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.2775,
+     "ci95": [
+      1.085,
+      1.5875
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.25,
+     "ci95": [
+      1.24,
+      1.26
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.35,
+   "margin_ci95": [
+    0.3500000000000001,
+    0.3500000000000001
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "inelastic",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.7514,
+     "ci95": [
+      1.6186,
+      1.8643
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.4033,
+     "ci95": [
+      1.29,
+      1.49
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.33,
+     "ci95": [
+      1.1,
+      1.56
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": 0.505,
+   "margin_ci95": [
+    0.48,
+    0.53
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "inelastic",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.345,
+     "ci95": [
+      1.32,
+      1.37
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.335,
+     "ci95": [
+      1.31,
+      1.36
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.27,
+     "ci95": [
+      1.27,
+      1.27
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": 0.01,
+   "margin_ci95": [
+    0.010000000000000009,
+    0.010000000000000009
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "inelastic",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.46,
+     "ci95": [
+      1.46,
+      1.46
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.45,
+     "ci95": [
+      1.37,
+      1.53
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "unit",
+   "population": "balanced",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.83,
+     "ci95": [
+      1.74,
+      1.92
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.43,
+     "ci95": [
+      1.3175,
+      1.515
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.35,
+     "ci95": [
+      1.304,
+      1.406
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.2,
+   "margin_ci95": [
+    0.19999999999999996,
+    0.19999999999999996
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "unit",
+   "population": "bargain",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.79,
+     "ci95": [
+      1.79,
+      1.79
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.1633,
+     "ci95": [
+      1.1,
+      1.21
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "unit",
+   "population": "hobby",
+   "ranking": [
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.78,
+     "ci95": [
+      1.78,
+      1.78
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.64,
+     "ci95": [
+      1.29,
+      1.99
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.52,
+     "ci95": [
+      1.42,
+      1.59
+     ]
+    }
+   ],
+   "best": "VICKREY",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  },
+  {
+   "value": "mid",
+   "elasticity": "unit",
+   "population": "rational",
+   "ranking": [
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.5233,
+     "ci95": [
+      1.44,
+      1.63
+     ]
+    },
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.294,
+     "ci95": [
+      1.244,
+      1.338
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.16,
+     "ci95": [
+      1.11,
+      1.21
+     ]
+    }
+   ],
+   "best": "PENNY",
+   "margin_vs_second": 0.28,
+   "margin_ci95": [
+    0.2799999999999998,
+    0.2799999999999998
+   ],
+   "significant": true
+  },
+  {
+   "value": "mid",
+   "elasticity": "unit",
+   "population": "thrill",
+   "ranking": [
+    {
+     "format": "DUTCH",
+     "revenue_ratio": 1.65,
+     "ci95": [
+      1.48,
+      1.82
+     ]
+    },
+    {
+     "format": "PENNY",
+     "revenue_ratio": 1.47,
+     "ci95": [
+      1.47,
+      1.47
+     ]
+    },
+    {
+     "format": "VICKREY",
+     "revenue_ratio": 1.285,
+     "ci95": [
+      1.255,
+      1.315
+     ]
+    }
+   ],
+   "best": "DUTCH",
+   "margin_vs_second": null,
+   "margin_ci95": [
+    null,
+    null
+   ],
+   "significant": false
+  }
+ ],
+ "by_cell": {
+  "DUTCH|balanced|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.62,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0187,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.54,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0222,
+    -0.0152
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "DUTCH|balanced|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.3,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0066,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.0,
+   "decisions": 38.0,
+   "revenue_ratio_ci95": [
+    1.3,
+    1.3
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0066,
+    -0.0066
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|balanced|high|unit": {
+   "n": 3,
+   "revenue_ratio": 1.5967,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3542,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0048,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.6667,
+   "decisions": 33.3333,
+   "revenue_ratio_ci95": [
+    1.46,
+    1.78
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0592,
+    0.0698
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|balanced|low|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.5,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0119,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.0,
+   "decisions": 38.0,
+   "revenue_ratio_ci95": [
+    1.5,
+    1.5
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0119,
+    -0.0119
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|balanced|low|inelastic": {
+   "n": 5,
+   "revenue_ratio": 1.548,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.225,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.021,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.0,
+   "decisions": 39.4,
+   "revenue_ratio_ci95": [
+    1.426,
+    1.67
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.027,
+    -0.015
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 5
+   }
+  },
+  "DUTCH|balanced|low|unit": {
+   "n": 1,
+   "revenue_ratio": 1.44,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0236,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 6.0,
+   "decisions": 72.0,
+   "revenue_ratio_ci95": [
+    1.44,
+    1.44
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0236,
+    -0.0236
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|balanced|mid|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.64,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3958,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0067,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.6667,
+   "decisions": 23.0,
+   "revenue_ratio_ci95": [
+    1.54,
+    1.83
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0451,
+    0.0552
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|balanced|mid|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.6767,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0025,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.0,
+   "decisions": 27.0,
+   "revenue_ratio_ci95": [
+    1.53,
+    1.81
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0278,
+    0.044
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|balanced|mid|unit": {
+   "n": 4,
+   "revenue_ratio": 1.43,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.3438,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0095,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.5,
+   "decisions": 32.0,
+   "revenue_ratio_ci95": [
+    1.3175,
+    1.515
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0202,
+    0.0026
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "GAMBLER": 2
+   }
+  },
+  "DUTCH|bargain|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.34,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0086,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 6.0,
+   "decisions": 45.0,
+   "revenue_ratio_ci95": [
+    1.14,
+    1.54
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0107,
+    -0.0066
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "DUTCH|bargain|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.43,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.5625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0009,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.43,
+    1.43
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0009,
+    0.0009
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|bargain|high|unit": {
+   "n": 1,
+   "revenue_ratio": 1.66,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.02,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 5.0,
+   "decisions": 39.0,
+   "revenue_ratio_ci95": [
+    1.66,
+    1.66
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.02,
+    -0.02
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|bargain|low|elastic": {
+   "n": 4,
+   "revenue_ratio": 1.565,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.7031,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.033,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 7.25,
+   "decisions": 38.5,
+   "revenue_ratio_ci95": [
+    1.47,
+    1.66
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.052,
+    -0.0156
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 4
+   }
+  },
+  "DUTCH|bargain|low|inelastic": {
+   "n": 5,
+   "revenue_ratio": 1.496,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.5125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0111,
+   "efficiency": 0.6,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.2,
+   "decisions": 39.8,
+   "revenue_ratio_ci95": [
+    1.386,
+    1.614
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0194,
+    -0.0017
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 5
+   }
+  },
+  "DUTCH|bargain|low|unit": {
+   "n": 3,
+   "revenue_ratio": 1.0233,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6458,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0121,
+   "efficiency": 0.3333,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 8.6667,
+   "decisions": 64.0,
+   "revenue_ratio_ci95": [
+    0.95,
+    1.09
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0034,
+    0.024
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3
+   }
+  },
+  "DUTCH|bargain|mid|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.51,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0085,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.0,
+   "decisions": 35.0,
+   "revenue_ratio_ci95": [
+    1.51,
+    1.51
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0085,
+    -0.0085
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|bargain|mid|inelastic": {
+   "n": 4,
+   "revenue_ratio": 1.2775,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6562,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0044,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 9.75,
+   "decisions": 70.0,
+   "revenue_ratio_ci95": [
+    1.085,
+    1.5875
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0118,
+    0.018
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 4
+   }
+  },
+  "DUTCH|bargain|mid|unit": {
+   "n": 1,
+   "revenue_ratio": 1.79,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.5625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0209,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.0,
+   "decisions": 23.0,
+   "revenue_ratio_ci95": [
+    1.79,
+    1.79
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0209,
+    -0.0209
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|hobby|high|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.5633,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.2917,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0081,
+   "efficiency": 0.3333,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.3333,
+   "decisions": 41.0,
+   "revenue_ratio_ci95": [
+    1.42,
+    1.77
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0397,
+    0.0779
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|hobby|high|inelastic": {
+   "n": 4,
+   "revenue_ratio": 1.5325,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.015,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.5,
+   "decisions": 65.0,
+   "revenue_ratio_ci95": [
+    1.3275,
+    1.72
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.027,
+    -0.0001
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 4
+   }
+  },
+  "DUTCH|hobby|high|unit": {
+   "n": 6,
+   "revenue_ratio": 1.4833,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1667,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0061,
+   "efficiency": 0.1667,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.3333,
+   "decisions": 46.8333,
+   "revenue_ratio_ci95": [
+    1.3117,
+    1.61
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0335,
+    0.051
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 4,
+    "COLLECTOR": 2
+   }
+  },
+  "DUTCH|hobby|low|elastic": {
+   "n": 4,
+   "revenue_ratio": 1.6075,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1094,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0298,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.5,
+   "decisions": 23.25,
+   "revenue_ratio_ci95": [
+    1.51,
+    1.72
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0636,
+    0.0309
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3,
+    "COLLECTOR": 1
+   }
+  },
+  "DUTCH|hobby|low|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.86,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0332,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.86,
+    1.86
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0332,
+    -0.0332
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|hobby|low|unit": {
+   "n": 2,
+   "revenue_ratio": 1.68,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0938,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0366,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.49,
+    1.87
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0451,
+    -0.0281
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "DUTCH|hobby|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.565,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0938,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0369,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.53,
+    1.6
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0447,
+    -0.029
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "DUTCH|hobby|mid|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.4033,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0106,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.3333,
+   "decisions": 35.0,
+   "revenue_ratio_ci95": [
+    1.29,
+    1.49
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0144,
+    -0.0085
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3
+   }
+  },
+  "DUTCH|hobby|mid|unit": {
+   "n": 3,
+   "revenue_ratio": 1.52,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0375,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.0,
+   "decisions": 30.0,
+   "revenue_ratio_ci95": [
+    1.42,
+    1.59
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0422,
+    -0.0337
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3
+   }
+  },
+  "DUTCH|rational|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.14,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0087,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 8.0,
+   "decisions": 58.0,
+   "revenue_ratio_ci95": [
+    0.97,
+    1.31
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0012,
+    0.0162
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|high|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.32,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.5625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0007,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 7.5,
+   "decisions": 61.5,
+   "revenue_ratio_ci95": [
+    1.32,
+    1.32
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0002,
+    0.0012
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|high|unit": {
+   "n": 2,
+   "revenue_ratio": 1.055,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6562,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0219,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 8.5,
+   "decisions": 58.5,
+   "revenue_ratio_ci95": [
+    0.99,
+    1.12
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0161,
+    0.0277
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|low|elastic": {
+   "n": 2,
+   "revenue_ratio": 0.99,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.7188,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0034,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 14.0,
+   "decisions": 88.5,
+   "revenue_ratio_ci95": [
+    0.94,
+    1.04
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0029,
+    0.004
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|low|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.2233,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6042,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0041,
+   "efficiency": 0.3333,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 9.0,
+   "decisions": 71.0,
+   "revenue_ratio_ci95": [
+    1.08,
+    1.32
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0016,
+    0.0084
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 3
+   }
+  },
+  "DUTCH|rational|low|unit": {
+   "n": 2,
+   "revenue_ratio": 1.29,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.75,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0007,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 14.5,
+   "decisions": 85.5,
+   "revenue_ratio_ci95": [
+    1.25,
+    1.33
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0004,
+    0.001
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|mid|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.25,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.6458,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0024,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 9.3333,
+   "decisions": 70.3333,
+   "revenue_ratio_ci95": [
+    1.18,
+    1.35
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0017,
+    0.0034
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 3
+   }
+  },
+  "DUTCH|rational|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.345,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.7188,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0004,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 8.0,
+   "decisions": 58.0,
+   "revenue_ratio_ci95": [
+    1.32,
+    1.37
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0004,
+    0.0004
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "DUTCH|rational|mid|unit": {
+   "n": 5,
+   "revenue_ratio": 1.294,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0013,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 9.2,
+   "decisions": 70.6,
+   "revenue_ratio_ci95": [
+    1.242,
+    1.338
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0002,
+    0.003
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 5
+   }
+  },
+  "DUTCH|thrill|high|elastic": {
+   "n": 4,
+   "revenue_ratio": 1.58,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1719,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0191,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 4.5,
+   "decisions": 64.5,
+   "revenue_ratio_ci95": [
+    1.46,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0297,
+    -0.0083
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3,
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|thrill|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.53,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0253,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.53,
+    1.53
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0253,
+    -0.0253
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|thrill|high|unit": {
+   "n": 3,
+   "revenue_ratio": 1.66,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0208,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0239,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.0,
+   "decisions": 46.3333,
+   "revenue_ratio_ci95": [
+    1.56,
+    1.73
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0261,
+    -0.0221
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2,
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|thrill|low|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.5933,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0497,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.44,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0607,
+    -0.0423
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3
+   }
+  },
+  "DUTCH|thrill|low|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.52,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0312,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0169,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 2.5,
+   "decisions": 40.0,
+   "revenue_ratio_ci95": [
+    1.38,
+    1.66
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0268,
+    -0.007
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "DUTCH|thrill|low|unit": {
+   "n": 4,
+   "revenue_ratio": 1.5425,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0469,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0308,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 3.25,
+   "decisions": 51.25,
+   "revenue_ratio_ci95": [
+    1.42,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.045,
+    -0.019
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 4
+   }
+  },
+  "DUTCH|thrill|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.555,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.2188,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0279,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 5.5,
+   "decisions": 64.5,
+   "revenue_ratio_ci95": [
+    1.34,
+    1.77
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0562,
+    0.0003
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1,
+    "GAMBLER": 1
+   }
+  },
+  "DUTCH|thrill|mid|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.46,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0143,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.46,
+    1.46
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0143,
+    -0.0143
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "DUTCH|thrill|mid|unit": {
+   "n": 2,
+   "revenue_ratio": 1.65,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0312,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0283,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.48,
+    1.82
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0362,
+    -0.0203
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "PENNY|balanced|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.315,
+   "sold": 1.0,
+   "conversion": 0.375,
+   "gini_outlay": 0.9057,
+   "leave_rate": 0.4375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0123,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 69.0,
+   "decisions": 925.0,
+   "revenue_ratio_ci95": [
+    1.23,
+    1.4
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0385,
+    0.0139
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8125,
+    "determined": 0.125,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "PENNY|balanced|high|inelastic": {
+   "n": 4,
+   "revenue_ratio": 1.5325,
+   "sold": 1.0,
+   "conversion": 0.3281,
+   "gini_outlay": 0.89,
+   "leave_rate": 0.2656,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0155,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.5,
+   "fallback_rate": 0.0,
+   "ticks": 90.25,
+   "decisions": 1223.0,
+   "revenue_ratio_ci95": [
+    1.365,
+    1.7575
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0328,
+    -0.0032
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8281,
+    "determined": 0.1094,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 4
+   }
+  },
+  "PENNY|balanced|high|unit": {
+   "n": 1,
+   "revenue_ratio": 1.96,
+   "sold": 1.0,
+   "conversion": 0.3125,
+   "gini_outlay": 0.8768,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0433,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 1.0,
+   "fallback_rate": 0.0,
+   "ticks": 120.0,
+   "decisions": 1650.0,
+   "revenue_ratio_ci95": [
+    1.96,
+    1.96
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0433,
+    -0.0433
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8125,
+    "determined": 0.125,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|balanced|low|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.55,
+   "sold": 1.0,
+   "conversion": 0.5625,
+   "gini_outlay": 0.9067,
+   "leave_rate": 0.4375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0294,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 62.0,
+   "decisions": 751.0,
+   "revenue_ratio_ci95": [
+    1.55,
+    1.55
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0294,
+    -0.0294
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.875,
+    "determined": 0.0625,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|balanced|low|unit": {
+   "n": 1,
+   "revenue_ratio": 1.43,
+   "sold": 1.0,
+   "conversion": 0.375,
+   "gini_outlay": 0.8833,
+   "leave_rate": 0.375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0195,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 82.0,
+   "decisions": 1128.0,
+   "revenue_ratio_ci95": [
+    1.43,
+    1.43
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0195,
+    -0.0195
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8125,
+    "determined": 0.125,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "PENNY|balanced|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 2.105,
+   "sold": 1.0,
+   "conversion": 0.4062,
+   "gini_outlay": 0.8852,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0751,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.5,
+   "fallback_rate": 0.0,
+   "ticks": 94.0,
+   "decisions": 1252.0,
+   "revenue_ratio_ci95": [
+    1.94,
+    2.27
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0903,
+    -0.0599
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8438,
+    "determined": 0.0938,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1,
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|balanced|mid|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.8833,
+   "sold": 1.0,
+   "conversion": 0.4167,
+   "gini_outlay": 0.8868,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0342,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3333,
+   "fallback_rate": 0.0,
+   "ticks": 100.0,
+   "decisions": 1304.0,
+   "revenue_ratio_ci95": [
+    1.48,
+    2.38
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0594,
+    -0.0167
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8333,
+    "determined": 0.1042,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3
+   }
+  },
+  "PENNY|balanced|mid|unit": {
+   "n": 2,
+   "revenue_ratio": 1.83,
+   "sold": 1.0,
+   "conversion": 0.375,
+   "gini_outlay": 0.8738,
+   "leave_rate": 0.375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0512,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 85.0,
+   "decisions": 1099.5,
+   "revenue_ratio_ci95": [
+    1.74,
+    1.92
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0527,
+    -0.0498
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8438,
+    "determined": 0.0938,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "PENNY|bargain|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.705,
+   "sold": 1.0,
+   "conversion": 0.3438,
+   "gini_outlay": 0.8972,
+   "leave_rate": 0.625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0379,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 93.0,
+   "decisions": 906.5,
+   "revenue_ratio_ci95": [
+    1.44,
+    1.97
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.054,
+    -0.0218
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9062,
+    "determined": 0.0312,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1,
+    "SNIPER": 1
+   }
+  },
+  "PENNY|bargain|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 2.15,
+   "sold": 1.0,
+   "conversion": 0.25,
+   "gini_outlay": 0.892,
+   "leave_rate": 0.8125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0453,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0014,
+   "ticks": 86.0,
+   "decisions": 737.0,
+   "revenue_ratio_ci95": [
+    2.15,
+    2.15
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0453,
+    -0.0453
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|bargain|high|unit": {
+   "n": 2,
+   "revenue_ratio": 1.38,
+   "sold": 1.0,
+   "conversion": 0.25,
+   "gini_outlay": 0.9307,
+   "leave_rate": 0.3438,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0273,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 78.5,
+   "decisions": 868.0,
+   "revenue_ratio_ci95": [
+    1.04,
+    1.72
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0421,
+    -0.0126
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 2
+   }
+  },
+  "PENNY|bargain|low|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.54,
+   "sold": 1.0,
+   "conversion": 0.3958,
+   "gini_outlay": 0.8919,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0263,
+   "efficiency": 0.6667,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3333,
+   "fallback_rate": 0.0,
+   "ticks": 84.3333,
+   "decisions": 932.6667,
+   "revenue_ratio_ci95": [
+    1.21,
+    1.92
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0474,
+    -0.0075
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8958,
+    "determined": 0.0417,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 3
+   }
+  },
+  "PENNY|bargain|low|unit": {
+   "n": 4,
+   "revenue_ratio": 1.555,
+   "sold": 1.0,
+   "conversion": 0.375,
+   "gini_outlay": 0.9121,
+   "leave_rate": 0.8125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0231,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.25,
+   "fallback_rate": 0.0,
+   "ticks": 75.75,
+   "decisions": 709.5,
+   "revenue_ratio_ci95": [
+    1.41,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0324,
+    -0.0139
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9219,
+    "determined": 0.0156,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3,
+    "SNIPER": 1
+   }
+  },
+  "PENNY|bargain|mid|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.29,
+   "sold": 1.0,
+   "conversion": 0.125,
+   "gini_outlay": 0.9321,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0209,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 47.0,
+   "decisions": 522.0,
+   "revenue_ratio_ci95": [
+    1.29,
+    1.29
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0209,
+    -0.0209
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1
+   }
+  },
+  "PENNY|bargain|mid|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.48,
+   "sold": 1.0,
+   "conversion": 0.125,
+   "gini_outlay": 0.9366,
+   "leave_rate": 0.5,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0263,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 48.0,
+   "decisions": 524.0,
+   "revenue_ratio_ci95": [
+    1.48,
+    1.48
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0263,
+    -0.0263
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1
+   }
+  },
+  "PENNY|hobby|high|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.5333,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.907,
+   "leave_rate": 0.0833,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0519,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3333,
+   "fallback_rate": 0.0,
+   "ticks": 92.0,
+   "decisions": 1426.6667,
+   "revenue_ratio_ci95": [
+    1.25,
+    1.75
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0676,
+    -0.0398
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3
+   }
+  },
+  "PENNY|hobby|high|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.4167,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.9291,
+   "leave_rate": 0.0833,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0094,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 51.0,
+   "decisions": 803.0,
+   "revenue_ratio_ci95": [
+    1.14,
+    1.67
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0236,
+    0.0034
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 3
+   }
+  },
+  "PENNY|hobby|low|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.83,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.8896,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0564,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 90.0,
+   "decisions": 1440.0,
+   "revenue_ratio_ci95": [
+    1.83,
+    1.83
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0564,
+    -0.0564
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "PENNY|hobby|low|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.1,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.9257,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0081,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 86.0,
+   "decisions": 1376.0,
+   "revenue_ratio_ci95": [
+    1.1,
+    1.1
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0081,
+    0.0081
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "PENNY|hobby|low|unit": {
+   "n": 1,
+   "revenue_ratio": 2.03,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.9277,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0548,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 116.0,
+   "decisions": 1759.0,
+   "revenue_ratio_ci95": [
+    2.03,
+    2.03
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0548,
+    -0.0548
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1
+   }
+  },
+  "PENNY|hobby|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.865,
+   "sold": 1.0,
+   "conversion": 0.2188,
+   "gini_outlay": 0.9102,
+   "leave_rate": 0.3125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0598,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.5,
+   "fallback_rate": 0.0,
+   "ticks": 92.0,
+   "decisions": 1345.5,
+   "revenue_ratio_ci95": [
+    1.59,
+    2.14
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0624,
+    -0.0572
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "PENNY|hobby|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.33,
+   "sold": 1.0,
+   "conversion": 0.1875,
+   "gini_outlay": 0.9192,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.007,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 62.0,
+   "decisions": 970.5,
+   "revenue_ratio_ci95": [
+    1.1,
+    1.56
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0184,
+    0.0043
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "PENNY|hobby|mid|unit": {
+   "n": 2,
+   "revenue_ratio": 1.64,
+   "sold": 1.0,
+   "conversion": 0.2188,
+   "gini_outlay": 0.9114,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.037,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 78.0,
+   "decisions": 1197.0,
+   "revenue_ratio_ci95": [
+    1.29,
+    1.99
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0594,
+    -0.0145
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 2
+   }
+  },
+  "PENNY|rational|high|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.36,
+   "sold": 1.0,
+   "conversion": 0.3125,
+   "gini_outlay": 0.9138,
+   "leave_rate": 0.6875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0078,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 59.0,
+   "decisions": 632.0,
+   "revenue_ratio_ci95": [
+    1.36,
+    1.36
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0078,
+    -0.0078
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 1
+   }
+  },
+  "PENNY|rational|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.32,
+   "sold": 1.0,
+   "conversion": 0.3125,
+   "gini_outlay": 0.9295,
+   "leave_rate": 0.25,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0121,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 66.0,
+   "decisions": 796.0,
+   "revenue_ratio_ci95": [
+    1.32,
+    1.32
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0121,
+    -0.0121
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1
+   }
+  },
+  "PENNY|rational|high|unit": {
+   "n": 1,
+   "revenue_ratio": 1.48,
+   "sold": 1.0,
+   "conversion": 0.25,
+   "gini_outlay": 0.9198,
+   "leave_rate": 0.625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0306,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 54.0,
+   "decisions": 623.0,
+   "revenue_ratio_ci95": [
+    1.48,
+    1.48
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0306,
+    -0.0306
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1
+   }
+  },
+  "PENNY|rational|low|unit": {
+   "n": 1,
+   "revenue_ratio": 1.74,
+   "sold": 1.0,
+   "conversion": 0.375,
+   "gini_outlay": 0.9118,
+   "leave_rate": 0.25,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0457,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 64.0,
+   "decisions": 772.0,
+   "revenue_ratio_ci95": [
+    1.74,
+    1.74
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0457,
+    -0.0457
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1
+   }
+  },
+  "PENNY|rational|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.605,
+   "sold": 1.0,
+   "conversion": 0.4375,
+   "gini_outlay": 0.8763,
+   "leave_rate": 0.4062,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0325,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 91.0,
+   "decisions": 1079.0,
+   "revenue_ratio_ci95": [
+    1.12,
+    2.09
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0533,
+    -0.0117
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1,
+    "INTERESTED": 1
+   }
+  },
+  "PENNY|rational|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.27,
+   "sold": 1.0,
+   "conversion": 0.4375,
+   "gini_outlay": 0.9205,
+   "leave_rate": 0.5,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0049,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 64.0,
+   "decisions": 719.5,
+   "revenue_ratio_ci95": [
+    1.27,
+    1.27
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0061,
+    -0.0037
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 2
+   }
+  },
+  "PENNY|rational|mid|unit": {
+   "n": 3,
+   "revenue_ratio": 1.5233,
+   "sold": 1.0,
+   "conversion": 0.3958,
+   "gini_outlay": 0.9117,
+   "leave_rate": 0.6042,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0172,
+   "efficiency": 0.3333,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.3333,
+   "fallback_rate": 0.0,
+   "ticks": 92.3333,
+   "decisions": 1010.3333,
+   "revenue_ratio_ci95": [
+    1.44,
+    1.63
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0195,
+    -0.0147
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2,
+    "SNIPER": 1
+   }
+  },
+  "PENNY|thrill|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.68,
+   "sold": 1.0,
+   "conversion": 0.4375,
+   "gini_outlay": 0.8694,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0256,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 58.0,
+   "decisions": 928.0,
+   "revenue_ratio_ci95": [
+    1.68,
+    1.68
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0256,
+    -0.0256
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8125,
+    "determined": 0.125,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|thrill|low|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.1,
+   "sold": 1.0,
+   "conversion": 0.75,
+   "gini_outlay": 0.8552,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.017,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 1.0,
+   "fallback_rate": 0.0,
+   "ticks": 120.0,
+   "decisions": 1920.0,
+   "revenue_ratio_ci95": [
+    1.1,
+    1.1
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.017,
+    0.017
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.8125,
+    "determined": 0.125,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|thrill|low|unit": {
+   "n": 1,
+   "revenue_ratio": 1.87,
+   "sold": 1.0,
+   "conversion": 0.5625,
+   "gini_outlay": 0.8896,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0496,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 95.0,
+   "decisions": 1482.0,
+   "revenue_ratio_ci95": [
+    1.87,
+    1.87
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0496,
+    -0.0496
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.75,
+    "determined": 0.1875,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "PENNY|thrill|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.925,
+   "sold": 1.0,
+   "conversion": 0.5625,
+   "gini_outlay": 0.8612,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.065,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.5,
+   "fallback_rate": 0.0,
+   "ticks": 95.5,
+   "decisions": 1496.5,
+   "revenue_ratio_ci95": [
+    1.69,
+    2.16
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0921,
+    -0.038
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.75,
+    "determined": 0.1875,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "PENNY|thrill|mid|unit": {
+   "n": 1,
+   "revenue_ratio": 1.47,
+   "sold": 1.0,
+   "conversion": 0.4375,
+   "gini_outlay": 0.887,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0138,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 49.0,
+   "decisions": 784.0,
+   "revenue_ratio_ci95": [
+    1.47,
+    1.47
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0138,
+    -0.0138
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.875,
+    "determined": 0.0625,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "VICKREY|balanced|high|elastic": {
+   "n": 5,
+   "revenue_ratio": 1.338,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.075,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0426,
+   "efficiency": 0.6,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.264,
+    1.432
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0146,
+    0.073
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 5
+   }
+  },
+  "VICKREY|balanced|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.31,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0733,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.31,
+    1.31
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0733,
+    0.0733
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|balanced|high|unit": {
+   "n": 4,
+   "revenue_ratio": 1.42,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0469,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0397,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.3,
+    1.585
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0126,
+    0.0921
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 2,
+    "SOCIAL": 1,
+    "GAMBLER": 1
+   }
+  },
+  "VICKREY|balanced|low|elastic": {
+   "n": 5,
+   "revenue_ratio": 1.394,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0239,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.348,
+    1.45
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0012,
+    0.0507
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 3,
+    "GAMBLER": 2
+   }
+  },
+  "VICKREY|balanced|low|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.4633,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0417,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0783,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.4,
+    1.56
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0717,
+    0.0823
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 3
+   }
+  },
+  "VICKREY|balanced|low|unit": {
+   "n": 1,
+   "revenue_ratio": 1.51,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0428,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.51,
+    1.51
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0428,
+    0.0428
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|balanced|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.245,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0784,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.22,
+    1.27
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0409,
+    0.1158
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 2
+   }
+  },
+  "VICKREY|balanced|mid|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.35,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0625,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0908,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.35,
+    1.35
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0908,
+    0.0908
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|balanced|mid|unit": {
+   "n": 5,
+   "revenue_ratio": 1.35,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.075,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0714,
+   "efficiency": 0.8,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.304,
+    1.406
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.054,
+    0.0922
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 5
+   }
+  },
+  "VICKREY|bargain|high|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.12,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0119,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.06,
+    1.18
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0245,
+    0.0007
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1,
+    "GAMBLER": 1
+   }
+  },
+  "VICKREY|bargain|high|inelastic": {
+   "n": 8,
+   "revenue_ratio": 1.22,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.007,
+   "efficiency": 0.375,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.1712,
+    1.2837
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0035,
+    0.0109
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 7,
+    "SNIPER": 1
+   }
+  },
+  "VICKREY|bargain|high|unit": {
+   "n": 5,
+   "revenue_ratio": 1.206,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0052,
+   "efficiency": 0.2,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.136,
+    1.276
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0133,
+    0.0025
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 4,
+    "SNIPER": 1
+   }
+  },
+  "VICKREY|bargain|low|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.16,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0417,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0095,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.11,
+    1.23
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0027,
+    0.0192
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2,
+    "SNIPER": 1
+   }
+  },
+  "VICKREY|bargain|low|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.2167,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1042,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0061,
+   "efficiency": 0.6667,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.2,
+    1.24
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.001,
+    0.0098
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3
+   }
+  },
+  "VICKREY|bargain|low|unit": {
+   "n": 3,
+   "revenue_ratio": 1.1933,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1042,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0021,
+   "efficiency": 0.3333,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.1,
+    1.32
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0038,
+    0.0057
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2,
+    "SNIPER": 1
+   }
+  },
+  "VICKREY|bargain|mid|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.11,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.25,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0167,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.11,
+    1.11
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0167,
+    0.0167
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 1
+   }
+  },
+  "VICKREY|bargain|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.25,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0043,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.24,
+    1.26
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0034,
+    0.0052
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "VICKREY|bargain|mid|unit": {
+   "n": 3,
+   "revenue_ratio": 1.1633,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.125,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0111,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.1,
+    1.21
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0031,
+    0.0185
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3
+   }
+  },
+  "VICKREY|hobby|high|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.7,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0469,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.7,
+    1.7
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0469,
+    0.0469
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|hobby|high|inelastic": {
+   "n": 4,
+   "revenue_ratio": 1.8425,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0568,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.7325,
+    1.915
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0495,
+    0.0624
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 4
+   }
+  },
+  "VICKREY|hobby|high|unit": {
+   "n": 1,
+   "revenue_ratio": 1.76,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0778,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.76,
+    1.76
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0778,
+    0.0778
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|hobby|low|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.445,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0118,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.32,
+    1.57
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0086,
+    0.0149
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 2
+   }
+  },
+  "VICKREY|hobby|low|inelastic": {
+   "n": 4,
+   "revenue_ratio": 1.7675,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0598,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.685,
+    1.85
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.057,
+    0.0625
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 4
+   }
+  },
+  "VICKREY|hobby|low|unit": {
+   "n": 4,
+   "revenue_ratio": 1.7175,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0597,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.65,
+    1.7975
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0335,
+    0.0859
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 4
+   }
+  },
+  "VICKREY|hobby|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.81,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0635,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.67,
+    1.95
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0613,
+    0.0656
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 2
+   }
+  },
+  "VICKREY|hobby|mid|inelastic": {
+   "n": 7,
+   "revenue_ratio": 1.7514,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0695,
+   "efficiency": 0.2857,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.6243,
+    1.8586
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0602,
+    0.0788
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 7
+   }
+  },
+  "VICKREY|hobby|mid|unit": {
+   "n": 1,
+   "revenue_ratio": 1.78,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0278,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.78,
+    1.78
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0278,
+    0.0278
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "COLLECTOR": 1
+   }
+  },
+  "VICKREY|rational|high|inelastic": {
+   "n": 1,
+   "revenue_ratio": 1.19,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0102,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.19,
+    1.19
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0102,
+    0.0102
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 1
+   }
+  },
+  "VICKREY|rational|high|unit": {
+   "n": 3,
+   "revenue_ratio": 1.2533,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0833,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0074,
+   "efficiency": 0.6667,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.12,
+    1.38
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.001,
+    0.0182
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 3
+   }
+  },
+  "VICKREY|rational|low|elastic": {
+   "n": 3,
+   "revenue_ratio": 1.0467,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0417,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0064,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.01,
+    1.11
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0006,
+    0.0125
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 1,
+    "CAUTIOUS": 1,
+    "SNIPER": 1
+   }
+  },
+  "VICKREY|rational|low|inelastic": {
+   "n": 5,
+   "revenue_ratio": 1.266,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0375,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0034,
+   "efficiency": 0.6,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.22,
+    1.308
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0022,
+    0.0042
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 5
+   }
+  },
+  "VICKREY|rational|low|unit": {
+   "n": 2,
+   "revenue_ratio": 1.145,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0312,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0073,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.12,
+    1.17
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0046,
+    0.0099
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SNIPER": 1,
+    "INTERESTED": 1
+   }
+  },
+  "VICKREY|rational|mid|elastic": {
+   "n": 1,
+   "revenue_ratio": 1.16,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1875,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0058,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.16,
+    1.16
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0058,
+    0.0058
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 1
+   }
+  },
+  "VICKREY|rational|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.335,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0938,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0014,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.31,
+    1.36
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0014,
+    0.0015
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "VICKREY|rational|mid|unit": {
+   "n": 2,
+   "revenue_ratio": 1.16,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.1562,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0103,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.11,
+    1.21
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0059,
+    0.0147
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "INTERESTED": 2
+   }
+  },
+  "VICKREY|thrill|high|elastic": {
+   "n": 4,
+   "revenue_ratio": 1.375,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0076,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.345,
+    1.4175
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0144,
+    -0.0008
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 4
+   }
+  },
+  "VICKREY|thrill|high|inelastic": {
+   "n": 5,
+   "revenue_ratio": 1.476,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0124,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.37,
+    1.628
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0234,
+    -0.0054
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 5
+   }
+  },
+  "VICKREY|thrill|high|unit": {
+   "n": 5,
+   "revenue_ratio": 1.522,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0129,
+   "efficiency": 0.2,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.434,
+    1.654
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0265,
+    -0.0021
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 5
+   }
+  },
+  "VICKREY|thrill|low|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.27,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0076,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.27,
+    1.27
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0207,
+    0.0054
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "SOCIAL": 1,
+    "GAMBLER": 1
+   }
+  },
+  "VICKREY|thrill|low|inelastic": {
+   "n": 3,
+   "revenue_ratio": 1.54,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0137,
+   "efficiency": 0.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.37,
+    1.78
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0303,
+    0.0026
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3
+   }
+  },
+  "VICKREY|thrill|low|unit": {
+   "n": 4,
+   "revenue_ratio": 1.3525,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.003,
+   "efficiency": 0.25,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.2525,
+    1.465
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0109,
+    0.007
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3,
+    "INTERESTED": 1
+   }
+  },
+  "VICKREY|thrill|mid|elastic": {
+   "n": 2,
+   "revenue_ratio": 1.3,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0079,
+   "efficiency": 1.0,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.28,
+    1.32
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0069,
+    0.009
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "VICKREY|thrill|mid|inelastic": {
+   "n": 2,
+   "revenue_ratio": 1.45,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": -0.0052,
+   "efficiency": 0.5,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.37,
+    1.53
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    -0.0136,
+    0.0031
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 2
+   }
+  },
+  "VICKREY|thrill|mid|unit": {
+   "n": 4,
+   "revenue_ratio": 1.285,
+   "sold": 1.0,
+   "conversion": 0.0625,
+   "gini_outlay": 0.9375,
+   "leave_rate": 0.0,
+   "emotion_mean": 0.0625,
+   "bidder_welfare": 0.0059,
+   "efficiency": 0.75,
+   "winner_over_budget": 0.0,
+   "hit_max_ticks": 0.0,
+   "fallback_rate": 0.0,
+   "ticks": 1.0,
+   "decisions": 16.0,
+   "revenue_ratio_ci95": [
+    1.255,
+    1.315
+   ],
+   "emotion_mean_ci95": [
+    0.0625,
+    0.0625
+   ],
+   "bidder_welfare_ci95": [
+    0.0023,
+    0.0089
+   ],
+   "emotion_share": {
+    "satisfied": 0.0625,
+    "calm": 0.9375,
+    "determined": 0.0,
+    "frustrated": 0.0,
+    "panicked": 0.0
+   },
+   "wins_by_role": {
+    "GAMBLER": 3,
+    "SOCIAL": 1
+   }
+  }
+ },
+ "throughput": {
+  "decisions": 73165,
+  "prompt_tokens": 52209395,
+  "completion_tokens": 3757682,
+  "fallback_rate": 0.0
+ }
+}

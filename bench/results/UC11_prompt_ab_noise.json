@@ -1,0 +1,49 @@
+{
+ "runs_paired": 180,
+ "by_format": {
+  "DUTCH": {
+   "n": 90,
+   "revenue_ratio_long": 1.4959,
+   "revenue_ratio_compact": 1.4906,
+   "diff_compact_minus_long": -0.0053,
+   "diff_ci95": [
+    -0.0221,
+    0.0114
+   ],
+   "corr": 0.943,
+   "winner_role_agreement": 0.8,
+   "leave_rate_long": 0.3236,
+   "leave_rate_compact": 0.3243,
+   "ticks_long": 4.9,
+   "ticks_compact": 5.04
+  },
+  "VICKREY": {
+   "n": 90,
+   "revenue_ratio_long": 1.4119,
+   "revenue_ratio_compact": 1.4273,
+   "diff_compact_minus_long": 0.0154,
+   "diff_ci95": [
+    0.001,
+    0.0348
+   ],
+   "corr": 0.9458,
+   "winner_role_agreement": 0.9778,
+   "leave_rate_long": 0.0444,
+   "leave_rate_compact": 0.0479,
+   "ticks_long": 1.0,
+   "ticks_compact": 1.0
+  }
+ },
+ "long": {
+  "completion_tokens_per_decision": 123.1,
+  "prompt_tokens_per_decision": 633.1,
+  "fallback_rate": 0.0005,
+  "mean_latency_ms": 23710
+ },
+ "compact": {
+  "completion_tokens_per_decision": 123.2,
+  "prompt_tokens_per_decision": 633.7,
+  "fallback_rate": 0.0002,
+  "mean_latency_ms": 23417
+ }
+}

@@ -1,0 +1,62 @@
+# UC11 — Aukrofy: experimentální grid (design-of-experiments nad AukrofySimulation).
+#
+# Buňka = formát × populace × zboží (hodnota × elasticita). Parametry formátu se NEfixují na
+# pár úrovní, ale per běh se losují z rozsahů (Latin hypercube uvnitř buňky) → surrogate
+# a Sobolova analýza vidí spojitý prostor parametrů, a buňka má `replicates` opakování
+# pro 95% intervaly výnosu „formát × populace × zboží“ (marginalizováno přes parametry).
+#
+# 3 formáty × 5 populací × 9 zboží = 135 buněk × replicates.
+# Všechny ceny jsou relativní k retail ceně zboží (srovnatelnost napříč hodnotou).
+
+seed: 20261027
+n_bidders: 16
+replicates: 15            # 135 × 15 = 2025 běhů
+
+goods:
+  value:                  # retail cena v Kč (LLM vidí absolutní čísla → test „cenové kotvy“)
+    low:  500
+    mid:  5000
+    high: 50000
+  elasticity:             # jak moc valuace kupujících citlivě reagují/rozptylují se kolem retail
+    inelastic: {level: 1.10, spread: 0.10}   # „musím mít“: valuace vysoko a těsně
+    unit:      {level: 1.00, spread: 0.25}
+    elastic:   {level: 0.85, spread: 0.45}   # „když bude levně“: nízko a široce
+  budget_mult: [1.0, 2.0] # budget = retail × U(a, b)
+
+# 7 rolí (bidder.Role) v 5 poměrech; podíly se převedou na počty largest-remainder metodou.
+populations:
+  balanced:   {GAMBLER: 1, CAUTIOUS: 1, INTERESTED: 1, RESELLER: 1, COLLECTOR: 1, SNIPER: 1, SOCIAL: 1}
+  rational:   {CAUTIOUS: 30, RESELLER: 25, SNIPER: 25, INTERESTED: 20}
+  hobby:      {COLLECTOR: 35, INTERESTED: 30, SOCIAL: 20, CAUTIOUS: 15}
+  thrill:     {GAMBLER: 40, SOCIAL: 25, INTERESTED: 20, SNIPER: 15}
+  bargain:    {RESELLER: 35, SNIPER: 30, CAUTIOUS: 25, GAMBLER: 10}
+
+# valuace role = retail × role_mult × elasticity.level × U(1−spread, 1+spread)
+# (role_mult = bidder.DefaultValuationMult v engine)
+role_valuation_mult: {GAMBLER: 1.2, CAUTIOUS: 0.9, INTERESTED: 1.15, RESELLER: 0.65, COLLECTOR: 2.5, SNIPER: 1.0, SOCIAL: 1.1}
+
+platform_fee_pct: 5.0
+# feature flag enginu (AuctionParams.EnforceBudget): vítěz nezaplatí víc než má. Bez něj Vickrey
+# i Penny strhnou cenu bez kontroly rozpočtu a výnos je nadhodnocený (sběratelé s valuací 2,5×).
+enforce_budget: true
+
+formats:
+  DUTCH:
+    start_mult: [1.4, 2.0]        # startovní cena / retail
+    step_pct: [2.0, 10.0]         # krok poklesu v % retail za tick
+    reserve_mult: 0.3             # pod tímhle nesold
+    tick_s: [1, 5]                # „čas“ kroku (agent ho vidí v promptu)
+    max_ticks: 120
+  VICKREY:
+    reserve_mult: [0.0, 0.9]      # rezervní cena / retail
+    window_s: 60
+  PENNY:
+    bid_fee_pct: [0.1, 1.5]       # bid fee v % retail (nevratný)
+    increment_pct: [0.5, 3.0]     # zvýšení ceny po bidu v % retail
+    timer_s: [3, 12]              # reset timeru po bidu (ticky po 1 s)
+    tick_s: 1
+    max_ticks: 120                # tvrdý strop (náklad simulace); zásahy stropu se reportují
+
+# Podmnožina pro rychlý throughput test / dry-run (scripts: --subset smoke).
+subsets:
+  smoke: {replicates: 1, populations: [balanced, thrill], value: [mid], elasticity: [unit]}

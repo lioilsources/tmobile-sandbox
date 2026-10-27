@@ -1,0 +1,67 @@
+{
+ "model": "qwen3-30b-a3b",
+ "features": [
+  "fmt_dutch",
+  "fmt_vickrey",
+  "fmt_penny",
+  "share_gambler",
+  "share_cautious",
+  "share_interested",
+  "share_reseller",
+  "share_collector",
+  "share_sniper",
+  "share_social",
+  "log10_retail",
+  "elasticity_level",
+  "elasticity_spread",
+  "p_start_mult",
+  "p_step_pct",
+  "p_tick_s",
+  "p_reserve_mult",
+  "p_bid_fee_pct",
+  "p_increment_pct",
+  "p_timer_s"
+ ],
+ "targets": {
+  "revenue_ratio": {
+   "cv_r2": 0.3559,
+   "cv_mae": 0.1547,
+   "cv": "GroupKFold(5) po buňkách"
+  },
+  "bidder_welfare": {
+   "cv_r2": 0.465,
+   "cv_mae": 0.0189,
+   "cv": "GroupKFold(5) po buňkách"
+  },
+  "sold": {
+   "cv_r2": null,
+   "cv_mae": 0.0,
+   "cv": "GroupKFold(5) po buňkách"
+  }
+ },
+ "importance_revenue": {
+  "p_bid_fee_pct": 0.1689,
+  "p_increment_pct": 0.1204,
+  "p_start_mult": 0.0966,
+  "p_timer_s": 0.0965,
+  "share_sniper": 0.0764,
+  "p_reserve_mult": 0.0663,
+  "share_reseller": 0.0599,
+  "p_step_pct": 0.0578,
+  "share_cautious": 0.0482,
+  "share_social": 0.0414,
+  "p_tick_s": 0.0388,
+  "log10_retail": 0.0297,
+  "share_interested": 0.0219,
+  "share_collector": 0.0195,
+  "share_gambler": 0.0185,
+  "fmt_vickrey": 0.0158,
+  "elasticity_spread": 0.0136,
+  "elasticity_level": 0.0098,
+  "fmt_dutch": 0.0,
+  "fmt_penny": 0.0
+ },
+ "gbr": "sklearn GradientBoostingRegressor(n_estimators=300, max_depth=3, lr=0.05, subsample=0.8)",
+ "export_max_abs_diff": 6.431642061155429e-07,
+ "model_json_bytes": 433886
+}

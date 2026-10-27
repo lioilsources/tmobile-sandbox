@@ -1,0 +1,170 @@
+{
+ "phases": {
+  "grid30b_core": {
+   "vllm": {
+    "samples": 300,
+    "span_s": 2999,
+    "running_avg": 246.3,
+    "running_p50": 247.0,
+    "share_saturated_ge_240": 0.983,
+    "kv_usage_avg": 0.731,
+    "gen_tok_per_s": 1834,
+    "prompt_tok_per_s": 25570,
+    "preemptions": 0.0,
+    "note": "vLLM počítadla jsou globální (zahrnují případné jiné klienty téhož serveru)"
+   }
+  }
+ },
+ "totals": {
+  "runs": 313,
+  "decisions": 73165,
+  "prompt_tokens": 52209395,
+  "completion_tokens": 3757682,
+  "decisions_per_run": 233.8,
+  "by_format": {
+   "VICKREY": {
+    "runs": 133,
+    "decisions": 2128,
+    "prompt_tokens": 1305918,
+    "completion_tokens": 114820,
+    "wall_s": 3049.9437723659994,
+    "decisions_per_run": 16,
+    "tokens_per_run": 10682,
+    "wall_s_per_run": 22.9,
+    "api_kc_per_run": 0.046
+   },
+   "DUTCH": {
+    "runs": 118,
+    "decisions": 5335,
+    "prompt_tokens": 3439001,
+    "completion_tokens": 268565,
+    "wall_s": 12332.415533744,
+    "decisions_per_run": 45,
+    "tokens_per_run": 31420,
+    "wall_s_per_run": 104.5,
+    "api_kc_per_run": 0.132
+   },
+   "PENNY": {
+    "runs": 62,
+    "decisions": 65702,
+    "prompt_tokens": 47464476,
+    "completion_tokens": 3374297,
+    "wall_s": 119647.17285394999,
+    "decisions_per_run": 1060,
+    "tokens_per_run": 819980,
+    "wall_s_per_run": 1929.8,
+    "api_kc_per_run": 3.392
+   }
+  },
+  "interim": true,
+  "sims_per_h": 375.7,
+  "elapsed_h": 0.83,
+  "decisions_per_s": 24.4
+ },
+ "cost": {
+  "kc_per_h_vm": 55.0,
+  "kc_per_sim_l40s": 0.146,
+  "kc_per_sim_api": 0.741,
+  "api_assumption": "0.15 USD/1M in, 0.6 USD/1M out, 23.0 Kč/USD (třída malého komerčního modelu; ověřit aktuální ceník)"
+ },
+ "extra": {
+  "ab_prompt_compare": {
+   "runs_paired": 180,
+   "by_format": {
+    "DUTCH": {
+     "n": 90,
+     "revenue_ratio_long": 1.4959,
+     "revenue_ratio_compact": 1.4749,
+     "diff_compact_minus_long": -0.021,
+     "diff_ci95": [
+      -0.0443,
+      0.0011
+     ],
+     "corr": 0.8776,
+     "winner_role_agreement": 0.7111,
+     "leave_rate_long": 0.3236,
+     "leave_rate_compact": 0.3563,
+     "ticks_long": 4.9,
+     "ticks_compact": 5.21
+    },
+    "VICKREY": {
+     "n": 90,
+     "revenue_ratio_long": 1.4119,
+     "revenue_ratio_compact": 1.3737,
+     "diff_compact_minus_long": -0.0382,
+     "diff_ci95": [
+      -0.0562,
+      -0.0229
+     ],
+     "corr": 0.9384,
+     "winner_role_agreement": 0.9333,
+     "leave_rate_long": 0.0444,
+     "leave_rate_compact": 0.0507,
+     "ticks_long": 1.0,
+     "ticks_compact": 1.0
+    }
+   },
+   "long": {
+    "completion_tokens_per_decision": 123.1,
+    "prompt_tokens_per_decision": 633.1,
+    "fallback_rate": 0.0005,
+    "mean_latency_ms": 23710
+   },
+   "compact": {
+    "completion_tokens_per_decision": 50.9,
+    "prompt_tokens_per_decision": 637.2,
+    "fallback_rate": 0.0,
+    "mean_latency_ms": 14989
+   }
+  },
+  "ab_prompt_noise": {
+   "runs_paired": 180,
+   "by_format": {
+    "DUTCH": {
+     "n": 90,
+     "revenue_ratio_long": 1.4959,
+     "revenue_ratio_compact": 1.4906,
+     "diff_compact_minus_long": -0.0053,
+     "diff_ci95": [
+      -0.0221,
+      0.0114
+     ],
+     "corr": 0.943,
+     "winner_role_agreement": 0.8,
+     "leave_rate_long": 0.3236,
+     "leave_rate_compact": 0.3243,
+     "ticks_long": 4.9,
+     "ticks_compact": 5.04
+    },
+    "VICKREY": {
+     "n": 90,
+     "revenue_ratio_long": 1.4119,
+     "revenue_ratio_compact": 1.4273,
+     "diff_compact_minus_long": 0.0154,
+     "diff_ci95": [
+      0.001,
+      0.0348
+     ],
+     "corr": 0.9458,
+     "winner_role_agreement": 0.9778,
+     "leave_rate_long": 0.0444,
+     "leave_rate_compact": 0.0479,
+     "ticks_long": 1.0,
+     "ticks_compact": 1.0
+    }
+   },
+   "long": {
+    "completion_tokens_per_decision": 123.1,
+    "prompt_tokens_per_decision": 633.1,
+    "fallback_rate": 0.0005,
+    "mean_latency_ms": 23710
+   },
+   "compact": {
+    "completion_tokens_per_decision": 123.2,
+    "prompt_tokens_per_decision": 633.7,
+    "fallback_rate": 0.0002,
+    "mean_latency_ms": 23417
+   }
+  }
+ }
+}
