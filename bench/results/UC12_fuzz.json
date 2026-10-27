@@ -1,0 +1,69 @@
+{
+ "uc": "UC12",
+ "what": "Dart engine (OrbitronTactics tools/engine_cli.dart) vs JAX port uc12/orbitron_py",
+ "games": 120000,
+ "plies": 16486824,
+ "positions_compared": 16606824,
+ "legal_moves_compared": 719384069,
+ "differences": 0,
+ "by_mode": {
+  "start": {
+   "positions": 16431425,
+   "plies": 16331425,
+   "legal_moves": 713396639,
+   "max_legal": 92,
+   "captures": 1719832,
+   "attacker_won": 1071270,
+   "defender_won": 648562,
+   "last_warrior_made": 63268,
+   "end_victory": 93282,
+   "end_cap": 6718,
+   "end_noMoves": 0,
+   "victory_powerFields": 93,
+   "victory_royalElimination": 73066,
+   "victory_infiltration": 20123,
+   "games": 100000
+  },
+  "random": {
+   "positions": 175399,
+   "plies": 155399,
+   "legal_moves": 5987430,
+   "max_legal": 94,
+   "captures": 17133,
+   "attacker_won": 10733,
+   "defender_won": 6400,
+   "last_warrior_made": 580,
+   "end_victory": 19916,
+   "end_cap": 10,
+   "end_noMoves": 74,
+   "victory_powerFields": 206,
+   "victory_royalElimination": 8732,
+   "victory_infiltration": 10978,
+   "games": 20000
+  }
+ },
+ "interactive": {
+  "games": 500,
+  "plies": 86353,
+  "diffs": []
+ },
+ "odds": {
+  "tables": 20000,
+  "pairs": 720000,
+  "max_abs_diff": 0.0,
+  "tables_over_1e-12": 0
+ },
+ "diff_samples": [],
+ "action_space": {
+  "squares": 64,
+  "displacements": 40,
+  "actions": 2560
+ },
+ "seconds": 1492.2,
+ "jax": "0.12.0.1",
+ "backend": "cpu",
+ "orbitron_commit": "79e809e (v\u011btev l40s-w2/uc12, lok\u00e1ln\u011b, nepushnuto)",
+ "sensitivity_check": "mutace portu (dosah st\u0159elce po diagon\u00e1le 3\u21924) dala 116 rozd\u00edl\u016f ze 120 parti\u00ed \u2014 test chyby skute\u010dn\u011b zachyt\u00ed",
+ "max_legal_moves_observed": 94,
+ "host": "Mac (8 jader), Dart AOT exe + JAX CPU"
+}
