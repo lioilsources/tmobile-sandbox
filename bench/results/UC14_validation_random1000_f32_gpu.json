@@ -1,0 +1,55 @@
+{
+ "n": 1000,
+ "tol": 0.0001,
+ "dtype": "float32",
+ "godot_seconds": null,
+ "serve_fma_True": {
+  "max_abs_diff": 9.5367431640625e-07,
+  "bitwise_equal_frac": 0.157
+ },
+ "serve_fma_False": {
+  "max_abs_diff": 0.0,
+  "bitwise_equal_frac": 1.0
+ },
+ "serve_rng_fma": false,
+ "ideal_tick_equal_frac": 1.0,
+ "jax_seconds_incl_compile": 0.619605541229248,
+ "outcome_equal_frac": 1.0,
+ "flight_tick_count_equal_frac": 1.0,
+ "kick_state_pos_diff": {
+  "n": 1000,
+  "max": 1.7285346984863281e-06,
+  "p99": 7.757544517517082e-07,
+  "median": 0.0,
+  "within_tol_frac": 1.0
+ },
+ "launch_vel_omega_diff": {
+  "n": 985,
+  "max": 1.52587890625e-05,
+  "p99": 7.62939453125e-06,
+  "median": 9.5367431640625e-07,
+  "within_tol_frac": 1.0
+ },
+ "trajectory_pos_diff": {
+  "n": 985,
+  "max": 1.52587890625e-05,
+  "p99": 7.62939453125e-06,
+  "median": 9.5367431640625e-07,
+  "within_tol_frac": 1.0
+ },
+ "goal_plane_cross_diff": {
+  "n": 162,
+  "max": 9.646855049449954e-06,
+  "p99": 7.801499967778902e-06,
+  "median": 5.022525177422743e-07,
+  "within_tol_frac": 1.0
+ },
+ "outcomes_godot": {
+  "GOAL": 43,
+  "WIDE": 119,
+  "SHORT": 823,
+  "WHIFF": 15,
+  "LATE": 0
+ },
+ "mismatches": []
+}

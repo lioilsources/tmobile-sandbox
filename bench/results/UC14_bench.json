@@ -1,0 +1,51 @@
+{
+ "device": "cuda:0",
+ "dtype": "float32",
+ "runs": [
+  {
+   "batch": 16384,
+   "compile_s": 2.8,
+   "best_s": 0.3515,
+   "kicks_per_s": 46612.57663018079,
+   "mean_flight_ticks": 221.08587646484375,
+   "max_flight_ticks": 1052,
+   "outcomes": {
+    "GOAL": 1650,
+    "WIDE": 5737,
+    "SHORT": 8997,
+    "WHIFF": 0,
+    "LATE": 0
+   }
+  },
+  {
+   "batch": 131072,
+   "compile_s": 2.541,
+   "best_s": 0.3901,
+   "kicks_per_s": 335994.8697612705,
+   "mean_flight_ticks": 221.17754364013672,
+   "max_flight_ticks": 1065,
+   "outcomes": {
+    "GOAL": 12642,
+    "WIDE": 45677,
+    "SHORT": 72753,
+    "WHIFF": 0,
+    "LATE": 0
+   }
+  },
+  {
+   "batch": 1048576,
+   "compile_s": 3.052,
+   "best_s": 0.7143,
+   "kicks_per_s": 1468076.6833647776,
+   "mean_flight_ticks": 221.04933166503906,
+   "max_flight_ticks": 1080,
+   "outcomes": {
+    "GOAL": 101724,
+    "WIDE": 365314,
+    "SHORT": 581538,
+    "WHIFF": 0,
+    "LATE": 0
+   }
+  }
+ ]
+}

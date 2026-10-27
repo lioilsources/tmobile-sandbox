@@ -1,0 +1,194 @@
+{
+ "SIMPLIFICATION": "\u0161umov\u00fd pl\u00e1nova\u010d s odhadnut\u00fdm lidsk\u00fdm \u0161umem m\u00edsto nau\u010den\u00e9 PPO policy; \u0161um nen\u00ed z re\u00e1ln\u00fdch swipe log\u016f",
+ "skills": {
+  "beginner": {
+   "st": 0.06,
+   "sxy": 0.15,
+   "sp": 0.15
+  },
+  "advanced": {
+   "st": 0.025,
+   "sxy": 0.07,
+   "sp": 0.08
+  }
+ },
+ "targets": {
+  "beginner": 0.3,
+  "advanced": 0.6
+ },
+ "search_space": {
+  "TIMING_SIGMA": [
+   0.03,
+   0.12
+  ],
+  "SWING_LIFT": [
+   0.0,
+   0.8
+  ],
+  "RATING_PERFECT": [
+   0.02,
+   0.045
+  ],
+  "RATING_GOOD": [
+   0.05,
+   0.1
+  ],
+  "GOAL_DISTANCE": [
+   14.0,
+   22.0
+  ]
+ },
+ "trials": 80,
+ "serves_per_trial": 300,
+ "seconds_per_trial": 1.9011811137199401,
+ "baseline": {
+  "oracle_lite": 1.0,
+  "beginner": 0.21729166666666666,
+  "beginner_p_goal_given_GOOD": 0.12287334593572778,
+  "beginner_n_GOOD": 3703,
+  "advanced": 0.7434375,
+  "advanced_p_goal_given_GOOD": 0.31305114638447973,
+  "advanced_n_GOOD": 2268,
+  "p_goal_given_GOOD": 0.21796224616010376,
+  "loss": 0.1069602794000817
+ },
+ "baseline_confirm": {
+  "oracle_lite": 1.0,
+  "beginner": 0.2207638888888889,
+  "beginner_p_goal_given_GOOD": 0.11449095423909188,
+  "beginner_n_GOOD": 11276,
+  "advanced": 0.7389236111111112,
+  "advanced_p_goal_given_GOOD": 0.30320741268709905,
+  "advanced_n_GOOD": 7015,
+  "p_goal_given_GOOD": 0.20884918346309547,
+  "loss": 0.11034692899826985
+ },
+ "best_params": {
+  "TIMING_SIGMA": 0.07413847653766334,
+  "SWING_LIFT": 0.7933662790358338,
+  "RATING_PERFECT": 0.02181569626972938,
+  "RATING_GOOD": 0.05725718657303614,
+  "GOAL_DISTANCE": 21.484960437980916
+ },
+ "best_trial": {
+  "oracle_lite": 1.0,
+  "beginner": 0.23635416666666667,
+  "beginner_p_goal_given_GOOD": 0.3101758431824733,
+  "beginner_n_GOOD": 3469,
+  "advanced": 0.7498958333333333,
+  "advanced_p_goal_given_GOOD": 0.6442414174972314,
+  "advanced_n_GOOD": 3612,
+  "p_goal_given_GOOD": 0.4772086303398524,
+  "loss": 0.027038999482374388
+ },
+ "best_confirm": {
+  "oracle_lite": 1.0,
+  "beginner": 0.23173611111111111,
+  "beginner_p_goal_given_GOOD": 0.3010446343779677,
+  "beginner_n_GOOD": 10530,
+  "advanced": 0.7538888888888889,
+  "advanced_p_goal_given_GOOD": 0.6416825656400472,
+  "advanced_n_GOOD": 11007,
+  "p_goal_given_GOOD": 0.47136360000900746,
+  "loss": 0.029161792054135494
+ },
+ "tuning_gd_diff": [
+  "-const TIMING_SIGMA := 0.045\n+const TIMING_SIGMA := 0.0741",
+  "-const SWING_LIFT := 0.3\n+const SWING_LIFT := 0.7934",
+  "-const RATING_PERFECT := 0.03\n+const RATING_PERFECT := 0.0218",
+  "-const RATING_GOOD := 0.07\n+const RATING_GOOD := 0.0573",
+  "-const GOAL_DISTANCE := 18.0\n+const GOAL_DISTANCE := 21.485"
+ ],
+ "top5": [
+  {
+   "params": {
+    "TIMING_SIGMA": 0.07413847653766334,
+    "SWING_LIFT": 0.7933662790358338,
+    "RATING_PERFECT": 0.02181569626972938,
+    "RATING_GOOD": 0.05725718657303614,
+    "GOAL_DISTANCE": 21.484960437980916
+   },
+   "loss": 0.027038999482374388,
+   "oracle_lite": 1.0,
+   "beginner": 0.23635416666666667,
+   "beginner_p_goal_given_GOOD": 0.3101758431824733,
+   "beginner_n_GOOD": 3469,
+   "advanced": 0.7498958333333333,
+   "advanced_p_goal_given_GOOD": 0.6442414174972314,
+   "advanced_n_GOOD": 3612,
+   "p_goal_given_GOOD": 0.4772086303398524
+  },
+  {
+   "params": {
+    "TIMING_SIGMA": 0.07466966609317748,
+    "SWING_LIFT": 0.7895432599670786,
+    "RATING_PERFECT": 0.02094019469935729,
+    "RATING_GOOD": 0.05822296431600088,
+    "GOAL_DISTANCE": 21.71915772466338
+   },
+   "loss": 0.02730073064738695,
+   "oracle_lite": 1.0,
+   "beginner": 0.23208333333333334,
+   "beginner_p_goal_given_GOOD": 0.29869020501138954,
+   "beginner_n_GOOD": 3512,
+   "advanced": 0.7476041666666666,
+   "advanced_p_goal_given_GOOD": 0.6412742382271468,
+   "advanced_n_GOOD": 3610,
+   "p_goal_given_GOOD": 0.46998222161926817
+  },
+  {
+   "params": {
+    "TIMING_SIGMA": 0.05925502949648336,
+    "SWING_LIFT": 0.759920870537836,
+    "RATING_PERFECT": 0.020534025270823174,
+    "RATING_GOOD": 0.055474183954202,
+    "GOAL_DISTANCE": 21.51050993594722
+   },
+   "loss": 0.027612614472168548,
+   "oracle_lite": 1.0,
+   "beginner": 0.19916666666666666,
+   "beginner_p_goal_given_GOOD": 0.25655644241733183,
+   "beginner_n_GOOD": 3508,
+   "advanced": 0.6934375,
+   "advanced_p_goal_given_GOOD": 0.5567385822359204,
+   "advanced_n_GOOD": 3569,
+   "p_goal_given_GOOD": 0.4066475123266261
+  },
+  {
+   "params": {
+    "TIMING_SIGMA": 0.06917235389257671,
+    "SWING_LIFT": 0.7832320061599789,
+    "RATING_PERFECT": 0.023013523372711817,
+    "RATING_GOOD": 0.05445844163622908,
+    "GOAL_DISTANCE": 21.309937678668486
+   },
+   "loss": 0.02949307653329567,
+   "oracle_lite": 1.0,
+   "beginner": 0.23114583333333333,
+   "beginner_p_goal_given_GOOD": 0.30355594102341715,
+   "beginner_n_GOOD": 3459,
+   "advanced": 0.7552083333333334,
+   "advanced_p_goal_given_GOOD": 0.6449638286032277,
+   "advanced_n_GOOD": 3594,
+   "p_goal_given_GOOD": 0.4742598848133224
+  },
+  {
+   "params": {
+    "TIMING_SIGMA": 0.0663177372720284,
+    "SWING_LIFT": 0.7314886284717674,
+    "RATING_PERFECT": 0.023573327226677408,
+    "RATING_GOOD": 0.05312745803491816,
+    "GOAL_DISTANCE": 21.95454191535605
+   },
+   "loss": 0.02953724493648054,
+   "oracle_lite": 1.0,
+   "beginner": 0.21458333333333332,
+   "beginner_p_goal_given_GOOD": 0.266590714896041,
+   "beginner_n_GOOD": 3511,
+   "advanced": 0.7338541666666667,
+   "advanced_p_goal_given_GOOD": 0.6018904642757854,
+   "advanced_n_GOOD": 3597,
+   "p_goal_given_GOOD": 0.4342405895859132
+  }
+ ]
+}
