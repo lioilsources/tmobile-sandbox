@@ -3,6 +3,7 @@
 #   core  = LLM pro vLLM + Whisper + ComfyUI (FLUX-schnell, Qwen-Image, Wan T2V, SDXL, ACE-Step)
 #   extra = Wan2.2 I2V (+29 GB) — jen když je místo
 #   uc1   = OCR enginy pro UC1 (~85 GB)
+#   w2img = druhá vlna, SDXL rodiny + FLUX.1-dev FP8 pro UC18/19 (~52 GB; FLUX.1-dev má nekomerční licenci → jen interní měření)
 #   w2    = druhá vlna: coder pro UC15, malé Qwen3 pro UC16/19, WD14 tagger (~43 GB)
 # Disk VM je 300 GB (z toho ~50 GB docker image v /var/lib/containerd) (ne 1 TB z plánu) → LLM ve FP8, Comfy jen repackaged fp8 soubory, ne celá repa.
 set -euo pipefail
@@ -62,6 +63,13 @@ elif [ "$TIER" = w2 ]; then   # Prompts/04 §0.1 — Devstral, GLM, SDXL checkpo
   llm Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8  33
   llm Qwen/Qwen3-8B-FP8                      10
   llm SmilingWolf/wd-swinv2-tagger-v3         1
+elif [ "$TIER" = w2img ]; then   # Prompts/04 §0.1 #23
+  comfy LyliaEngine/Pony_Diffusion_V6_XL  checkpoints ponyDiffusionV6XL_v6StartWithThisOne.safetensors 7
+  comfy OnomaAIResearch/Illustrious-XL-v1.0 checkpoints Illustrious-XL-v1.0.safetensors 7
+  comfy Laxhar/noobai-XL-1.1              checkpoints NoobAI-XL-v1.1.safetensors 7
+  comfy cagliostrolab/animagine-xl-4.0    checkpoints animagine-xl-4.0.safetensors 7
+  comfy RunDiffusion/Juggernaut-XL-v9     checkpoints Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors 8
+  comfy Comfy-Org/Flux-1-Dev              checkpoints flux1-dev-fp8.safetensors 18
 elif [ "$TIER" = extra ]; then
   W=split_files
   comfy Comfy-Org/Wan_2.2_ComfyUI_Repackaged diffusion_models $W/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors 15
