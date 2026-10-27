@@ -1,0 +1,32 @@
+{
+ "id": "aukrofy-01",
+ "repo": "lioilsources/AukrofySimulation",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "e2b933253b9dfe66fa25dce7f8d7366e8fda15dc",
+ "gold_commit": "931de9c130b640f1d02d58cd988c9f9e4eb859e7",
+ "workdir": ".",
+ "test_files": [
+  "internal/auction/engine_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/auction",
+ "fail_to_pass": [
+  "TestPennyCountdownExtensionOnlyInTriggerZone"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+63/-24 in 6 files",
+ "prod_files": [
+  "cmd/engine/main.go",
+  "internal/api/handlers.go",
+  "internal/api/server.go",
+  "internal/auction/penny.go",
+  "internal/reporter/metrics.go",
+  "internal/store/store.go"
+ ],
+ "source": "Oprava startup bugu, persistence přes restart a deployment balíček"
+}

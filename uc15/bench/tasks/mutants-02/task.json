@@ -1,0 +1,46 @@
+{
+ "id": "mutants-02",
+ "repo": "lioilsources/Mutants",
+ "lang": "dart",
+ "kind": "reverse-commit",
+ "base_commit": "c9d8ffa6207a90d1267126a2e57a5588011eb4bb",
+ "gold_commit": "d186c4e9be94ab2ec92315253074b430a7dcd829",
+ "workdir": "mutant_core",
+ "test_files": [
+  "mutant_core/test/dealing_test.dart",
+  "mutant_core/test/hazard_test.dart",
+  "mutant_core/test/rarity_test.dart",
+  "mutant_core/test/sim_test.dart",
+  "mutant_core/test/synchro_pass_test.dart",
+  "mutant_core/test/support.dart"
+ ],
+ "setup_cmd": "dart pub get",
+ "test_cmd": "dart test",
+ "fail_to_pass": [
+  "the pot deals one card per interval to the player with the fewest cards",
+  "no refill after a throw when dealing is on",
+  "full hand: the pot swaps back the oldest card that does not fit",
+  "a full hand of fitting cards is left alone",
+  "hazards surface while the pot deals",
+  "dealing keeps its rhythm across a hatch",
+  "chaos step is configurable",
+  "harmony: +2 when all parts share one element",
+  "v1: passer refills their hand"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "hard",
+ "diff_stats": "+237/-88 in 7 files",
+ "prod_files": [
+  "mutant_core/bin/sim.dart",
+  "mutant_core/lib/src/engine/creature_builder.dart",
+  "mutant_core/lib/src/engine/engine.dart",
+  "mutant_core/lib/src/engine/events.dart",
+  "mutant_core/lib/src/model/config.dart",
+  "mutant_core/lib/src/model/game_state.dart",
+  "mutant_core/lib/src/rules/rarity.dart"
+ ],
+ "source": "Pace the build with timed pot dealing; calibrate drain and chaos"
+}

@@ -1,0 +1,32 @@
+{
+ "id": "wlp-01",
+ "repo": "lioilsources/WorldLibraryProject",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "c28588bef28edd5f84bb69ea24967229b36fdc33",
+ "gold_commit": "429357008951d6c7a50821020ec0e89db27dc4d9",
+ "workdir": "rag",
+ "test_files": [
+  "rag/tests/test_chapter_budget.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_chapter_budget.py",
+ "fail_to_pass": [
+  "test_odhad_je_pro_puvodni_pismo_pesimisticky",
+  "test_fit_a_fit_list_drzi_rozpocet",
+  "test_okna_se_vejdou_i_s_prerostlym_chunkem",
+  "test_chyba_kontextu_se_pozna",
+  "test_chyba_kontextu_neni_vypadek_polozka_padne_a_jede_se_dal"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+108/-14 in 2 files",
+ "prod_files": [
+  "rag/enrich_chapters.py",
+  "rag/llm_batch.py"
+ ],
+ "source": "fix(enrich): kapitola přes kontext modelu už neuspí celou noc"
+}

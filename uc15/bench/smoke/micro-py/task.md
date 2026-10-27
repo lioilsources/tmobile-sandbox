@@ -1,0 +1,1 @@
+Fix `median` in `stats.py`: for an even number of values it must return the mean of the two middle values (e.g. `median([4, 1, 3, 2]) == 2.5`), and for an empty list it must raise `ValueError`. Test command: `python -m pytest -q`.

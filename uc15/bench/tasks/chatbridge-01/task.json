@@ -1,0 +1,36 @@
+{
+ "id": "chatbridge-01",
+ "repo": "lioilsources/chatbridge",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "47b070ba86e482f9e9a4b80772034820d8beb3ac",
+ "gold_commit": "8ed2a3c469597f6ae15ce37ad4301d3c30baa594",
+ "workdir": ".",
+ "test_files": [
+  "internal/rules/limiter_test.go",
+  "internal/rules/parser_test.go",
+  "internal/twitch/client_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/rules ./internal/twitch",
+ "fail_to_pass": [
+  "TestUserCooldown",
+  "TestGlobalBudgetAndRefill",
+  "TestEntityCapAndExpiry",
+  "TestParse",
+  "TestHashUser"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+232/-3 in 4 files",
+ "prod_files": [
+  "cmd/chatbridge/main.go",
+  "internal/rules/catalog.go",
+  "internal/rules/limiter.go",
+  "internal/rules/parser.go"
+ ],
+ "source": "Phase 2: parser, action catalog and rate limits"
+}

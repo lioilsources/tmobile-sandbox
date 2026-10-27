@@ -1,0 +1,35 @@
+{
+ "id": "mutants-01",
+ "repo": "lioilsources/Mutants",
+ "lang": "dart",
+ "kind": "reverse-commit",
+ "base_commit": "d186c4e9be94ab2ec92315253074b430a7dcd829",
+ "gold_commit": "6509fc212b74c00c5ceacb131e07049e516862b9",
+ "workdir": "mutant_core",
+ "test_files": [
+  "mutant_core/test/mutation_bonus_test.dart"
+ ],
+ "setup_cmd": "dart pub get",
+ "test_cmd": "dart test",
+ "fail_to_pass": [
+  "a mutation into an empty slot is just a part",
+  "a mutation that replaces a part earns +1",
+  "several overwrites still give +1 once",
+  "v1: any mutation earns +1",
+  "defaults use the overwrite rule, v1 keeps the plan"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+48/-9 in 5 files",
+ "prod_files": [
+  "mutant_core/bin/sim.dart",
+  "mutant_core/lib/src/engine/creature_builder.dart",
+  "mutant_core/lib/src/engine/engine.dart",
+  "mutant_core/lib/src/model/config.dart",
+  "mutant_core/lib/src/model/game_state.dart"
+ ],
+ "source": "Rarity: mutation bonus only when a mutation overwrites a slot"
+}

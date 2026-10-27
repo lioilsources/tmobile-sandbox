@@ -1,0 +1,100 @@
+diff --git a/fuse_core/lib/src/rules/bomb_fuse.dart b/fuse_core/lib/src/rules/bomb_fuse.dart
+index cad51e5..cd864b3 100644
+--- a/fuse_core/lib/src/rules/bomb_fuse.dart
++++ b/fuse_core/lib/src/rules/bomb_fuse.dart
+@@ -5,8 +5,5 @@ import '../model/game_state.dart';
+ /// a *transferred* turn (Kradež, Odpal, Ne! revert) does not. When the tick
+ /// reaches 0, the player whose turn just completed takes the bomb damage.
+ ({BombState? bomb, bool exploded}) tickFuse(BombState? bomb) {
+-  if (bomb == null) return (bomb: null, exploded: false);
+-  final fuse = bomb.fuse - 1;
+-  if (fuse <= 0) return (bomb: null, exploded: true);
+-  return (bomb: BombState(card: bomb.card, fuse: fuse), exploded: false);
+-}
++    throw UnimplementedError('TODO: implement tickFuse');
++  }
+diff --git a/fuse_core/lib/src/rules/match_rule.dart b/fuse_core/lib/src/rules/match_rule.dart
+index 953fc4e..c4f0871 100644
+--- a/fuse_core/lib/src/rules/match_rule.dart
++++ b/fuse_core/lib/src/rules/match_rule.dart
+@@ -3,19 +3,11 @@ import '../model/game_state.dart';
+ 
+ /// Number card vs. target. Normal: colour or number. Otoč: number ±1 only.
+ bool matchesTarget(Card card, Card target, MatchMode mode) {
+-  if (!card.isNumber || !target.isNumber) return false;
+-  return switch (mode) {
+-    MatchMode.normal =>
+-      card.color == target.color || card.number == target.number,
+-    MatchMode.twist => (card.number! - target.number!).abs() == 1,
+-  };
+-}
++    throw UnimplementedError('TODO: implement matchesTarget');
++  }
+ 
+ /// Whether an up-swipe throw of [card] is valid in [state]. An invalid throw
+ /// costs a life; it is not the same as a rejected (malformed) command.
+-bool isValidThrow(GameState state, Card card) => switch (card.kind) {
+-  CardKind.number => matchesTarget(card, state.target, state.matchMode),
+-  CardKind.twist || CardKind.blind => true,
+-  CardKind.defuse || CardKind.detonate => state.bomb != null,
+-  CardKind.bomb || CardKind.nope || CardKind.shield || CardKind.steal => false,
+-};
++bool isValidThrow(GameState state, Card card) {
++    throw UnimplementedError('TODO: implement isValidThrow');
++  }
+diff --git a/fuse_core/lib/src/rules/reactions.dart b/fuse_core/lib/src/rules/reactions.dart
+index add57ff..aa7000f 100644
+--- a/fuse_core/lib/src/rules/reactions.dart
++++ b/fuse_core/lib/src/rules/reactions.dart
+@@ -2,29 +2,22 @@ import '../model/game_state.dart';
+ 
+ /// Kradež: the player on turn must have hesitated strictly longer than the
+ /// threshold.
+-bool stealAllowedAt(GameState state, int ts) =>
+-    ts - state.turn.startedAt > state.rules.stealThresholdMs;
++bool stealAllowedAt(GameState state, int ts) {
++    throw UnimplementedError('TODO: implement stealAllowedAt');
++  }
+ 
+ /// Štít: the earliest pending loss of [playerId] whose window is still open.
+ PendingLifeLoss? shieldableLoss(GameState state, String playerId, int ts) {
+-  PendingLifeLoss? best;
+-  for (final l in state.pendingLosses) {
+-    if (l.playerId != playerId) continue;
+-    if (ts > l.startedAt + state.rules.shieldWindowMs || ts > l.deadline) {
+-      continue;
+-    }
+-    if (best == null || l.deadline < best.deadline) best = l;
++    throw UnimplementedError('TODO: implement shieldableLoss');
+   }
+-  return best;
+-}
+ 
+ /// Ne!: the last action exists and its window is open (same turn, in time).
+ /// A second Ne! on an already cancelled action is accepted but fizzles.
+ bool nopeTargetOpen(GameState state, int ts) {
+-  final a = state.lastAction;
+-  return a != null && a.isOpenAt(ts, state.turn.seq, state.rules);
+-}
++    throw UnimplementedError('TODO: implement nopeTargetOpen');
++  }
+ 
+ /// A ghost may use Ne! once per round.
+-bool ghostNopeAvailable(GameState state, PlayerState player) =>
+-    player.isGhost && player.ghostNopeRound != state.round;
++bool ghostNopeAvailable(GameState state, PlayerState player) {
++    throw UnimplementedError('TODO: implement ghostNopeAvailable');
++  }
+diff --git a/fuse_core/lib/src/rules/turn_reward.dart b/fuse_core/lib/src/rules/turn_reward.dart
+index 6a46aea..6fd3e5d 100644
+--- a/fuse_core/lib/src/rules/turn_reward.dart
++++ b/fuse_core/lib/src/rules/turn_reward.dart
+@@ -2,5 +2,6 @@ import '../model/rules_config.dart';
+ 
+ /// Cards to draw after a valid throw made [throwMs] after the turn started.
+ /// (Timeouts and invalid throws use `rules.drawPenalty`.)
+-int rewardDraw(RulesConfig rules, int throwMs) =>
+-    throwMs <= rules.fastThrowMs ? rules.drawFast : rules.drawNormal;
++int rewardDraw(RulesConfig rules, int throwMs) {
++    throw UnimplementedError('TODO: implement rewardDraw');
++  }

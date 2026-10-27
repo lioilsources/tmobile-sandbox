@@ -1,0 +1,32 @@
+{
+ "id": "ftg-01",
+ "repo": "lioilsources/FineTuneGallery",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "99e67e1634b8a341e1a8ef1ee52631d7f16e15c9",
+ "gold_commit": "44673dc14d65afe428ddfa3990bc228576e111fd",
+ "workdir": "server",
+ "test_files": [
+  "server/eval_judge_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 .",
+ "fail_to_pass": [
+  "TestEvalDefaultSourceIgnoresTheJudge",
+  "TestEvalJudgeSourceCountsOnlyGatedVerdicts",
+  "TestEvalMergedLetsTheHumanWin",
+  "TestEvalGateDoesNotCarryOverToANewJudgeVersion",
+  "TestEvalSourceErrors",
+  "TestEvalCSVCarriesSourceColumns"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+123/-12 in 1 files",
+ "prod_files": [
+  "server/eval.go"
+ ],
+ "source": "feat(judge): F4 — Eval source=human|judge|merged"
+}

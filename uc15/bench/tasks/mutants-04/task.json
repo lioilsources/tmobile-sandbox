@@ -1,0 +1,54 @@
+{
+ "id": "mutants-04",
+ "repo": "lioilsources/Mutants",
+ "lang": "dart",
+ "kind": "removal",
+ "base_commit": "c9904954ac273b24d92d11ce91b55be9a1ed008a",
+ "gold_commit": "c9904954ac273b24d92d11ce91b55be9a1ed008a",
+ "base_patch": "base.patch",
+ "workdir": "mutant_core",
+ "test_files": [
+  "mutant_core/test/naming_test.dart"
+ ],
+ "setup_cmd": "dart pub get",
+ "test_cmd": "dart test",
+ "fail_to_pass": [
+  "JSON round trip keeps every field",
+  "adding the same record twice is a no-op (reconnect)",
+  "an active hazard is cancelled (no penalty) when the creature hatches",
+  "apply never mutates the state it was given",
+  "bots hatch the requested number of creatures",
+  "dealing keeps its rhythm across a hatch",
+  "dominant element majority, ties broken by the earlier slot",
+  "dominant element seal wins",
+  "duplicates get Roman numerals",
+  "elemental seal overrides the creature element regardless of parts",
+  "engine keeps names unique within a session and against the bestiary",
+  "failed hazard that empties the incubator hatches early",
+  "filter by element and minimum rarity",
+  "hand-less table only hatches through the incubator",
+  "hatching all 6 slots filled hatches a full record",
+  "hatching hatch now (debug) hatches a partial creature as not premature",
+  "incubator empty incubator = premature hatch with stumps, reset, faster drain",
+  "incubator premature creature keeps what was placed",
+  "kids can rename; blank names are ignored",
+  "met hazard shows up in the rarity breakdown",
+  "mutation bonus only for an overwrite (default rules) a mutation into an empty slot is just a part",
+  "mutation bonus only for an overwrite (default rules) a mutation that replaces a part earns +1",
+  "mutation bonus only for an overwrite (default rules) several overwrites still give +1 once",
+  "same seed, same report",
+  "seed + command log replays identically",
+  "solo seat works (no passing)",
+  "v1: any mutation earns +1"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "gold restores ~36 removed lines in 1 files",
+ "prod_files": [
+  "mutant_core/lib/src/rules/naming.dart"
+ ],
+ "source": "synthetic removal: function bodies stubbed out at HEAD, original implementation is the gold solution"
+}

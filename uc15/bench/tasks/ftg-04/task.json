@@ -1,0 +1,39 @@
+{
+ "id": "ftg-04",
+ "repo": "lioilsources/FineTuneGallery",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "e3986c205cd7219b94714b8ba7da42778e485c13",
+ "gold_commit": "1d19cde0442b61693acfd39db9e4d2385d08743d",
+ "workdir": "server",
+ "test_files": [
+  "server/gallery_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 .",
+ "fail_to_pass": [
+  "TestMigrationV2KeepsExistingRows",
+  "TestIngestKeepsStyleAndLoraStrength",
+  "TestFilterByStyle",
+  "TestDeleteSessionRemovesBlobsButKeepsSharedOnes",
+  "TestDeleteSessionRefusesWhenImagesAreInADataset",
+  "TestMetaCoversEveryModelTheAppCanGenerateWith"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "hard",
+ "diff_stats": "+230/-34 in 8 files",
+ "prod_files": [
+  "server/db.go",
+  "server/gallery.go",
+  "server/imgutil.go",
+  "server/ingest.go",
+  "server/main.go",
+  "server/meta.go",
+  "web/src/components/FilterBar.svelte",
+  "web/src/lib/stores.js"
+ ],
+ "source": "feat: styl, síla LoRA a mazání session — co galerie zahazovala"
+}

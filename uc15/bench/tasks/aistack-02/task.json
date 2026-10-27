@@ -1,0 +1,27 @@
+{
+ "id": "aistack-02",
+ "repo": "lioilsources/AiStack",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "cbd6eab11e1b3b1343aa30da8473e3b1f8c395b6",
+ "gold_commit": "bf482fb02a9e44241b6dfa98abdf1dd90aed098f",
+ "workdir": "services/gen-queue",
+ "test_files": [
+  "services/gen-queue/internal/portal/portal_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/portal",
+ "fail_to_pass": [
+  "TestSaveName"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+41/-0 in 1 files",
+ "prod_files": [
+  "services/gen-queue/internal/portal/portal.go"
+ ],
+ "source": "gen-queue portal: /cpe/workflow/save jen s holým jménem souboru (#32)"
+}

@@ -1,0 +1,75 @@
+diff --git a/fuse_core/lib/src/replay/replay.dart b/fuse_core/lib/src/replay/replay.dart
+index 7c6ef78..ced6a71 100644
+--- a/fuse_core/lib/src/replay/replay.dart
++++ b/fuse_core/lib/src/replay/replay.dart
+@@ -16,46 +16,26 @@ final class Replay {
+   final GameSetup setup;
+   final List<Command> commands;
+ 
+-  Map<String, Object?> toJson() => {
+-    'format': 'fuse-replay',
+-    'version': formatVersion,
+-    'setup': setup.toJson(),
+-    'commands': [for (final c in commands) c.toJson()],
+-  };
++  Map<String, Object?> toJson() {
++    throw UnimplementedError('TODO: implement toJson');
++  }
+ 
+   factory Replay.fromJson(Map<String, Object?> j) {
+-    final version = (j['version'] as num?)?.toInt();
+-    if (j['format'] != 'fuse-replay' || version == null) {
+-      throw const FormatException('Not a Kittens replay');
+-    }
+-    if (version > formatVersion) {
+-      throw FormatException('Replay version $version is newer than supported');
+-    }
+-    return Replay(
+-      setup: GameSetup.fromJson(j['setup'] as Map<String, Object?>),
+-      commands: [
+-        for (final c in j['commands'] as List<Object?>)
+-          Command.fromJson(c as Map<String, Object?>),
+-      ],
+-    );
++    throw UnimplementedError('TODO: implement Replay.fromJson');
+   }
+ 
+-  String encode({bool pretty = false}) =>
+-      (pretty ? const JsonEncoder.withIndent('  ') : const JsonEncoder())
+-          .convert(toJson());
++  String encode({bool pretty = false}) {
++    throw UnimplementedError('TODO: implement encode');
++  }
+ 
+-  static Replay decode(String source) =>
+-      Replay.fromJson(jsonDecode(source) as Map<String, Object?>);
++  static Replay decode(String source) {
++    throw UnimplementedError('TODO: implement decode');
++  }
+ 
+   /// Re-runs the game. [upTo] limits the number of commands applied (for
+   /// step-through debugging).
+   RecordedGame run({int? upTo}) {
+-    final game = RecordedGame(setup);
+-    final n = upTo == null || upTo > commands.length ? commands.length : upTo;
+-    for (var i = 0; i < n; i++) {
+-      game.apply(commands[i]);
+-    }
+-    return game;
++    throw UnimplementedError('TODO: implement run');
+   }
+ }
+ 
+@@ -75,11 +55,7 @@ final class RecordedGame {
+   GameState get state => _state;
+ 
+   EngineStep apply(Command command) {
+-    final step = GameEngine.apply(_state, command);
+-    commands.add(command);
+-    events.addAll(step.events);
+-    _state = step.state;
+-    return step;
++    throw UnimplementedError('TODO: implement apply');
+   }
+ 
+   Replay get replay => Replay(setup: setup, commands: List.of(commands));

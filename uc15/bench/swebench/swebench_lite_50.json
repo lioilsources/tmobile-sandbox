@@ -1,0 +1,402 @@
+[
+ {
+  "instance_id": "django__django-11564",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "580e644f24f1c5ae5b94784fb73a9953a178fd26",
+  "patch_lines": 55,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-11797",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "3346b78a8a872286a245d1e77ef4718fc5e6be1a",
+  "patch_lines": 16,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-11910",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "d232fd76a85870daf345fd8f8d617fe7802ae194",
+  "patch_lines": 14,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-11964",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "fc2b1cc926e34041953738e58fa6ad3053059b22",
+  "patch_lines": 18,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-11999",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "84633905273fc916e3d17883810d9969c03f73c2",
+  "patch_lines": 18,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-12497",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "a4881f5e5d7ee38b7e83301331a0b4962845ef8a",
+  "patch_lines": 21,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-12708",
+  "repo": "django/django",
+  "version": "3.1",
+  "base_commit": "447980e72ac01da1594dd3373a03ba40b7ee6f80",
+  "patch_lines": 17,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-12908",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "49ae7ce50a874f8a04cd910882fb9571ff3a0d7a",
+  "patch_lines": 11,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-12983",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "3bc4240d979812bd11365ede04c028ea13fdc8c6",
+  "patch_lines": 27,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-13028",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "78ad4b4b0201003792bfdbf1a7781cbc9ee03539",
+  "patch_lines": 15,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-13033",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "a59de6e89e8dc1f3e71c9a5a5bbceb373ea5247e",
+  "patch_lines": 17,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-13220",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "16218c20606d8cd89c5393970c83da04598a3e04",
+  "patch_lines": 37,
+  "n_fail_to_pass": 4
+ },
+ {
+  "instance_id": "django__django-13321",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "35b03788b0607c1f8d2b64e4fa9e1669b0907ea4",
+  "patch_lines": 19,
+  "n_fail_to_pass": 355
+ },
+ {
+  "instance_id": "django__django-13658",
+  "repo": "django/django",
+  "version": "3.2",
+  "base_commit": "0773837e15bb632afffb6848a58c59a791008fa1",
+  "patch_lines": 17,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-13933",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "42e8cf47c7ee2db238bf91197ea398126c546741",
+  "patch_lines": 16,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-14016",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "1710cdbe79c90665046034fe1700933d038d90ad",
+  "patch_lines": 26,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-14238",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "30e123ed351317b7527f632b3b7dc4e81e850449",
+  "patch_lines": 12,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-14534",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "910ecd1b8df7678f45c3d507dde6bcb1faafa243",
+  "patch_lines": 12,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-14580",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "36fa071d6ebd18a61c4d7f1b5c9d17106134bd44",
+  "patch_lines": 12,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-14608",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "7f33c1e22dbc34a7afae7967783725b10f1f13b1",
+  "patch_lines": 24,
+  "n_fail_to_pass": 4
+ },
+ {
+  "instance_id": "django__django-14752",
+  "repo": "django/django",
+  "version": "4.0",
+  "base_commit": "b64db05b9cedd96905d637a2d824cbbf428e40e7",
+  "patch_lines": 34,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-14999",
+  "repo": "django/django",
+  "version": "4.1",
+  "base_commit": "a754b82dac511475b6276039471ccd17cc64aeb8",
+  "patch_lines": 22,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-15202",
+  "repo": "django/django",
+  "version": "4.1",
+  "base_commit": "4fd3044ca0135da903a70dfb66992293f529ecf1",
+  "patch_lines": 42,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "django__django-15498",
+  "repo": "django/django",
+  "version": "4.1",
+  "base_commit": "d90e34c61b27fba2527834806639eebbcfab9631",
+  "patch_lines": 19,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "django__django-15695",
+  "repo": "django/django",
+  "version": "4.1",
+  "base_commit": "647480166bfe7532e8c471fef0146e3a17e6c0c9",
+  "patch_lines": 13,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-13471",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "3546ac7ed78e1780c1a76929864bb33330055740",
+  "patch_lines": 15,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-13480",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "f57fe3f4b3f2cab225749e1b3b38ae1bf80b62f0",
+  "patch_lines": 12,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-13773",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "7121bdf1facdd90d05b6994b4c2e5b2865a4638a",
+  "patch_lines": 25,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-14024",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "b17abcb09cbcee80a90f6750e0f9b53f0247656c",
+  "patch_lines": 29,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "sympy__sympy-14317",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "fb536869fb7aa28b2695ad7a3b70949926b291c4",
+  "patch_lines": 55,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "sympy__sympy-14396",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "f35ad6411f86a15dd78db39c29d1e5291f66f9b5",
+  "patch_lines": 26,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-14774",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "8fc63c2d71752389a44367b8ef4aba8a91af6a45",
+  "patch_lines": 12,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sympy__sympy-14817",
+  "repo": "sympy/sympy",
+  "version": "1.1",
+  "base_commit": "0dbdc0ea83d339936da175f8c3a97d0d6bafb9f8",
+  "patch_lines": 13,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pytest-dev__pytest-7168",
+  "repo": "pytest-dev/pytest",
+  "version": "5.4",
+  "base_commit": "4787fd64a4ca0dba5528b5651bddd254102fe9f3",
+  "patch_lines": 12,
+  "n_fail_to_pass": 11
+ },
+ {
+  "instance_id": "pytest-dev__pytest-7220",
+  "repo": "pytest-dev/pytest",
+  "version": "5.4",
+  "base_commit": "56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f",
+  "patch_lines": 28,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pytest-dev__pytest-7373",
+  "repo": "pytest-dev/pytest",
+  "version": "5.4",
+  "base_commit": "7b77fc086aab8b3a8ebc890200371884555eea1e",
+  "patch_lines": 42,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pytest-dev__pytest-7432",
+  "repo": "pytest-dev/pytest",
+  "version": "5.4",
+  "base_commit": "e6e300e729dd33956e5448d8be9a0b1540b4e53a",
+  "patch_lines": 13,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "scikit-learn__scikit-learn-14092",
+  "repo": "scikit-learn/scikit-learn",
+  "version": "0.22",
+  "base_commit": "df7dd8391148a873d157328a4f0328528a0c4ed9",
+  "patch_lines": 34,
+  "n_fail_to_pass": 3
+ },
+ {
+  "instance_id": "scikit-learn__scikit-learn-14894",
+  "repo": "scikit-learn/scikit-learn",
+  "version": "0.22",
+  "base_commit": "fdbaa58acbead5a254f2e6d597dc1ab3b947f4c6",
+  "patch_lines": 23,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "scikit-learn__scikit-learn-14983",
+  "repo": "scikit-learn/scikit-learn",
+  "version": "0.22",
+  "base_commit": "06632c0d185128a53c57ccc73b25b6408e90bb89",
+  "patch_lines": 22,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "scikit-learn__scikit-learn-15535",
+  "repo": "scikit-learn/scikit-learn",
+  "version": "0.22",
+  "base_commit": "70b0ddea992c01df1a41588fa9e2d130fb6b13f8",
+  "patch_lines": 16,
+  "n_fail_to_pass": 8
+ },
+ {
+  "instance_id": "matplotlib__matplotlib-23913",
+  "repo": "matplotlib/matplotlib",
+  "version": "3.6",
+  "base_commit": "5c4595267ccd3daf78f5fd05693b7ecbcd575c1e",
+  "patch_lines": 33,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "matplotlib__matplotlib-23964",
+  "repo": "matplotlib/matplotlib",
+  "version": "3.6",
+  "base_commit": "269c0b94b4fcf8b1135011c1556eac29dc09de15",
+  "patch_lines": 15,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "matplotlib__matplotlib-24149",
+  "repo": "matplotlib/matplotlib",
+  "version": "3.6",
+  "base_commit": "af39f1edffcd828f05cfdd04f2e59506bb4a27bc",
+  "patch_lines": 23,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sphinx-doc__sphinx-8595",
+  "repo": "sphinx-doc/sphinx",
+  "version": "3.5",
+  "base_commit": "b19bce971e82f2497d67fdacdeca8db08ae0ba56",
+  "patch_lines": 12,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "sphinx-doc__sphinx-8627",
+  "repo": "sphinx-doc/sphinx",
+  "version": "3.5",
+  "base_commit": "332d80ba8433aea41c3709fa52737ede4405072b",
+  "patch_lines": 31,
+  "n_fail_to_pass": 2
+ },
+ {
+  "instance_id": "sphinx-doc__sphinx-8721",
+  "repo": "sphinx-doc/sphinx",
+  "version": "3.5",
+  "base_commit": "82ef497a8c88f0f6e50d84520e7276bfbf65025d",
+  "patch_lines": 14,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pylint-dev__pylint-7080",
+  "repo": "pylint-dev/pylint",
+  "version": "2.15",
+  "base_commit": "3c5eca2ded3dd2b59ebaf23eb289453b5d2930f0",
+  "patch_lines": 11,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pylint-dev__pylint-7114",
+  "repo": "pylint-dev/pylint",
+  "version": "2.15",
+  "base_commit": "397c1703e8ae6349d33f7b99f45b2ccaf581e666",
+  "patch_lines": 27,
+  "n_fail_to_pass": 1
+ },
+ {
+  "instance_id": "pylint-dev__pylint-7228",
+  "repo": "pylint-dev/pylint",
+  "version": "2.15",
+  "base_commit": "d597f252915ddcaaa15ccdfcb35670152cb83587",
+  "patch_lines": 34,
+  "n_fail_to_pass": 2
+ }
+]

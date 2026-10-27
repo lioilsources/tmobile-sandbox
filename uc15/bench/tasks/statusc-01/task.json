@@ -1,0 +1,27 @@
+{
+ "id": "statusc-01",
+ "repo": "lioilsources/status-collector",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "7521f943bb9c468ba207ae469c14084b6088029d",
+ "gold_commit": "955f056eee27d05910d0edfba80c6e8193a025bf",
+ "workdir": ".",
+ "test_files": [
+  "internal/host/host_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/host",
+ "fail_to_pass": [
+  "TestNodeExporterGPUTemp"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+30/-5 in 1 files",
+ "prod_files": [
+  "internal/host/host.go"
+ ],
+ "source": "feat(host): read GPU temperature from node_exporter's textfile collector"
+}

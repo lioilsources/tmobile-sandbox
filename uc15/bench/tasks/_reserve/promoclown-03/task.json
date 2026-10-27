@@ -1,0 +1,30 @@
+{
+ "id": "promoclown-03",
+ "repo": "lioilsources/PromoClown",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "08fce41a6f0341155c0b6325b30df2b90d217cdd",
+ "gold_commit": "1ffd377540765d28f8eba62ea937c8289a7f45af",
+ "workdir": ".",
+ "test_files": [
+  "cmd/promo-tribute/thermal_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./cmd/promo-tribute",
+ "fail_to_pass": [
+  "TestThermalZone",
+  "TestThermalWait"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+140/-2 in 3 files",
+ "prod_files": [
+  "cmd/promo-tribute/main.go",
+  "cmd/promo-tribute/thermal.go",
+  "internal/restyle/restyle.go"
+ ],
+ "source": "promo-tribute: pause for the Spark's thermal zone like the other batches"
+}

@@ -1,0 +1,39 @@
+{
+ "id": "kittens-02",
+ "repo": "lioilsources/Kittens",
+ "lang": "dart",
+ "kind": "removal",
+ "base_commit": "3c07299ca6e49706eb82f9dd4699499a56123647",
+ "gold_commit": "3c07299ca6e49706eb82f9dd4699499a56123647",
+ "base_patch": "base.patch",
+ "workdir": "fuse_core",
+ "test_files": [
+  "fuse_core/test/determinism_test.dart",
+  "fuse_core/test/host_loop_test.dart"
+ ],
+ "setup_cmd": "dart pub get",
+ "test_cmd": "dart test",
+ "fail_to_pass": [
+  "a human throw after the deadline comes too late",
+  "a human throw exactly at the deadline is on time",
+  "advanceTo applies what is due by now, nothing later",
+  "bot games 2 players: 25 games finish, invariants hold every step",
+  "bot games 3 players: 25 games finish, invariants hold every step",
+  "bot games 4 players: 25 games finish, invariants hold every step",
+  "bot games 5 players: 25 games finish, invariants hold every step",
+  "bots act through the loop; setBot(null) hands the seat to a human",
+  "replay JSON replay reproduces the exact final state and events",
+  "replay game state JSON round-trips mid-game",
+  "replay stepping a replay part-way matches the live game at that point"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "gold restores ~36 removed lines in 1 files",
+ "prod_files": [
+  "fuse_core/lib/src/replay/replay.dart"
+ ],
+ "source": "synthetic removal: function bodies stubbed out at HEAD, original implementation is the gold solution"
+}

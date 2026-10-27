@@ -1,0 +1,30 @@
+{
+ "id": "statusc-02",
+ "repo": "lioilsources/status-collector",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "a3ce1b917e5f71d2e618f6292320618dbec93e8a",
+ "gold_commit": "d116810222749bfc50f8aed1823d476365231e2e",
+ "workdir": ".",
+ "test_files": [
+  "internal/host/host_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/host",
+ "fail_to_pass": [
+  "TestLocalReportsEachFilesystemOnce",
+  "TestMissingDisksAreReported"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+44/-1 in 3 files",
+ "prod_files": [
+  "cmd/status-collector/main.go",
+  "internal/host/disk.go",
+  "internal/host/host.go"
+ ],
+ "source": "fix(host): report each filesystem once, make the disk list configurable"
+}

@@ -1,0 +1,33 @@
+{
+ "id": "chatbridge-02",
+ "repo": "lioilsources/chatbridge",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "8ed2a3c469597f6ae15ce37ad4301d3c30baa594",
+ "gold_commit": "71161f05ce8dec475c2049f5dbfe0eb9df13bbbf",
+ "workdir": ".",
+ "test_files": [
+  "internal/queue/queue_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/queue",
+ "fail_to_pass": [
+  "TestSinceResetsWhenBehindWindow",
+  "TestSinceReturnsNewerOnly",
+  "TestSinceRespectsMax",
+  "TestSinceUpToDate",
+  "TestConcurrentPushAndRead"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+197/-13 in 3 files",
+ "prod_files": [
+  "cmd/chatbridge/main.go",
+  "internal/api/http.go",
+  "internal/queue/queue.go"
+ ],
+ "source": "Phase 3: in-memory event queue and GET /events"
+}

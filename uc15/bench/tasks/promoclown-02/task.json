@@ -1,0 +1,28 @@
+{
+ "id": "promoclown-02",
+ "repo": "lioilsources/PromoClown",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "4169836c7c9553313dd002dd8fe5c535720382dc",
+ "gold_commit": "18e94a8b9748456361d7a5f1495975c820acaf7e",
+ "workdir": ".",
+ "test_files": [
+  "internal/core/service_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/core",
+ "fail_to_pass": [
+  "TestMinDaysBetweenZeroSurvivesUpsert"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+15/-10 in 2 files",
+ "prod_files": [
+  "internal/core/service.go",
+  "internal/model/model.go"
+ ],
+ "source": "core: let a project say \"no gap between posts\" and be believed"
+}

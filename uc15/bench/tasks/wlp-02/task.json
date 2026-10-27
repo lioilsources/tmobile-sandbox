@@ -1,0 +1,29 @@
+{
+ "id": "wlp-02",
+ "repo": "lioilsources/WorldLibraryProject",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "82e547728e2d30d05f273550d22d93ea9d962941",
+ "gold_commit": "ce9b717c9bcdcba107ba5e4488945b782e44d173",
+ "workdir": "rag",
+ "test_files": [
+  "rag/tests/test_export_bundle.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_export_bundle.py",
+ "fail_to_pass": [
+  "test_zavorka_se_neurizne_a_vysvetlivka_odpadne",
+  "test_jeden_pojem_je_jedna_bublina",
+  "test_vzacny_term_prebije_vsudypritomny"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+79/-23 in 1 files",
+ "prod_files": [
+  "rag/export_bundle.py"
+ ],
+ "source": "fix(bundles): neuřezávat závorky a jeden pojem = jedna bublina; stav plánu Kindlify"
+}

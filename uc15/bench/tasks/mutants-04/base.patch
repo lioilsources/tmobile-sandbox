@@ -1,0 +1,59 @@
+diff --git a/mutant_core/lib/src/rules/naming.dart b/mutant_core/lib/src/rules/naming.dart
+index 5ceaf4f..7dddcf5 100644
+--- a/mutant_core/lib/src/rules/naming.dart
++++ b/mutant_core/lib/src/rules/naming.dart
+@@ -9,26 +9,8 @@ ElementType? dominantElement(
+   List<CardDef> partsInSlotOrder, {
+   ElementType? sealElement,
+ }) {
+-  if (sealElement != null) return sealElement;
+-  final counts = <ElementType, int>{};
+-  final firstSeen = <ElementType, int>{};
+-  for (var i = 0; i < partsInSlotOrder.length; i++) {
+-    final element = partsInSlotOrder[i].element;
+-    if (element == null) continue;
+-    counts[element] = (counts[element] ?? 0) + 1;
+-    firstSeen.putIfAbsent(element, () => i);
++    throw UnimplementedError('TODO: implement dominantElement');
+   }
+-  ElementType? best;
+-  for (final element in counts.keys) {
+-    if (best == null ||
+-        counts[element]! > counts[best]! ||
+-        (counts[element] == counts[best] &&
+-            firstSeen[element]! < firstSeen[best]!)) {
+-      best = element;
+-    }
+-  }
+-  return best;
+-}
+ 
+ /// `prefix[element]-root[head origin]-suffix[torso origin]` → Pyro-Rexo-dračák.
+ /// Missing pieces use the stump entries (Šedo / Bezhlavo / bezbřichák).
+@@ -48,24 +30,9 @@ String baseCreatureName(
+ 
+ /// Appends a Roman numeral (II, III, …) until the name is not in [taken].
+ String uniqueCreatureName(String base, Set<String> taken) {
+-  if (!taken.contains(base)) return base;
+-  for (var n = 2; ; n++) {
+-    final candidate = '$base ${romanNumeral(n)}';
+-    if (!taken.contains(candidate)) return candidate;
++    throw UnimplementedError('TODO: implement uniqueCreatureName');
+   }
+-}
+ 
+ String romanNumeral(int n) {
+-  if (n <= 0) throw ArgumentError.value(n, 'n', 'must be positive');
+-  const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+-  const symbols = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+-  final buffer = StringBuffer();
+-  var rest = n;
+-  for (var i = 0; i < values.length; i++) {
+-    while (rest >= values[i]) {
+-      buffer.write(symbols[i]);
+-      rest -= values[i];
+-    }
++    throw UnimplementedError('TODO: implement romanNumeral');
+   }
+-  return buffer.toString();
+-}

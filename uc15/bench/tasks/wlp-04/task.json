@@ -1,0 +1,33 @@
+{
+ "id": "wlp-04",
+ "repo": "lioilsources/WorldLibraryProject",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "1cd73a61e62851eb11d9bfd0f701da53e06a56a0",
+ "gold_commit": "eed636208b6665e3aea76a1d4c9ccb982c326eb7",
+ "workdir": "rag",
+ "test_files": [
+  "rag/tests/test_export_bundle.py",
+  "rag/tests/test_kindlify_sync.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_export_bundle.py tests/test_kindlify_sync.py",
+ "fail_to_pass": [
+  "test_popisek_listu_podle_versu",
+  "test_prekryv_chunku_se_v_textu_neopakuje",
+  "test_listy_nesou_glosu_termy_a_text",
+  "test_bez_textu_klic_texts_chybi_a_otisk_se_nemeni"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "hard",
+ "diff_stats": "+311/-19 in 3 files",
+ "prod_files": [
+  "rag/export_bundle.py",
+  "rag/kindlify_sync.py",
+  "rag/verse_refs.py"
+ ],
+ "source": "feat(bundles): verše NZ, úseky s glosou pod kapitolami, text originálu, delší souhrny"
+}

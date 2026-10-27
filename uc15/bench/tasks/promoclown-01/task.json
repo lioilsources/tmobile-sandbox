@@ -1,0 +1,29 @@
+{
+ "id": "promoclown-01",
+ "repo": "lioilsources/PromoClown",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "e7f76bc27550747c783741ecdefa429c89207ac4",
+ "gold_commit": "85124aa48d9d78e44cbea2ee2288ae185da26848",
+ "workdir": ".",
+ "test_files": [
+  "cmd/promo-tribute/main_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./cmd/promo-tribute",
+ "fail_to_pass": [
+  "TestDryRunDoesNotTouchQueue",
+  "TestDryRunRespectsMax",
+  "TestRunClaimsAndRecordsFailure"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+45/-8 in 1 files",
+ "prod_files": [
+  "cmd/promo-tribute/main.go"
+ ],
+ "source": "promo-tribute: make --dry-run read-only"
+}

@@ -1,0 +1,61 @@
+diff --git a/internal/auction/dutch.go b/internal/auction/dutch.go
+index b0ed3b7..8b90877 100644
+--- a/internal/auction/dutch.go
++++ b/internal/auction/dutch.go
+@@ -4,55 +4,5 @@ import "context"
+ 
+ // runDutch: cena klesá z StartPrice o Decrement každý tick, první BID vyhrává za aktuální cenu.
+ func (e *Engine) runDutch(ctx context.Context) Result {
+-	e.price = e.Params.StartPrice
+-	maxTicks := e.Params.MaxTicks
+-	if maxTicks <= 0 {
+-		maxTicks = 1000
+-	}
+-
+-	for tick := 0; tick < maxTicks; tick++ {
+-		if ctx.Err() != nil {
+-			break
+-		}
+-		if e.price < e.Params.ReservePrice {
+-			e.emit("no_sale", map[string]any{"reason": "dosažena rezervní cena bez nabídky"})
+-			return Result{}
+-		}
+-		if len(e.Parts.ActiveIDs()) == 0 {
+-			e.emit("no_sale", map[string]any{"reason": "žádní aktivní bidři"})
+-			return Result{}
+-		}
+-
+-		next := e.price - e.Params.Decrement
+-		e.emit("price_updated", map[string]any{"price": e.price, "next_price": next})
+-
+-		s := e.snapshot(tick, 0, next)
+-		decisions := e.Parts.Decide(ctx, s)
+-
+-		win, ok := e.pickWinningBid(decisions)
+-		if !ok {
+-			e.price = next
+-			e.Clock.Sleep(e.Params.TickInterval)
+-			continue
+-		}
+-		if res, bought := e.tryBuyNow(win); bought {
+-			return res
+-		}
+-		// vítěz bere za aktuální cenu
+-		if !e.Parts.CanAfford(win.BidderID, e.price) {
+-			e.recordNonBid(win)
+-			e.price = next
+-			e.Clock.Sleep(e.Params.TickInterval)
+-			continue
+-		}
+-		e.Parts.Debit(win.BidderID, e.price, 0)
+-		e.recordBid(win, 0)
+-		e.leaderID = win.BidderID
+-		e.emit("bid_placed", map[string]any{
+-			"bidder_id": win.BidderID, "amount": e.price, "reasoning": win.Reasoning,
+-		})
+-		return Result{WinnerID: win.BidderID, FinalPrice: e.price}
+-	}
+-	e.emit("no_sale", map[string]any{"reason": "vyčerpán počet ticků"})
+-	return Result{}
++	panic("TODO: implement runDutch")
+ }

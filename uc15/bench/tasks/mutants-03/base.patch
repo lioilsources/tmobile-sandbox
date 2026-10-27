@@ -1,0 +1,38 @@
+diff --git a/mutant_core/lib/src/rules/rarity.dart b/mutant_core/lib/src/rules/rarity.dart
+index d35dcba..4086388 100644
+--- a/mutant_core/lib/src/rules/rarity.dart
++++ b/mutant_core/lib/src/rules/rarity.dart
+@@ -44,32 +44,5 @@ class RarityResult {
+ /// - +1 any fusion, +1 any mutation, +1 per met hazard, +1 for ≥ 3 synchro throws
+ /// - −1 premature hatch, −1 per 2 stumps
+ RarityResult evaluateRarity(RarityInput input) {
+-  final reasons = <RarityReason>[];
+-
+-  final origins = {for (final p in input.parts) p.origin}..remove(null);
+-  final chaos = origins.length ~/ input.chaosOriginsPerPoint;
+-  final elements = {for (final p in input.parts) p.element};
+-  final harmony =
+-      input.parts.isNotEmpty && input.stumps == 0 && elements.length == 1
+-      ? 2
+-      : 0;
+-  if (harmony > 0 && harmony >= chaos) {
+-    reasons.add(RarityReason('harmony', harmony));
+-  } else if (chaos > 0) {
+-    reasons.add(RarityReason('chaos', chaos));
+-  }
+-
+-  if (input.fusions > 0) reasons.add(const RarityReason('fusion', 1));
+-  if (input.mutations > 0) reasons.add(const RarityReason('mutation', 1));
+-  if (input.hazardsMet > 0) {
+-    reasons.add(RarityReason('hazard', input.hazardsMet));
++    throw UnimplementedError('TODO: implement evaluateRarity');
+   }
+-  if (input.synchroThrows >= 3) reasons.add(const RarityReason('synchro', 1));
+-  if (input.premature) reasons.add(const RarityReason('premature', -1));
+-  final stumpPenalty = input.stumps ~/ 2;
+-  if (stumpPenalty > 0) reasons.add(RarityReason('stumps', -stumpPenalty));
+-
+-  final raw = reasons.fold(0, (sum, r) => sum + r.delta);
+-  final clamped = raw.clamp(0, Rarity.values.length - 1);
+-  return RarityResult(Rarity.values[clamped], raw, reasons);
+-}

@@ -1,0 +1,28 @@
+{
+ "id": "wlp-03",
+ "repo": "lioilsources/WorldLibraryProject",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "1f08bab47c2c7f9cbef141e50f7af019e162d6c7",
+ "gold_commit": "dd7ebf88c8b74e67fec321db86b5cb1ed07c510b",
+ "workdir": "rag",
+ "test_files": [
+  "rag/tests/test_search_logic.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_search_logic.py",
+ "fail_to_pass": [
+  "test_parse_json_repairs_unquoted_value_and_missing_comma",
+  "test_parse_json_leaves_valid_json_alone"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+22/-6 in 1 files",
+ "prod_files": [
+  "rag/llm_batch.py"
+ ],
+ "source": "fix(rag): parser opraví holou hodnotu a chybějící čárku (~4 % chunků)"
+}

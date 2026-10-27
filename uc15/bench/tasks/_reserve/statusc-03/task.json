@@ -1,0 +1,31 @@
+{
+ "id": "statusc-03",
+ "repo": "lioilsources/status-collector",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "5603c7a028e9fdbeef6e77831b82a720524964b7",
+ "gold_commit": "7521f943bb9c468ba207ae469c14084b6088029d",
+ "workdir": ".",
+ "test_files": [
+  "internal/host/host_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/host",
+ "fail_to_pass": [
+  "TestNodeExporterTemps",
+  "TestNodeExporterTempsFallBackToHwmon",
+  "TestLocalTemps"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+141/-2 in 3 files",
+ "prod_files": [
+  "cmd/seed-demo/main.go",
+  "internal/api/api.go",
+  "internal/host/host.go"
+ ],
+ "source": "feat(host): chart machine temperatures"
+}

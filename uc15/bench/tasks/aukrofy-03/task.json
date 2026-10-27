@@ -1,0 +1,28 @@
+{
+ "id": "aukrofy-03",
+ "repo": "lioilsources/AukrofySimulation",
+ "lang": "go",
+ "kind": "removal",
+ "base_commit": "0a5554f5051d057cd9c7e7a2cee08b4333f49fb1",
+ "gold_commit": "0a5554f5051d057cd9c7e7a2cee08b4333f49fb1",
+ "base_patch": "base.patch",
+ "workdir": ".",
+ "test_files": [
+  "internal/auction/engine_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 ./internal/auction",
+ "fail_to_pass": [
+  "TestDutchFirstBidWins"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "gold restores ~51 removed lines in 1 files",
+ "prod_files": [
+  "internal/auction/dutch.go"
+ ],
+ "source": "synthetic removal: function bodies stubbed out at HEAD, original implementation is the gold solution"
+}

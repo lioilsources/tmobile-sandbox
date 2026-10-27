@@ -1,0 +1,49 @@
+{
+ "id": "aistack-03",
+ "repo": "lioilsources/AiStack",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "a0b2c4eae9b9a90a73c348b8ee834ae1006e3ac0",
+ "gold_commit": "32213aa6dd19cbef3283f94e8d49b1f11cd353b4",
+ "workdir": "services/audio",
+ "test_files": [
+  "services/audio/tests/test_rhythm.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_rhythm.py",
+ "fail_to_pass": [
+  "test_czech_syllables",
+  "test_english_syllables_are_close",
+  "test_numbers_count_as_a_word",
+  "test_phrases_keep_every_word_in_order",
+  "test_sentence_end_ends_a_phrase",
+  "test_no_scraps",
+  "test_faster_pace_puts_more_text_in_the_same_time",
+  "test_fast_tempo_spans_more_beats_instead_of_shredding_text",
+  "test_fit_speech_separates_onset_from_rate",
+  "test_fit_speech_survives_garbage",
+  "test_nothing_to_read",
+  "test_fit_tempo_stretches_to_the_window",
+  "test_fit_tempo_never_leaves_the_limits",
+  "test_output_lands_on_the_grid",
+  "test_runaway_phrase_is_retried_with_another_seed",
+  "test_runaway_that_never_stops_is_cut_not_kept",
+  "test_style_sets_delivery_unless_the_caller_did",
+  "test_tts_with_rhythm_end_to_end",
+  "test_tts_without_rhythm_is_unchanged",
+  "test_rhythm_rejects_bad_input_before_queueing"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "hard",
+ "diff_stats": "+530/-2 in 4 files",
+ "prod_files": [
+  "services/audio/app/jobs.py",
+  "services/audio/app/main.py",
+  "services/audio/app/schemas.py",
+  "services/audio/app/tts/rhythm.py"
+ ],
+ "source": "tts: řeč na mřížce — fráze zarovnané na doby (rhythm)"
+}

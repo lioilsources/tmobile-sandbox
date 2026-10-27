@@ -1,0 +1,71 @@
+diff --git a/internal/auction/vickrey.go b/internal/auction/vickrey.go
+index 538fe5e..12bf723 100644
+--- a/internal/auction/vickrey.go
++++ b/internal/auction/vickrey.go
+@@ -7,65 +7,5 @@ import (
+ 
+ // runVickrey: zapečetěné nabídky, vyhrává nejvyšší, platí druhou nejvyšší (min reserve).
+ func (e *Engine) runVickrey(ctx context.Context) Result {
+-	e.price = e.Params.StartPrice
+-	e.emit("submission_open", map[string]any{
+-		"window_s": e.Params.SubmissionWindow.Seconds(), "reserve": e.Params.ReservePrice,
+-	})
+-
+-	s := e.snapshot(0, e.Params.SubmissionWindow, 0)
+-	decisions := e.Parts.Decide(ctx, s)
+-
+-	type sealed struct {
+-		id     string
+-		amount float64
+-	}
+-	var bids []sealed
+-	for _, d := range decisions {
+-		switch d.Action {
+-		case ActionBuyNow:
+-			if res, ok := e.tryBuyNow(d); ok {
+-				return res
+-			}
+-			e.recordNonBid(d)
+-		case ActionLeave:
+-			e.Parts.Leave(d.BidderID)
+-			e.recordNonBid(d)
+-		case ActionBid:
+-			if d.Amount > 0 {
+-				e.recordBid(d, 0)
+-				bids = append(bids, sealed{d.BidderID, d.Amount})
+-				e.emit("sealed_bid_received", map[string]any{"bidder_id": d.BidderID})
+-			} else {
+-				e.recordNonBid(d)
+-			}
+-		default:
+-			e.recordNonBid(d)
+-		}
+-	}
+-
+-	if len(bids) == 0 {
+-		e.emit("no_sale", map[string]any{"reason": "žádné nabídky"})
+-		return Result{}
+-	}
+-	sort.SliceStable(bids, func(i, j int) bool { return bids[i].amount > bids[j].amount })
+-
+-	highest := bids[0]
+-	if highest.amount < e.Params.ReservePrice {
+-		e.emit("no_sale", map[string]any{"reason": "pod rezervní cenou"})
+-		return Result{}
+-	}
+-	// platí se druhá nejvyšší, minimálně reserve
+-	pay := e.Params.ReservePrice
+-	if len(bids) >= 2 && bids[1].amount > pay {
+-		pay = bids[1].amount
+-	}
+-	if pay < e.Params.ReservePrice {
+-		pay = e.Params.ReservePrice
+-	}
+-	if pay > highest.amount {
+-		pay = highest.amount
+-	}
+-	e.Parts.Debit(highest.id, pay, 0)
+-	e.leaderID = highest.id
+-	return Result{WinnerID: highest.id, FinalPrice: pay}
++	panic("TODO: implement runVickrey")
+ }

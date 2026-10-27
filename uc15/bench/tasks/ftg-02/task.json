@@ -1,0 +1,34 @@
+{
+ "id": "ftg-02",
+ "repo": "lioilsources/FineTuneGallery",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "002efd3b5d74a63b89e768b629488929caf60757",
+ "gold_commit": "f7b1bab466c62c7f86883564c46afcbc728a30af",
+ "workdir": "server",
+ "test_files": [
+  "server/kappa_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 .",
+ "fail_to_pass": [
+  "TestKappaPerfectAgreementPasses",
+  "TestKappaAlwaysUpJudgeFails",
+  "TestKappaKnownTable",
+  "TestKappaThinSampleFailsOnLowerBound",
+  "TestKappaTooFewPairsIsUncalibrated",
+  "TestKappaUndefinedWhenBothRatersUseOneClass",
+  "TestMigrationV5KeepsV4Rows"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+147/-0 in 2 files",
+ "prod_files": [
+  "server/db.go",
+  "server/kappa.go"
+ ],
+ "source": "feat(judge): F0 — migrace v5 a κ-gate per kritérium"
+}

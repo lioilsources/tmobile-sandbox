@@ -1,0 +1,28 @@
+{
+ "id": "ftg-03",
+ "repo": "lioilsources/FineTuneGallery",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "c7453529d9765d9b03a435034540cbe66fbc00fc",
+ "gold_commit": "ecd5db0ad706b2f32075659ed084408ef6617707",
+ "workdir": "server",
+ "test_files": [
+  "server/stylemaps_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 .",
+ "fail_to_pass": [
+  "TestStylemapServesPackFiles"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "easy",
+ "diff_stats": "+50/-2 in 2 files",
+ "prod_files": [
+  "server/main.go",
+  "server/stylemaps.go"
+ ],
+ "source": "feat(stylemaps): statické packy map stylů pro picker v appce"
+}

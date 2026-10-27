@@ -1,0 +1,29 @@
+{
+ "id": "genealogy-01",
+ "repo": "lioilsources/genealogy-matriky",
+ "lang": "go",
+ "kind": "reverse-commit",
+ "base_commit": "a223f4c321f28c0a216b690f17862f71c3bb9bd1",
+ "gold_commit": "d0a38be9b007860ef0aed2dbf746fadf114864a8",
+ "workdir": "genealogy",
+ "test_files": [
+  "genealogy/pipeline_test.go"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "go test -count=1 .",
+ "fail_to_pass": [
+  "TestAnalyticsQueries"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+130/-10 in 3 files",
+ "prod_files": [
+  "genealogy/analytics.go",
+  "web/src/App.tsx",
+  "web/src/components/AnalyticsPage.tsx"
+ ],
+ "source": "Analytika rodinné struktury: sňatky, bezdětní, největší rodiny"
+}

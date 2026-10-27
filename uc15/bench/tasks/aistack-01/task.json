@@ -1,0 +1,37 @@
+{
+ "id": "aistack-01",
+ "repo": "lioilsources/AiStack",
+ "lang": "python",
+ "kind": "reverse-commit",
+ "base_commit": "02c8e4ce8cd74298bfaec03c10d3d3c42cda1dcc",
+ "gold_commit": "b43c1bc93e0cf4f6f6b5a9d3b8c2ab9c3ce4b3bb",
+ "workdir": "services/audio",
+ "test_files": [
+  "services/audio/tests/test_vibe.py"
+ ],
+ "setup_cmd": null,
+ "test_cmd": "python -m pytest -q -p no:cacheprovider tests/test_vibe.py",
+ "fail_to_pass": [
+  "test_vibe_refuses_early_when_model_is_down",
+  "test_model_going_down_mid_job_is_one_readable_error",
+  "test_analysis_without_lm_is_not_cached",
+  "test_unreachable_lm_fails_analysis_instead_of_degrading",
+  "test_acestep_connect_error_is_unavailable"
+ ],
+ "pass_to_pass": [
+  "all other tests run by test_cmd (same packages/files)"
+ ],
+ "timeout_s": 900,
+ "difficulty": "medium",
+ "diff_stats": "+55/-8 in 7 files",
+ "prod_files": [
+  "services/audio/app/backends/__init__.py",
+  "services/audio/app/backends/acestep.py",
+  "services/audio/app/backends/base.py",
+  "services/audio/app/jobs.py",
+  "services/audio/app/main.py",
+  "services/audio/app/vibe/analyze.py",
+  "services/audio/app/vibe/jobs.py"
+ ],
+ "source": "fix(audio): vibe mimo denní režim — 503 s důvodem místo rozbité analýzy"
+}
