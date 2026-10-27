@@ -3,6 +3,7 @@
 #   core  = LLM pro vLLM + Whisper + ComfyUI (FLUX-schnell, Qwen-Image, Wan T2V, SDXL, ACE-Step)
 #   extra = Wan2.2 I2V (+29 GB) — jen když je místo
 #   uc1   = OCR enginy pro UC1 (~85 GB)
+#   w2    = druhá vlna: coder pro UC15, malé Qwen3 pro UC16/19, WD14 tagger (~43 GB)
 # Disk VM je 300 GB (z toho ~50 GB docker image v /var/lib/containerd) (ne 1 TB z plánu) → LLM ve FP8, Comfy jen repackaged fp8 soubory, ne celá repa.
 set -euo pipefail
 TIER=${1:-core}
@@ -57,6 +58,10 @@ elif [ "$TIER" = uc1 ]; then   # UC1 genealogie OCR — kandidátní enginy (Qwe
   llm Qwen/Qwen3-VL-30B-A3B-Instruct-FP8     33
   llm rednote-hilab/dots.ocr                  7
   llm allenai/olmOCR-2-7B-1025-FP8           11
+elif [ "$TIER" = w2 ]; then   # Prompts/04 §0.1 — Devstral, GLM, SDXL checkpointy a audio modely až podle místa
+  llm Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8  33
+  llm Qwen/Qwen3-8B-FP8                      10
+  llm SmilingWolf/wd-swinv2-tagger-v3         1
 elif [ "$TIER" = extra ]; then
   W=split_files
   comfy Comfy-Org/Wan_2.2_ComfyUI_Repackaged diffusion_models $W/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors 15
