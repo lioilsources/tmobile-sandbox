@@ -1,0 +1,736 @@
+{
+ "uc": "UC25",
+ "tag": "gpu",
+ "host": "ubuntu-l40s",
+ "note": "fáze A na L40S (GPU), C na CPU bez VLM (fáze B 28. 10. selhala: HTTP 400, neplatné schéma)",
+ "gpu": "NVIDIA L40S, 42055 MiB, 46068 MiB",
+ "data": "obrázky vygenerované v sandboxu (UC10 Storyteller, UC7 oči, UC8 objekty, UC5/smoke ComfyUI); žádná uživatelská galerie; kalibrační sada jen pokud existuje",
+ "throughput": {
+  "wd14": {
+   "provider": "CUDAExecutionProvider",
+   "images": 11299,
+   "wall_s": 566.1,
+   "img_per_h": 71851
+  },
+  "falconsai": {
+   "device": "cuda",
+   "images": 11299,
+   "wall_s": 684.4,
+   "img_per_h": 59434
+  },
+  "adamcodd": {
+   "device": "cuda",
+   "images": 11299,
+   "wall_s": 640.3,
+   "img_per_h": 63523
+  },
+  "siglip": {
+   "siglip_device": "cuda",
+   "images": 11299,
+   "wall_s": 742.3,
+   "img_per_h": 54801
+  },
+  "vlm": {
+   "failed": true,
+   "images": 3037,
+   "errors": 3037
+  }
+ },
+ "stats": {
+  "images": 11299,
+  "bands": {
+   "safe": 11221,
+   "suggestive": 72,
+   "nsfw": 6
+  },
+  "rating_unsure": 120,
+  "rating_unsure_share": 0.0106,
+  "images_with_any_unsure_share": 1.0,
+  "node_unsure_share_overall": 0.7537,
+  "per_node": {
+   "subject": {
+    "answered": 11299,
+    "agreed": 9412,
+    "unsure": 1887,
+    "unsure_share": 0.167
+   },
+   "person.age_group": {
+    "answered": 8751,
+    "agreed": 2747,
+    "unsure": 6004,
+    "unsure_share": 0.6861
+   },
+   "person.gender_presentation": {
+    "answered": 9598,
+    "agreed": 7064,
+    "unsure": 2534,
+    "unsure_share": 0.264
+   },
+   "person.skin_tone": {
+    "answered": 8513,
+    "agreed": 152,
+    "unsure": 8361,
+    "unsure_share": 0.9821
+   },
+   "person.hair.length": {
+    "answered": 8941,
+    "agreed": 3798,
+    "unsure": 5143,
+    "unsure_share": 0.5752
+   },
+   "person.hair.style": {
+    "answered": 9598,
+    "agreed": 544,
+    "unsure": 9054,
+    "unsure_share": 0.9433
+   },
+   "person.hair.color": {
+    "answered": 9041,
+    "agreed": 2791,
+    "unsure": 6250,
+    "unsure_share": 0.6913
+   },
+   "person.eyes.color": {
+    "answered": 8571,
+    "agreed": 559,
+    "unsure": 8012,
+    "unsure_share": 0.9348
+   },
+   "person.body_type": {
+    "answered": 8473,
+    "agreed": 7,
+    "unsure": 8466,
+    "unsure_share": 0.9992
+   },
+   "person.clothing.coverage": {
+    "answered": 9145,
+    "agreed": 5054,
+    "unsure": 4091,
+    "unsure_share": 0.4473
+   },
+   "person.clothing.type": {
+    "answered": 9598,
+    "agreed": 4099,
+    "unsure": 5499,
+    "unsure_share": 0.5729
+   },
+   "person.expression": {
+    "answered": 8810,
+    "agreed": 657,
+    "unsure": 8153,
+    "unsure_share": 0.9254
+   },
+   "style.medium": {
+    "answered": 11103,
+    "agreed": 1093,
+    "unsure": 10010,
+    "unsure_share": 0.9016
+   },
+   "style.era": {
+    "answered": 11281,
+    "agreed": 17,
+    "unsure": 11264,
+    "unsure_share": 0.9985
+   },
+   "style.palette": {
+    "answered": 11285,
+    "agreed": 435,
+    "unsure": 10850,
+    "unsure_share": 0.9615
+   },
+   "style.lighting": {
+    "answered": 11121,
+    "agreed": 116,
+    "unsure": 11005,
+    "unsure_share": 0.9896
+   },
+   "style.camera": {
+    "answered": 11226,
+    "agreed": 2435,
+    "unsure": 8791,
+    "unsure_share": 0.7831
+   }
+  },
+  "minor_decisions": {
+   "none": 11229,
+   "block": 70
+  },
+  "evaluators": [
+   "wd14",
+   "siglip"
+  ]
+ },
+ "stats_2eval": {
+  "images": 11299,
+  "bands": {
+   "safe": 11221,
+   "suggestive": 72,
+   "nsfw": 6
+  },
+  "rating_unsure": 120,
+  "rating_unsure_share": 0.0106,
+  "images_with_any_unsure_share": 1.0,
+  "node_unsure_share_overall": 0.7537,
+  "per_node": {
+   "subject": {
+    "answered": 11299,
+    "agreed": 9412,
+    "unsure": 1887,
+    "unsure_share": 0.167
+   },
+   "person.age_group": {
+    "answered": 8751,
+    "agreed": 2747,
+    "unsure": 6004,
+    "unsure_share": 0.6861
+   },
+   "person.gender_presentation": {
+    "answered": 9598,
+    "agreed": 7064,
+    "unsure": 2534,
+    "unsure_share": 0.264
+   },
+   "person.skin_tone": {
+    "answered": 8513,
+    "agreed": 152,
+    "unsure": 8361,
+    "unsure_share": 0.9821
+   },
+   "person.hair.length": {
+    "answered": 8941,
+    "agreed": 3798,
+    "unsure": 5143,
+    "unsure_share": 0.5752
+   },
+   "person.hair.style": {
+    "answered": 9598,
+    "agreed": 544,
+    "unsure": 9054,
+    "unsure_share": 0.9433
+   },
+   "person.hair.color": {
+    "answered": 9041,
+    "agreed": 2791,
+    "unsure": 6250,
+    "unsure_share": 0.6913
+   },
+   "person.eyes.color": {
+    "answered": 8571,
+    "agreed": 559,
+    "unsure": 8012,
+    "unsure_share": 0.9348
+   },
+   "person.body_type": {
+    "answered": 8473,
+    "agreed": 7,
+    "unsure": 8466,
+    "unsure_share": 0.9992
+   },
+   "person.clothing.coverage": {
+    "answered": 9145,
+    "agreed": 5054,
+    "unsure": 4091,
+    "unsure_share": 0.4473
+   },
+   "person.clothing.type": {
+    "answered": 9598,
+    "agreed": 4099,
+    "unsure": 5499,
+    "unsure_share": 0.5729
+   },
+   "person.expression": {
+    "answered": 8810,
+    "agreed": 657,
+    "unsure": 8153,
+    "unsure_share": 0.9254
+   },
+   "style.medium": {
+    "answered": 11103,
+    "agreed": 1093,
+    "unsure": 10010,
+    "unsure_share": 0.9016
+   },
+   "style.era": {
+    "answered": 11281,
+    "agreed": 17,
+    "unsure": 11264,
+    "unsure_share": 0.9985
+   },
+   "style.palette": {
+    "answered": 11285,
+    "agreed": 435,
+    "unsure": 10850,
+    "unsure_share": 0.9615
+   },
+   "style.lighting": {
+    "answered": 11121,
+    "agreed": 116,
+    "unsure": 11005,
+    "unsure_share": 0.9896
+   },
+   "style.camera": {
+    "answered": 11226,
+    "agreed": 2435,
+    "unsure": 8791,
+    "unsure_share": 0.7831
+   }
+  },
+  "minor_decisions": {
+   "none": 11229,
+   "block": 70
+  },
+  "evaluators": [
+   "wd14",
+   "siglip"
+  ]
+ },
+ "agreement_wd14_siglip": {
+  "person.age_group": {
+   "n": 3014,
+   "agreement": 0.8962
+  },
+  "person.body_type": {
+   "n": 12,
+   "agreement": 0.5833
+  },
+  "person.clothing.coverage": {
+   "n": 5668,
+   "agreement": 0.8885
+  },
+  "person.clothing.type": {
+   "n": 8419,
+   "agreement": 0.4144
+  },
+  "person.expression": {
+   "n": 4335,
+   "agreement": 0.1516
+  },
+  "person.eyes.color": {
+   "n": 2687,
+   "agreement": 0.208
+  },
+  "person.gender_presentation": {
+   "n": 8419,
+   "agreement": 0.6801
+  },
+  "person.hair.color": {
+   "n": 6360,
+   "agreement": 0.4388
+  },
+  "person.hair.length": {
+   "n": 5076,
+   "agreement": 0.5853
+  },
+  "person.hair.style": {
+   "n": 8419,
+   "agreement": 0.054
+  },
+  "person.skin_tone": {
+   "n": 211,
+   "agreement": 0.1185
+  },
+  "style.camera": {
+   "n": 2888,
+   "agreement": 0.6908
+  },
+  "style.era": {
+   "n": 26,
+   "agreement": 0.6538
+  },
+  "style.lighting": {
+   "n": 366,
+   "agreement": 0.3169
+  },
+  "style.medium": {
+   "n": 2320,
+   "agreement": 0.4711
+  },
+  "style.palette": {
+   "n": 899,
+   "agreement": 0.4839
+  },
+  "subject": {
+   "n": 11277,
+   "agreement": 0.6891
+  }
+ },
+ "head": {
+  "label_source": "consensus pseudo-labels (re-train on human labels)",
+  "train": {
+   "images": 9040,
+   "val": 2259,
+   "epochs": 200,
+   "seconds": 91.34
+  },
+  "val_metrics": {
+   "subject": {
+    "n_val": 1858,
+    "n_train": 7554,
+    "f1_macro_vs_labels": 0.8685457133486494
+   },
+   "person.age_group": {
+    "n_val": 549,
+    "n_train": 2198,
+    "f1_macro_vs_labels": 0.8703035315938541
+   },
+   "person.gender_presentation": {
+    "n_val": 1430,
+    "n_train": 5634,
+    "f1_macro_vs_labels": 0.9707138390594763
+   },
+   "person.skin_tone": {
+    "n_val": 33,
+    "n_train": 119,
+    "f1_macro_vs_labels": 0.4307400379506641
+   },
+   "person.hair.length": {
+    "n_val": 791,
+    "n_train": 3007,
+    "f1_macro_vs_labels": 0.7404141303523344
+   },
+   "person.hair.style": {
+    "n_val": 116,
+    "n_train": 428,
+    "f1_macro_vs_labels": 0.5162716830689754
+   },
+   "person.hair.color": {
+    "n_val": 572,
+    "n_train": 2219,
+    "f1_macro_vs_labels": 0.825869768122082
+   },
+   "person.eyes.color": {
+    "n_val": 104,
+    "n_train": 455,
+    "f1_macro_vs_labels": 0.7013412153572336
+   },
+   "person.body_type": {
+    "n_val": 1,
+    "n_train": 6,
+    "f1_macro_vs_labels": 1.0
+   },
+   "person.clothing.coverage": {
+    "n_val": 977,
+    "n_train": 4077,
+    "f1_macro_vs_labels": 0.4994877049180328
+   },
+   "person.clothing.type": {
+    "n_val": 796,
+    "n_train": 3303,
+    "f1_macro_vs_labels": 0.7146392958357646
+   },
+   "person.expression": {
+    "n_val": 117,
+    "n_train": 540,
+    "f1_macro_vs_labels": 0.8484848484848485
+   },
+   "style.medium": {
+    "n_val": 215,
+    "n_train": 878,
+    "f1_macro_vs_labels": 0.7672646363509944
+   },
+   "style.era": {
+    "n_val": 8,
+    "n_train": 9,
+    "f1_macro_vs_labels": 0.8545454545454545
+   },
+   "style.palette": {
+    "n_val": 83,
+    "n_train": 352,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.lighting": {
+    "n_val": 28,
+    "n_train": 88,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.camera": {
+    "n_val": 489,
+    "n_train": 1946,
+    "f1_macro_vs_labels": 0.856579471920694
+   }
+  },
+  "val_temperature_mae": 0.01976795308291912,
+  "dim": 1152,
+  "bench": {
+   "batch1_ms_per_call": 0.1906,
+   "batch1_ms_per_image": 0.1906,
+   "batch64_ms_per_call": 0.6137,
+   "batch64_ms_per_image": 0.0096,
+   "onnx_bytes": 2609664
+  }
+ },
+ "f1_vs_intended_calib": {
+  "wd14": {
+   "person.age_group": {
+    "n": 410,
+    "macro_f1": 0.3265
+   },
+   "person.clothing.coverage": {
+    "n": 398,
+    "macro_f1": 0.933
+   },
+   "person.clothing.type": {
+    "n": 325,
+    "macro_f1": 0.7489
+   },
+   "person.expression": {
+    "n": 398,
+    "macro_f1": 0.551
+   },
+   "person.eyes.color": {
+    "n": 398,
+    "macro_f1": 0.9397
+   },
+   "person.gender_presentation": {
+    "n": 398,
+    "macro_f1": 0.8613
+   },
+   "person.hair.color": {
+    "n": 398,
+    "macro_f1": 0.9207
+   },
+   "person.hair.length": {
+    "n": 115,
+    "macro_f1": 0.9726
+   },
+   "person.hair.style": {
+    "n": 331,
+    "macro_f1": 0.6843
+   },
+   "person.skin_tone": {
+    "n": 398,
+    "macro_f1": 0.2433
+   },
+   "style.camera": {
+    "n": 398,
+    "macro_f1": 0.8362
+   },
+   "style.lighting": {
+    "n": 530,
+    "macro_f1": 0.3142
+   },
+   "style.medium": {
+    "n": 530,
+    "macro_f1": 0.1277
+   },
+   "style.palette": {
+    "n": 530,
+    "macro_f1": 0.1445
+   },
+   "subject": {
+    "n": 542,
+    "macro_f1": 0.7569
+   }
+  },
+  "siglip": {
+   "person.age_group": {
+    "n": 410,
+    "macro_f1": 0.329
+   },
+   "person.clothing.coverage": {
+    "n": 398,
+    "macro_f1": 0.9141
+   },
+   "person.clothing.type": {
+    "n": 325,
+    "macro_f1": 0.6958
+   },
+   "person.expression": {
+    "n": 398,
+    "macro_f1": 0.6468
+   },
+   "person.eyes.color": {
+    "n": 398,
+    "macro_f1": 0.282
+   },
+   "person.gender_presentation": {
+    "n": 398,
+    "macro_f1": 0.6968
+   },
+   "person.hair.color": {
+    "n": 398,
+    "macro_f1": 0.6982
+   },
+   "person.hair.length": {
+    "n": 115,
+    "macro_f1": 0.8479
+   },
+   "person.hair.style": {
+    "n": 331,
+    "macro_f1": 0.5226
+   },
+   "person.skin_tone": {
+    "n": 398,
+    "macro_f1": 0.3738
+   },
+   "style.camera": {
+    "n": 398,
+    "macro_f1": 0.5476
+   },
+   "style.lighting": {
+    "n": 530,
+    "macro_f1": 0.2237
+   },
+   "style.medium": {
+    "n": 530,
+    "macro_f1": 0.3061
+   },
+   "style.palette": {
+    "n": 530,
+    "macro_f1": 0.6006
+   },
+   "subject": {
+    "n": 542,
+    "macro_f1": 0.7113
+   }
+  },
+  "head": {
+   "person.age_group": {
+    "n": 410,
+    "macro_f1": 0.2848
+   },
+   "person.clothing.coverage": {
+    "n": 398,
+    "macro_f1": 1.0
+   },
+   "person.clothing.type": {
+    "n": 325,
+    "macro_f1": 0.6476
+   },
+   "person.expression": {
+    "n": 398,
+    "macro_f1": 0.669
+   },
+   "person.eyes.color": {
+    "n": 398,
+    "macro_f1": 0.4445
+   },
+   "person.gender_presentation": {
+    "n": 398,
+    "macro_f1": 0.875
+   },
+   "person.hair.color": {
+    "n": 398,
+    "macro_f1": 0.88
+   },
+   "person.hair.length": {
+    "n": 115,
+    "macro_f1": 0.9043
+   },
+   "person.hair.style": {
+    "n": 331,
+    "macro_f1": 0.3666
+   },
+   "person.skin_tone": {
+    "n": 398,
+    "macro_f1": 0.3503
+   },
+   "style.camera": {
+    "n": 398,
+    "macro_f1": 0.7569
+   },
+   "style.lighting": {
+    "n": 530,
+    "macro_f1": 0.2875
+   },
+   "style.medium": {
+    "n": 530,
+    "macro_f1": 0.0716
+   },
+   "style.palette": {
+    "n": 530,
+    "macro_f1": 0.1866
+   },
+   "subject": {
+    "n": 542,
+    "macro_f1": 0.7931
+   }
+  }
+ },
+ "f1_vs_intended_calib_mean": {
+  "wd14": 0.6241,
+  "siglip": 0.5598,
+  "head": 0.5679
+ },
+ "bands_pseudo": {
+  "thresholds": {
+   "safe_max": 0.092,
+   "suggestive_max": 0.3128,
+   "nsfw_max": 0.3737,
+   "explicit_guard": null
+  },
+  "source": "pseudo:wd14-argmax",
+  "n": 11299,
+  "label_counts": {
+   "safe": 9970,
+   "suggestive": 1327,
+   "nsfw": 1,
+   "explicit": 1
+  },
+  "valid": false,
+  "explicit_guard_valid": false,
+  "explicit_needed": 299,
+  "calibration": {
+   "explicit_recall_with_guard": 1.0,
+   "safe": {
+    "precision": 0.9826086956521739,
+    "precision_lower": 0.9803108295388598,
+    "n_pred_safe": 9890
+   },
+   "unsure_share_from_guard": 0.0
+  },
+  "targets": {
+   "explicit_recall": 0.99,
+   "safe_precision": 0.98
+  }
+ },
+ "bands_synth": {
+  "thresholds": {
+   "safe_max": 0.074283,
+   "suggestive_max": 0.420305,
+   "nsfw_max": 0.674671,
+   "explicit_guard": 0.603319
+  },
+  "source": "synthetic",
+  "n": 3000,
+  "label_counts": {
+   "safe": 1630,
+   "suggestive": 602,
+   "nsfw": 369,
+   "explicit": 399
+  },
+  "valid": true,
+  "explicit_guard_valid": true,
+  "explicit_needed": 299,
+  "calibration": {
+   "explicit_recall_with_guard": 0.9974937343358395,
+   "safe": {
+    "precision": 0.9882766705744431,
+    "precision_lower": 0.9804866300175812,
+    "n_pred_safe": 853
+   },
+   "unsure_share_from_guard": 0.029333333333333333
+  },
+  "targets": {
+   "explicit_recall": 0.99,
+   "safe_precision": 0.98
+  },
+  "test": {
+   "explicit_recall": 0.9941245593419507,
+   "safe_precision": 0.9880332986472424,
+   "safe_coverage": 0.5258549931600547,
+   "unsure_share": 0.02835
+  }
+ },
+ "calib_guard": {
+  "evaluated": 542,
+  "kept": 541,
+  "deleted": 1,
+  "deleted_by_rule": {
+   "child prompt not confidently safe": 1
+  },
+  "child_prompts": 12,
+  "child_prompts_flagged_child_by_any_evaluator": 11,
+  "dry_run": false
+ }
+}

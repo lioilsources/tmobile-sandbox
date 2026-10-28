@@ -46,6 +46,9 @@ def throughput(d: Path) -> dict:
             for line in p.read_text().splitlines():
                 if line.startswith("{") and "img_per_h" in line:
                     out[name] = json.loads(line)
+            if out.get(name, {}).get("errors") and out[name]["errors"] >= out[name].get("images", 0):
+                # every request failed (e.g. HTTP 400): no throughput to report
+                out[name] = {"failed": True, "images": out[name]["images"], "errors": out[name]["errors"]}
     for k, f in (("wd14", "wd14.err"), ("nsfw", "nsfw.err"), ("siglip", "siglip.err")):
         p = d / f
         if p.exists():
@@ -136,7 +139,9 @@ def main():
     a = ap.parse_args()
     d = Path(a.dir)
 
-    wd14, siglip, vlm, head = (labels_by(jl(d / f"{n}.jsonl")) for n in ("wd14", "siglip", "vlm", "head"))
+    # failed requests (VLM HTTP errors) are no answer — keep them out of F1/agreement
+    wd14, siglip, vlm, head = (labels_by([r for r in jl(d / f"{n}.jsonl") if "error" not in r])
+                               for n in ("wd14", "siglip", "vlm", "head"))
     res = {
         "uc": "UC25", "tag": a.tag, "host": platform.node(), "note": a.note,
         "gpu": subprocess.run(["nvidia-smi", "--query-gpu=name,memory.used,memory.total", "--format=csv,noheader"],
