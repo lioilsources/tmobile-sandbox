@@ -5,6 +5,7 @@
 #   uc1   = OCR enginy pro UC1 (~85 GB)
 #   w2img = druhá vlna, SDXL rodiny + FLUX.1-dev FP8 pro UC18/19 (~52 GB; FLUX.1-dev má nekomerční licenci → jen interní měření)
 #   w2    = druhá vlna: coder pro UC15, malé Qwen3 pro UC16/19, WD14 tagger (~43 GB)
+#   w2gate = UC24 audio soudci (Audiobox, CLAP, Qwen2-Audio) + UC25 SigLIP 2 a NSFW klasifikátory (~29 GB)
 # Disk VM je 300 GB (z toho ~50 GB docker image v /var/lib/containerd) (ne 1 TB z plánu) → LLM ve FP8, Comfy jen repackaged fp8 soubory, ne celá repa.
 set -euo pipefail
 TIER=${1:-core}
@@ -70,6 +71,14 @@ elif [ "$TIER" = w2img ]; then   # Prompts/04 §0.1 #23
   comfy cagliostrolab/animagine-xl-4.0    checkpoints animagine-xl-4.0.safetensors 7
   comfy RunDiffusion/Juggernaut-XL-v9     checkpoints Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors 8
   comfy Comfy-Org/Flux-1-Dev              checkpoints flux1-dev-fp8.safetensors 18
+elif [ "$TIER" = w2gate ]; then   # Prompts/04 §0.1 #31 (UC24 audio) + #32 (UC25 SFW/taxonomie); PANNs/NISQA bere venv
+  llm facebook/audiobox-aesthetics           1
+  llm laion/clap-htsat-unfused               1
+  llm laion/larger_clap_general              1
+  llm Qwen/Qwen2-Audio-7B-Instruct          17
+  llm google/siglip2-so400m-patch16-512      5
+  llm Falconsai/nsfw_image_detection         2
+  llm AdamCodd/vit-base-nsfw-detector        2
 elif [ "$TIER" = extra ]; then
   W=split_files
   comfy Comfy-Org/Wan_2.2_ComfyUI_Repackaged diffusion_models $W/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors 15
