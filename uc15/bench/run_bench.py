@@ -262,15 +262,41 @@ def vllm_counters(base_url: str) -> dict:
 
 
 # ----------------------------------------------------------------------------- metrics
-def export_sessions(opencode: str, env: dict, cwd: Path, log: Path) -> list[dict]:
+def transcript_session_ids(transcript: Path) -> list[str]:
+    ids = []
+    for e in read_transcript(transcript):
+        sid = e.get("sessionID")
+        if sid and sid not in ids:
+            ids.append(sid)
+    return ids
+
+
+def read_transcript(transcript: Path) -> list[dict]:
+    events = []
+    try:
+        with open(transcript) as f:
+            for ln in f:
+                try:
+                    events.append(json.loads(ln))
+                except json.JSONDecodeError:
+                    continue
+    except OSError:
+        pass
+    return events
+
+
+def export_sessions(opencode: str, env: dict, cwd: Path, log: Path, transcript: Path) -> list[dict]:
+    # `session list` is scoped to the project and sometimes comes back empty; the transcript
+    # always names the root session, so export those ids too
     rc, out = sh([opencode, "session", "list", "--format", "json"], cwd=cwd, env=env, timeout=60)
     try:
-        sessions = json.loads(out[out.index("["):])
-    except (ValueError, json.JSONDecodeError):
-        return []
+        ids = [s["id"] for s in json.loads(out[out.index("["):])]
+    except (ValueError, json.JSONDecodeError, KeyError, TypeError):
+        ids = []
+    ids += [i for i in transcript_session_ids(transcript) if i not in ids]
     exported = []
-    for s in sessions:
-        rc, out = sh([opencode, "export", s["id"]], cwd=cwd, env=env, timeout=120)
+    for sid in ids:
+        rc, out = sh([opencode, "export", sid], cwd=cwd, env=env, timeout=120)
         try:
             exported.append(json.loads(out[out.index("{"):]))
         except (ValueError, json.JSONDecodeError):
@@ -278,6 +304,25 @@ def export_sessions(opencode: str, env: dict, cwd: Path, log: Path) -> list[dict
     with open(log, "w") as f:
         json.dump(exported, f)
     return exported
+
+
+def transcript_metrics(transcript: Path) -> dict:
+    """Fallback when no session could be exported: the root session's steps from `run --format json`
+    (subagent sessions are not in the transcript, so this undercounts delegating configs)."""
+    tin = tout = calls = 0
+    tools: dict[str, int] = {}
+    for e in read_transcript(transcript):
+        part = e.get("part") or {}
+        if e.get("type") == "step_finish":
+            tk = part.get("tokens") or {}
+            calls += 1
+            tin += tk.get("input", 0)
+            tout += tk.get("output", 0) + tk.get("reasoning", 0)
+        elif e.get("type") == "tool_use":
+            name = part.get("tool", "?")
+            tools[name] = tools.get(name, 0) + 1
+    return {"tokens_in": tin, "tokens_out": tout, "llm_calls": calls, "tool_calls": tools,
+            "metrics_source": "transcript"}
 
 
 def session_metrics(exported: list[dict]) -> dict:
@@ -431,10 +476,12 @@ def run_one(task, cfg_name, a, base_env, run_root: Path, sampler: Sampler | None
         rc_diff, diff = sh("git add -A && git diff --cached --stat HEAD", cwd=work)
         (d / "agent.diff").write_text(sh("git diff --cached HEAD", cwd=work)[1])
         ok, tail = restore_tests_and_check(task, work, base_env, log, task.get("timeout_s", 900))
-        exported = export_sessions(a.opencode, env, work, d / "sessions.json")
+        exported = export_sessions(a.opencode, env, work, d / "sessions.json", d / "transcript.jsonl")
         row.update({"pass": ok, "agent_rc": rc, "timed_out": rc == 124, "secs": round(t1 - t0, 1),
                     "diffstat": diff.strip().splitlines()[-1:] if diff.strip() else [],
                     **session_metrics(exported)})
+        if not exported:
+            row.update(transcript_metrics(d / "transcript.jsonl"))
         if v0 and v1:
             row["vllm_delta"] = {k: v1.get(k, 0) - v0.get(k, 0) for k in v1}
             row["vllm_delta_note"] = "server-wide counters; exact only when runs are not parallel"
@@ -495,6 +542,24 @@ def write_summary(rows: list[dict], path: Path, meta: dict):
     path.write_text("\n".join(lines) + "\n")
 
 
+def backfill(run_root: Path):
+    """Recompute token metrics of finished rows whose session export came back empty."""
+    res_path = run_root / "results.jsonl"
+    rows = [json.loads(ln) for ln in res_path.read_text().splitlines() if ln.strip()]
+    fixed = 0
+    for r in rows:
+        if r.get("sessions") or r.get("metrics_source") or "config" not in r:
+            continue
+        tr = run_root / "runs" / r["config"].replace("+", "_") / r["task"] / "transcript.jsonl"
+        if tr.exists():
+            r.update(transcript_metrics(tr))
+            fixed += 1
+    res_path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
+    meta = json.loads((run_root / "meta.json").read_text())
+    write_summary(rows, run_root / "summary.md", meta)
+    print(f"backfilled {fixed}/{len(rows)} rows in {res_path}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--env", help="swarm env preset (opencode-swarm/env/*.env)")
@@ -511,7 +576,10 @@ def main():
     ap.add_argument("--keep", action="store_true", help="keep working copies and session DBs")
     ap.add_argument("--dry-run", action="store_true", help="prepare everything, print commands, do not call the model")
     ap.add_argument("--check-gold", action="store_true", help="harness self-test: base fails, gold passes (no LLM)")
+    ap.add_argument("--backfill", metavar="RUN_DIR", help="fill token metrics of a finished run from transcripts")
     a = ap.parse_args()
+    if a.backfill:
+        return backfill(Path(a.backfill))
 
     base_env = dict(os.environ)
     envsh = TASKS_DIR / "env.sh"
