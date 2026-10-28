@@ -1,0 +1,272 @@
+{
+ "uc": "UC24",
+ "what": "statický sken katalogu Storytelleru (rag/audio/catalog.json @ master 52026c6) na slova z pravidel přepisovače — HYPOTÉZA, ne měření",
+ "n_prompts": 186,
+ "n_with_risk_words": 30,
+ "words": [
+  "deep",
+  "thunderous",
+  "thunder",
+  "rumble",
+  "rumbling",
+  "booming",
+  "boom",
+  "bass",
+  "heavy",
+  "loud",
+  "roar",
+  "roaring",
+  "explosive",
+  "crash",
+  "distant",
+  "far away",
+  "crackling",
+  "low"
+ ],
+ "rows": [
+  {
+   "id": "creature-wolf",
+   "kind": "sfx",
+   "prompt": "a wolf howling at night, far away",
+   "risk_words": [
+    "far away"
+   ]
+  },
+  {
+   "id": "creature-dragon",
+   "kind": "sfx",
+   "prompt": "a big dragon roaring with a whoosh of fire, not too scary",
+   "risk_words": [
+    "roaring"
+   ]
+  },
+  {
+   "id": "creature-bear",
+   "kind": "sfx",
+   "prompt": "a bear grumbling deep and sleepy",
+   "risk_words": [
+    "deep"
+   ]
+  },
+  {
+   "id": "creature-giant",
+   "kind": "sfx",
+   "prompt": "a giant's heavy footsteps and a sleepy yawn, no words",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "creature-lion",
+   "kind": "sfx",
+   "prompt": "a lion giving one deep roar, majestic not scary",
+   "risk_words": [
+    "deep",
+    "roar"
+   ]
+  },
+  {
+   "id": "creature-big-cat",
+   "kind": "sfx",
+   "prompt": "a big cat growling low and purring, not scary",
+   "risk_words": [
+    "low"
+   ]
+  },
+  {
+   "id": "creature-jackal",
+   "kind": "sfx",
+   "prompt": "a jackal yipping and howling briefly, far away",
+   "risk_words": [
+    "far away"
+   ]
+  },
+  {
+   "id": "creature-crocodile",
+   "kind": "sfx",
+   "prompt": "a crocodile sliding into water with a slow splash and a low rumble",
+   "risk_words": [
+    "rumble",
+    "low"
+   ]
+  },
+  {
+   "id": "creature-buffalo",
+   "kind": "sfx",
+   "prompt": "a buffalo snorting and stamping heavy hooves",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "creature-king",
+   "kind": "sfx",
+   "prompt": "a short royal trumpet call and a heavy cloak swishing, no words",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "creature-wizard",
+   "kind": "sfx",
+   "prompt": "a staff striking the floor with a deep magical hum and crackle",
+   "risk_words": [
+    "deep"
+   ]
+  },
+  {
+   "id": "creature-holy-man",
+   "kind": "sfx",
+   "prompt": "a small prayer bell ringing and a calm low hum, no words",
+   "risk_words": [
+    "low"
+   ]
+  },
+  {
+   "id": "creature-god",
+   "kind": "sfx",
+   "prompt": "a deep warm gong with shimmering light, majestic",
+   "risk_words": [
+    "deep"
+   ]
+  },
+  {
+   "id": "action-curse",
+   "kind": "sfx",
+   "prompt": "a dark curse falling, low rumble and fading chime, not scary",
+   "risk_words": [
+    "rumble",
+    "low"
+   ]
+  },
+  {
+   "id": "action-gate",
+   "kind": "sfx",
+   "prompt": "a heavy castle gate opening with chains",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-thunder",
+   "kind": "sfx",
+   "prompt": "distant thunder rolling",
+   "risk_words": [
+    "thunder",
+    "distant"
+   ]
+  },
+  {
+   "id": "action-fire",
+   "kind": "sfx",
+   "prompt": "a crackling campfire",
+   "risk_words": [
+    "crackling"
+   ]
+  },
+  {
+   "id": "action-thud",
+   "kind": "sfx",
+   "prompt": "something heavy falling on the ground with a soft thud",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-stone-grind",
+   "kind": "sfx",
+   "prompt": "a heavy stone slab grinding slowly across stone",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-campfire",
+   "kind": "sfx",
+   "prompt": "a small campfire crackling at night with soft pops",
+   "risk_words": [
+    "crackling"
+   ]
+  },
+  {
+   "id": "action-lock-key",
+   "kind": "sfx",
+   "prompt": "a heavy iron key turning in a lock with a click",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-chest",
+   "kind": "sfx",
+   "prompt": "a heavy wooden chest lid creaking open and thumping shut",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-chains",
+   "kind": "sfx",
+   "prompt": "heavy iron chains rattling",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "action-market",
+   "kind": "sfx",
+   "prompt": "a busy market square, distant chatter and clatter, no words",
+   "risk_words": [
+    "distant"
+   ]
+  },
+  {
+   "id": "action-stomp",
+   "kind": "sfx",
+   "prompt": "heavy feet stomping hard on a wooden floor three times",
+   "risk_words": [
+    "heavy"
+   ]
+  },
+  {
+   "id": "env-village",
+   "kind": "music",
+   "prompt": "rustic village, folk flute and fiddle, distant farm life",
+   "risk_words": [
+    "distant"
+   ]
+  },
+  {
+   "id": "env-forest",
+   "kind": "music",
+   "prompt": "deep old forest, soft strings, woodwinds, rustling leaves",
+   "risk_words": [
+    "deep"
+   ]
+  },
+  {
+   "id": "env-garden",
+   "kind": "music",
+   "prompt": "blooming garden, music box and harp, birds far away",
+   "risk_words": [
+    "far away"
+   ]
+  },
+  {
+   "id": "env-underground",
+   "kind": "music",
+   "prompt": "cave and underground halls, low pads, dripping water, glass chimes",
+   "risk_words": [
+    "low"
+   ]
+  },
+  {
+   "id": "env-cottage",
+   "kind": "music",
+   "prompt": "cozy cottage by the fire, soft piano, crackling hearth",
+   "risk_words": [
+    "crackling"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "uc": "UC24",
+ "what": "sfxgate krok 1 (příznaky + simulace telefonu + prahy) — ms/klip, 1 vlákno (OMP=1), uc24/bench_gate.py, 50 opakování, procedurální klipy 44.1 kHz mono",
+ "mac_m2": {"bell_3s": {"median_ms": 4.16, "p95_ms": 4.48}, "footsteps_3s": {"median_ms": 3.97, "p95_ms": 4.19}, "rain_8s": {"median_ms": 10.47, "p95_ms": 10.99}, "wind_30s": {"median_ms": 41.03, "p95_ms": 42.73}},
+ "l40s_vm_xeon_6548Y_under_load": {"bell_3s": {"median_ms": 7.06, "p95_ms": 35.08}, "footsteps_3s": {"median_ms": 6.61, "p95_ms": 33.49}, "rain_8s": {"median_ms": 19.85, "p95_ms": 47.47}, "wind_30s": {"median_ms": 113.85, "p95_ms": 219.16},
+   "note": "VM load average 10–17 na 8 vCPU (UC11 vLLM grid, UC15, UC25 a CPU soudci UC24 současně) — p95 je hlavně čekání na CPU"},
+ "earlier_version_ms_3s_vm": 33.0, "earlier_version_note": "pyloudnorm + resample_poly per špička + časová simulace telefonu, stejný VM",
+ "optimisations": ["vlastní BS.1770 LUFS (reshape po 100ms blocích) místo pyloudnorm smyčky", "true-peak jen na oknech kolem maxim 64vz. bloků (FFT 4×)", "scipy.fft místo numpy.fft", "kliky po 512vz. blocích místo klouzavého průměru", "simulace telefonu ve frekvenční oblasti (Parseval) a na polovičním vzorkování"],
+ "learned_gate_onnx_ms": {"median_approx": 0.2, "note": "LightGBM ONNX nad 32 příznaky, onnxruntime CPU, VM"}
+}

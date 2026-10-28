@@ -1,0 +1,50 @@
+{
+ "uc": "UC24",
+ "what": "krok 4 feedback smyčka nad 173 SFX z katalogu Storytelleru, SIMULOVANÝ generátor (gen.py sim) — měří smyčku a přepisovač, ne kvalitu MOSS/SAO",
+ "reseed_only": {
+  "n": 173,
+  "first_try_pass": 0.538,
+  "first_try_accepted_incl_repair": 0.717,
+  "accepted_within_3": 0.763,
+  "mean_iterations": 1.54,
+  "generations_total": 266,
+  "rewrites": 0,
+  "rewrite_ms_median": null,
+  "first_try_reason_counts": {
+   "clicks": 33,
+   "rumble": 29,
+   "hiss": 17,
+   "lead_silence": 8,
+   "phone_drop": 4,
+   "clipping": 3,
+   "true_peak": 3,
+   "silent": 1
+  },
+  "backend": "sim",
+  "rewrite": false,
+  "wall_s": 105.2
+ },
+ "rewrite_qwen3_8b": {
+  "n": 173,
+  "first_try_pass": 0.538,
+  "first_try_accepted_incl_repair": 0.717,
+  "accepted_within_3": 0.879,
+  "mean_iterations": 1.43,
+  "generations_total": 247,
+  "rewrites": 74,
+  "rewrite_ms_median": 15433,
+  "first_try_reason_counts": {
+   "clicks": 33,
+   "rumble": 29,
+   "hiss": 17,
+   "lead_silence": 8,
+   "phone_drop": 4,
+   "true_peak": 3,
+   "clipping": 3,
+   "silent": 1
+  },
+  "backend": "sim",
+  "rewrite": true,
+  "wall_s": 1361.5
+ }
+}

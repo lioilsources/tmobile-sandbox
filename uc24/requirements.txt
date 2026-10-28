@@ -1,0 +1,7 @@
+# UC24 — venv na VM: /cold/venvs/uc24 (python 3.12). sfxgate samotný potřebuje jen první řádek.
+numpy scipy soundfile pyloudnorm noisereduce
+# soudci a učený gate
+torch torchaudio  # --index-url https://download.pytorch.org/whl/cu128
+transformers==4.57.* accelerate librosa panns-inference audiobox_aesthetics
+scikit-learn lightgbm onnx onnxruntime onnxmltools skl2onnx
+openevolve pytest

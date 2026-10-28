@@ -1,0 +1,1652 @@
+{
+ "uc": "UC24",
+ "what": "soudci kroku 2 na syntetické sadě (test split; prahy z dev)",
+ "meta": {
+  "aesthetics": {
+   "seconds": 1317.2070388793945,
+   "n": 460.0,
+   "audio_s": 2526.0
+  },
+  "clap-general": {
+   "seconds": 1745.3457190990448,
+   "n": 1104.0,
+   "audio_s": 6090.0
+  },
+  "clap-unfused": {
+   "seconds": 1602.541467666626,
+   "n": 2070.0,
+   "audio_s": 11436.0
+  },
+  "panns": {
+   "seconds": 776.7331433296204,
+   "n": 2070.0,
+   "audio_s": 11436.0
+  }
+ },
+ "defect": {
+  "sfxgate": {
+   "sfx": {
+    "thr_dev_p90_clean": 0.0,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.949,
+     "det": 1.0
+    },
+    "clipping": {
+     "auc": 0.984,
+     "det": 1.0
+    },
+    "hiss": {
+     "auc": 0.931,
+     "det": 1.0
+    },
+    "haze": {
+     "auc": 0.911,
+     "det": 1.0
+    },
+    "clicks": {
+     "auc": 0.958,
+     "det": 1.0
+    },
+    "dc_offset": {
+     "auc": 0.923,
+     "det": 1.0
+    },
+    "lead_silence": {
+     "auc": 0.881,
+     "det": 0.958
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.0,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.949,
+     "det": 1.0
+    },
+    "clipping": {
+     "auc": 0.976,
+     "det": 1.0
+    },
+    "hiss": {
+     "auc": 0.781,
+     "det": 0.786
+    },
+    "haze": {
+     "auc": 0.847,
+     "det": 0.929
+    },
+    "clicks": {
+     "auc": 0.833,
+     "det": 0.81
+    },
+    "dc_offset": {
+     "auc": 0.901,
+     "det": 1.0
+    },
+    "lead_silence": {
+     "auc": 0.878,
+     "det": 1.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.0,
+    "fpr_test": 0.167,
+    "rumble": {
+     "auc": 0.774,
+     "det": 0.625
+    },
+    "clipping": {
+     "auc": 1.0,
+     "det": 1.0
+    },
+    "hiss": {
+     "auc": 0.604,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.729,
+     "det": 0.625
+    },
+    "clicks": {
+     "auc": 1.0,
+     "det": 1.0
+    },
+    "dc_offset": {
+     "auc": 0.927,
+     "det": 1.0
+    },
+    "lead_silence": {
+     "auc": 0.924,
+     "det": 1.0
+    }
+   }
+  },
+  "aesthetics_PQ": {
+   "sfx": {
+    "thr_dev_p90_clean": -6.6761,
+    "fpr_test": 0.083,
+    "rumble": {
+     "auc": 0.951,
+     "det": 0.875
+    },
+    "clipping": {
+     "auc": 0.623,
+     "det": 0.167
+    },
+    "hiss": {
+     "auc": 0.964,
+     "det": 0.792
+    },
+    "haze": {
+     "auc": 0.789,
+     "det": 0.333
+    },
+    "clicks": {
+     "auc": 0.641,
+     "det": 0.167
+    },
+    "dc_offset": {
+     "auc": 0.552,
+     "det": 0.083
+    },
+    "lead_silence": {
+     "auc": 0.469,
+     "det": 0.125
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": -4.5653,
+    "fpr_test": 0.048,
+    "rumble": {
+     "auc": 0.605,
+     "det": 0.143
+    },
+    "clipping": {
+     "auc": 0.694,
+     "det": 0.214
+    },
+    "hiss": {
+     "auc": 0.565,
+     "det": 0.071
+    },
+    "haze": {
+     "auc": 0.558,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.507,
+     "det": 0.071
+    },
+    "dc_offset": {
+     "auc": 0.527,
+     "det": 0.071
+    },
+    "lead_silence": {
+     "auc": 0.398,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -5.6578,
+    "fpr_test": 0.167,
+    "rumble": {
+     "auc": 0.812,
+     "det": 0.375
+    },
+    "clipping": {
+     "auc": 0.948,
+     "det": 0.75
+    },
+    "hiss": {
+     "auc": 0.729,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.688,
+     "det": 0.25
+    },
+    "clicks": {
+     "auc": 0.781,
+     "det": 0.25
+    },
+    "dc_offset": {
+     "auc": 0.635,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.448,
+     "det": 0.125
+    }
+   }
+  },
+  "aesthetics_CE": {
+   "sfx": {
+    "thr_dev_p90_clean": -2.6156,
+    "fpr_test": 0.028,
+    "rumble": {
+     "auc": 0.756,
+     "det": 0.208
+    },
+    "clipping": {
+     "auc": 0.689,
+     "det": 0.25
+    },
+    "hiss": {
+     "auc": 0.529,
+     "det": 0.167
+    },
+    "haze": {
+     "auc": 0.507,
+     "det": 0.083
+    },
+    "clicks": {
+     "auc": 0.603,
+     "det": 0.167
+    },
+    "dc_offset": {
+     "auc": 0.53,
+     "det": 0.125
+    },
+    "lead_silence": {
+     "auc": 0.497,
+     "det": 0.0
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": -2.0837,
+    "fpr_test": 0.048,
+    "rumble": {
+     "auc": 0.629,
+     "det": 0.143
+    },
+    "clipping": {
+     "auc": 0.748,
+     "det": 0.214
+    },
+    "hiss": {
+     "auc": 0.446,
+     "det": 0.0
+    },
+    "haze": {
+     "auc": 0.493,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.493,
+     "det": 0.143
+    },
+    "dc_offset": {
+     "auc": 0.592,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.541,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -5.9499,
+    "fpr_test": 0.75,
+    "rumble": {
+     "auc": 0.583,
+     "det": 0.875
+    },
+    "clipping": {
+     "auc": 0.698,
+     "det": 0.75
+    },
+    "hiss": {
+     "auc": 0.365,
+     "det": 0.75
+    },
+    "haze": {
+     "auc": 0.344,
+     "det": 0.75
+    },
+    "clicks": {
+     "auc": 0.427,
+     "det": 0.75
+    },
+    "dc_offset": {
+     "auc": 0.323,
+     "det": 0.75
+    },
+    "lead_silence": {
+     "auc": 0.302,
+     "det": 0.625
+    }
+   }
+  },
+  "aesthetics_CU": {
+   "sfx": {
+    "thr_dev_p90_clean": -6.5742,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.944,
+     "det": 0.958
+    },
+    "clipping": {
+     "auc": 0.644,
+     "det": 0.375
+    },
+    "hiss": {
+     "auc": 0.86,
+     "det": 0.792
+    },
+    "haze": {
+     "auc": 0.706,
+     "det": 0.417
+    },
+    "clicks": {
+     "auc": 0.653,
+     "det": 0.333
+    },
+    "dc_offset": {
+     "auc": 0.554,
+     "det": 0.208
+    },
+    "lead_silence": {
+     "auc": 0.528,
+     "det": 0.083
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": -5.4301,
+    "fpr_test": 0.095,
+    "rumble": {
+     "auc": 0.888,
+     "det": 0.643
+    },
+    "clipping": {
+     "auc": 0.762,
+     "det": 0.571
+    },
+    "hiss": {
+     "auc": 0.524,
+     "det": 0.071
+    },
+    "haze": {
+     "auc": 0.534,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.425,
+     "det": 0.071
+    },
+    "dc_offset": {
+     "auc": 0.636,
+     "det": 0.429
+    },
+    "lead_silence": {
+     "auc": 0.52,
+     "det": 0.143
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -6.5319,
+    "fpr_test": 0.333,
+    "rumble": {
+     "auc": 0.625,
+     "det": 0.25
+    },
+    "clipping": {
+     "auc": 0.833,
+     "det": 0.625
+    },
+    "hiss": {
+     "auc": 0.583,
+     "det": 0.25
+    },
+    "haze": {
+     "auc": 0.604,
+     "det": 0.25
+    },
+    "clicks": {
+     "auc": 0.656,
+     "det": 0.25
+    },
+    "dc_offset": {
+     "auc": 0.542,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.208,
+     "det": 0.125
+    }
+   }
+  },
+  "aesthetics_PC": {
+   "sfx": {
+    "thr_dev_p90_clean": -1.5922,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.05,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.367,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.105,
+     "det": 0.042
+    },
+    "haze": {
+     "auc": 0.315,
+     "det": 0.083
+    },
+    "clicks": {
+     "auc": 0.346,
+     "det": 0.083
+    },
+    "dc_offset": {
+     "auc": 0.289,
+     "det": 0.083
+    },
+    "lead_silence": {
+     "auc": 0.472,
+     "det": 0.042
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": -1.6877,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.459,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.527,
+     "det": 0.143
+    },
+    "hiss": {
+     "auc": 0.429,
+     "det": 0.0
+    },
+    "haze": {
+     "auc": 0.497,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.459,
+     "det": 0.071
+    },
+    "dc_offset": {
+     "auc": 0.571,
+     "det": 0.0
+    },
+    "lead_silence": {
+     "auc": 0.554,
+     "det": 0.143
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -5.2501,
+    "fpr_test": 0.083,
+    "rumble": {
+     "auc": 0.323,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.375,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.177,
+     "det": 0.0
+    },
+    "haze": {
+     "auc": 0.24,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.188,
+     "det": 0.0
+    },
+    "dc_offset": {
+     "auc": 0.24,
+     "det": 0.0
+    },
+    "lead_silence": {
+     "auc": 0.365,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-general_probe_hiss": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0464,
+    "fpr_test": 0.194,
+    "rumble": {
+     "auc": 0.828,
+     "det": 0.667
+    },
+    "clipping": {
+     "auc": 0.614,
+     "det": 0.236
+    },
+    "hiss": {
+     "auc": 0.992,
+     "det": 0.986
+    },
+    "haze": {
+     "auc": 1.0,
+     "det": 1.0
+    },
+    "clicks": {
+     "auc": 0.91,
+     "det": 0.819
+    },
+    "dc_offset": {
+     "auc": 0.641,
+     "det": 0.264
+    },
+    "lead_silence": {
+     "auc": 0.376,
+     "det": 0.083
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.3336,
+    "fpr_test": 0.048,
+    "rumble": {
+     "auc": 0.522,
+     "det": 0.024
+    },
+    "clipping": {
+     "auc": 0.658,
+     "det": 0.286
+    },
+    "hiss": {
+     "auc": 0.65,
+     "det": 0.095
+    },
+    "haze": {
+     "auc": 0.646,
+     "det": 0.119
+    },
+    "clicks": {
+     "auc": 0.603,
+     "det": 0.048
+    },
+    "dc_offset": {
+     "auc": 0.518,
+     "det": 0.048
+    },
+    "lead_silence": {
+     "auc": 0.353,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.1155,
+    "fpr_test": 0.167,
+    "rumble": {
+     "auc": 0.562,
+     "det": 0.083
+    },
+    "clipping": {
+     "auc": 0.701,
+     "det": 0.208
+    },
+    "hiss": {
+     "auc": 0.722,
+     "det": 0.333
+    },
+    "haze": {
+     "auc": 0.705,
+     "det": 0.208
+    },
+    "clicks": {
+     "auc": 0.576,
+     "det": 0.167
+    },
+    "dc_offset": {
+     "auc": 0.497,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.174,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-general_probe_rumble": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0476,
+    "fpr_test": 0.111,
+    "rumble": {
+     "auc": 0.931,
+     "det": 0.833
+    },
+    "clipping": {
+     "auc": 0.446,
+     "det": 0.083
+    },
+    "hiss": {
+     "auc": 0.818,
+     "det": 0.542
+    },
+    "haze": {
+     "auc": 0.799,
+     "det": 0.583
+    },
+    "clicks": {
+     "auc": 0.704,
+     "det": 0.306
+    },
+    "dc_offset": {
+     "auc": 0.596,
+     "det": 0.194
+    },
+    "lead_silence": {
+     "auc": 0.435,
+     "det": 0.083
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.0856,
+    "fpr_test": 0.095,
+    "rumble": {
+     "auc": 0.607,
+     "det": 0.143
+    },
+    "clipping": {
+     "auc": 0.517,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.505,
+     "det": 0.0
+    },
+    "haze": {
+     "auc": 0.542,
+     "det": 0.143
+    },
+    "clicks": {
+     "auc": 0.576,
+     "det": 0.071
+    },
+    "dc_offset": {
+     "auc": 0.5,
+     "det": 0.071
+    },
+    "lead_silence": {
+     "auc": 0.404,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.0228,
+    "fpr_test": 0.25,
+    "rumble": {
+     "auc": 0.719,
+     "det": 0.458
+    },
+    "clipping": {
+     "auc": 0.497,
+     "det": 0.208
+    },
+    "hiss": {
+     "auc": 0.625,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.549,
+     "det": 0.25
+    },
+    "clicks": {
+     "auc": 0.569,
+     "det": 0.25
+    },
+    "dc_offset": {
+     "auc": 0.49,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.278,
+     "det": 0.042
+    }
+   }
+  },
+  "clap-general_probe_clipping": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0069,
+    "fpr_test": 0.111,
+    "rumble": {
+     "auc": 0.861,
+     "det": 0.681
+    },
+    "clipping": {
+     "auc": 0.86,
+     "det": 0.569
+    },
+    "hiss": {
+     "auc": 0.908,
+     "det": 0.806
+    },
+    "haze": {
+     "auc": 0.925,
+     "det": 0.847
+    },
+    "clicks": {
+     "auc": 0.912,
+     "det": 0.819
+    },
+    "dc_offset": {
+     "auc": 0.659,
+     "det": 0.208
+    },
+    "lead_silence": {
+     "auc": 0.38,
+     "det": 0.083
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.2108,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.652,
+     "det": 0.143
+    },
+    "clipping": {
+     "auc": 0.823,
+     "det": 0.381
+    },
+    "hiss": {
+     "auc": 0.696,
+     "det": 0.143
+    },
+    "haze": {
+     "auc": 0.635,
+     "det": 0.143
+    },
+    "clicks": {
+     "auc": 0.753,
+     "det": 0.143
+    },
+    "dc_offset": {
+     "auc": 0.542,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.384,
+     "det": 0.048
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.1037,
+    "fpr_test": 0.167,
+    "rumble": {
+     "auc": 0.639,
+     "det": 0.125
+    },
+    "clipping": {
+     "auc": 0.944,
+     "det": 0.917
+    },
+    "hiss": {
+     "auc": 0.677,
+     "det": 0.333
+    },
+    "haze": {
+     "auc": 0.625,
+     "det": 0.208
+    },
+    "clicks": {
+     "auc": 0.58,
+     "det": 0.167
+    },
+    "dc_offset": {
+     "auc": 0.51,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.253,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-general_probe_clicks": {
+   "sfx": {
+    "thr_dev_p90_clean": 0.0755,
+    "fpr_test": 0.111,
+    "rumble": {
+     "auc": 0.68,
+     "det": 0.375
+    },
+    "clipping": {
+     "auc": 0.535,
+     "det": 0.111
+    },
+    "hiss": {
+     "auc": 0.751,
+     "det": 0.5
+    },
+    "haze": {
+     "auc": 0.698,
+     "det": 0.542
+    },
+    "clicks": {
+     "auc": 0.867,
+     "det": 0.764
+    },
+    "dc_offset": {
+     "auc": 0.606,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.458,
+     "det": 0.097
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.3191,
+    "fpr_test": 0.0,
+    "rumble": {
+     "auc": 0.427,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.668,
+     "det": 0.143
+    },
+    "hiss": {
+     "auc": 0.68,
+     "det": 0.0
+    },
+    "haze": {
+     "auc": 0.632,
+     "det": 0.0
+    },
+    "clicks": {
+     "auc": 0.78,
+     "det": 0.0
+    },
+    "dc_offset": {
+     "auc": 0.532,
+     "det": 0.0
+    },
+    "lead_silence": {
+     "auc": 0.451,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.0541,
+    "fpr_test": 0.083,
+    "rumble": {
+     "auc": 0.639,
+     "det": 0.042
+    },
+    "clipping": {
+     "auc": 0.719,
+     "det": 0.25
+    },
+    "hiss": {
+     "auc": 0.649,
+     "det": 0.167
+    },
+    "haze": {
+     "auc": 0.58,
+     "det": 0.125
+    },
+    "clicks": {
+     "auc": 0.622,
+     "det": 0.083
+    },
+    "dc_offset": {
+     "auc": 0.493,
+     "det": 0.083
+    },
+    "lead_silence": {
+     "auc": 0.101,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-general_probe_generic": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0646,
+    "fpr_test": 0.111,
+    "rumble": {
+     "auc": 0.806,
+     "det": 0.639
+    },
+    "clipping": {
+     "auc": 0.655,
+     "det": 0.25
+    },
+    "hiss": {
+     "auc": 0.927,
+     "det": 0.875
+    },
+    "haze": {
+     "auc": 0.927,
+     "det": 0.875
+    },
+    "clicks": {
+     "auc": 0.848,
+     "det": 0.694
+    },
+    "dc_offset": {
+     "auc": 0.603,
+     "det": 0.208
+    },
+    "lead_silence": {
+     "auc": 0.426,
+     "det": 0.097
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.1433,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.463,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.659,
+     "det": 0.286
+    },
+    "hiss": {
+     "auc": 0.549,
+     "det": 0.167
+    },
+    "haze": {
+     "auc": 0.541,
+     "det": 0.143
+    },
+    "clicks": {
+     "auc": 0.638,
+     "det": 0.071
+    },
+    "dc_offset": {
+     "auc": 0.514,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.424,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.0019,
+    "fpr_test": 0.25,
+    "rumble": {
+     "auc": 0.66,
+     "det": 0.333
+    },
+    "clipping": {
+     "auc": 0.74,
+     "det": 0.375
+    },
+    "hiss": {
+     "auc": 0.66,
+     "det": 0.417
+    },
+    "haze": {
+     "auc": 0.583,
+     "det": 0.25
+    },
+    "clicks": {
+     "auc": 0.573,
+     "det": 0.25
+    },
+    "dc_offset": {
+     "auc": 0.507,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.219,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-unfused_probe_hiss": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0924,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.913,
+     "det": 0.667
+    },
+    "clipping": {
+     "auc": 0.492,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.949,
+     "det": 0.806
+    },
+    "haze": {
+     "auc": 0.929,
+     "det": 0.75
+    },
+    "clicks": {
+     "auc": 0.678,
+     "det": 0.264
+    },
+    "dc_offset": {
+     "auc": 0.564,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.534,
+     "det": 0.125
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.1399,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.599,
+     "det": 0.357
+    },
+    "clipping": {
+     "auc": 0.543,
+     "det": 0.071
+    },
+    "hiss": {
+     "auc": 0.619,
+     "det": 0.095
+    },
+    "haze": {
+     "auc": 0.645,
+     "det": 0.095
+    },
+    "clicks": {
+     "auc": 0.672,
+     "det": 0.143
+    },
+    "dc_offset": {
+     "auc": 0.493,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.273,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -0.0083,
+    "fpr_test": 0.0,
+    "rumble": {
+     "auc": 0.76,
+     "det": 0.0
+    },
+    "clipping": {
+     "auc": 0.024,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.819,
+     "det": 0.292
+    },
+    "haze": {
+     "auc": 0.854,
+     "det": 0.375
+    },
+    "clicks": {
+     "auc": 0.583,
+     "det": 0.042
+    },
+    "dc_offset": {
+     "auc": 0.5,
+     "det": 0.0
+    },
+    "lead_silence": {
+     "auc": 0.062,
+     "det": 0.0
+    }
+   }
+  },
+  "clap-unfused_probe_rumble": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0452,
+    "fpr_test": 0.083,
+    "rumble": {
+     "auc": 0.998,
+     "det": 0.986
+    },
+    "clipping": {
+     "auc": 0.196,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.804,
+     "det": 0.333
+    },
+    "haze": {
+     "auc": 0.64,
+     "det": 0.181
+    },
+    "clicks": {
+     "auc": 0.524,
+     "det": 0.083
+    },
+    "dc_offset": {
+     "auc": 0.572,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.506,
+     "det": 0.069
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.0068,
+    "fpr_test": 0.095,
+    "rumble": {
+     "auc": 0.727,
+     "det": 0.262
+    },
+    "clipping": {
+     "auc": 0.295,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.543,
+     "det": 0.143
+    },
+    "haze": {
+     "auc": 0.509,
+     "det": 0.095
+    },
+    "clicks": {
+     "auc": 0.619,
+     "det": 0.119
+    },
+    "dc_offset": {
+     "auc": 0.515,
+     "det": 0.095
+    },
+    "lead_silence": {
+     "auc": 0.392,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -0.1153,
+    "fpr_test": 0.333,
+    "rumble": {
+     "auc": 0.892,
+     "det": 0.833
+    },
+    "clipping": {
+     "auc": 0.0,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.604,
+     "det": 0.5
+    },
+    "haze": {
+     "auc": 0.573,
+     "det": 0.458
+    },
+    "clicks": {
+     "auc": 0.524,
+     "det": 0.375
+    },
+    "dc_offset": {
+     "auc": 0.503,
+     "det": 0.292
+    },
+    "lead_silence": {
+     "auc": 0.267,
+     "det": 0.083
+    }
+   }
+  },
+  "clap-unfused_probe_clipping": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0509,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.957,
+     "det": 0.875
+    },
+    "clipping": {
+     "auc": 0.794,
+     "det": 0.472
+    },
+    "hiss": {
+     "auc": 0.719,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.599,
+     "det": 0.153
+    },
+    "clicks": {
+     "auc": 0.712,
+     "det": 0.417
+    },
+    "dc_offset": {
+     "auc": 0.611,
+     "det": 0.222
+    },
+    "lead_silence": {
+     "auc": 0.541,
+     "det": 0.208
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.0687,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.748,
+     "det": 0.429
+    },
+    "clipping": {
+     "auc": 0.749,
+     "det": 0.381
+    },
+    "hiss": {
+     "auc": 0.505,
+     "det": 0.071
+    },
+    "haze": {
+     "auc": 0.454,
+     "det": 0.048
+    },
+    "clicks": {
+     "auc": 0.704,
+     "det": 0.381
+    },
+    "dc_offset": {
+     "auc": 0.505,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.255,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.1131,
+    "fpr_test": 0.25,
+    "rumble": {
+     "auc": 0.83,
+     "det": 0.792
+    },
+    "clipping": {
+     "auc": 0.594,
+     "det": 0.292
+    },
+    "hiss": {
+     "auc": 0.639,
+     "det": 0.458
+    },
+    "haze": {
+     "auc": 0.493,
+     "det": 0.292
+    },
+    "clicks": {
+     "auc": 0.562,
+     "det": 0.375
+    },
+    "dc_offset": {
+     "auc": 0.51,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.24,
+     "det": 0.042
+    }
+   }
+  },
+  "clap-unfused_probe_clicks": {
+   "sfx": {
+    "thr_dev_p90_clean": 0.0196,
+    "fpr_test": 0.167,
+    "rumble": {
+     "auc": 0.859,
+     "det": 0.556
+    },
+    "clipping": {
+     "auc": 0.333,
+     "det": 0.042
+    },
+    "hiss": {
+     "auc": 0.885,
+     "det": 0.778
+    },
+    "haze": {
+     "auc": 0.783,
+     "det": 0.403
+    },
+    "clicks": {
+     "auc": 0.776,
+     "det": 0.472
+    },
+    "dc_offset": {
+     "auc": 0.546,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.542,
+     "det": 0.139
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.369,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.431,
+     "det": 0.095
+    },
+    "clipping": {
+     "auc": 0.315,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.544,
+     "det": 0.143
+    },
+    "haze": {
+     "auc": 0.515,
+     "det": 0.143
+    },
+    "clicks": {
+     "auc": 0.671,
+     "det": 0.048
+    },
+    "dc_offset": {
+     "auc": 0.497,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.353,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -0.1403,
+    "fpr_test": 0.25,
+    "rumble": {
+     "auc": 0.535,
+     "det": 0.167
+    },
+    "clipping": {
+     "auc": 0.007,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.632,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.701,
+     "det": 0.458
+    },
+    "clicks": {
+     "auc": 0.58,
+     "det": 0.292
+    },
+    "dc_offset": {
+     "auc": 0.479,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.344,
+     "det": 0.083
+    }
+   }
+  },
+  "clap-unfused_probe_generic": {
+   "sfx": {
+    "thr_dev_p90_clean": -0.0699,
+    "fpr_test": 0.139,
+    "rumble": {
+     "auc": 0.97,
+     "det": 0.875
+    },
+    "clipping": {
+     "auc": 0.523,
+     "det": 0.139
+    },
+    "hiss": {
+     "auc": 0.88,
+     "det": 0.667
+    },
+    "haze": {
+     "auc": 0.815,
+     "det": 0.556
+    },
+    "clicks": {
+     "auc": 0.728,
+     "det": 0.403
+    },
+    "dc_offset": {
+     "auc": 0.606,
+     "det": 0.222
+    },
+    "lead_silence": {
+     "auc": 0.539,
+     "det": 0.139
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.1126,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.704,
+     "det": 0.262
+    },
+    "clipping": {
+     "auc": 0.523,
+     "det": 0.071
+    },
+    "hiss": {
+     "auc": 0.586,
+     "det": 0.071
+    },
+    "haze": {
+     "auc": 0.526,
+     "det": 0.048
+    },
+    "clicks": {
+     "auc": 0.73,
+     "det": 0.143
+    },
+    "dc_offset": {
+     "auc": 0.507,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.255,
+     "det": 0.0
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": -0.0133,
+    "fpr_test": 0.0,
+    "rumble": {
+     "auc": 0.788,
+     "det": 0.25
+    },
+    "clipping": {
+     "auc": 0.035,
+     "det": 0.0
+    },
+    "hiss": {
+     "auc": 0.757,
+     "det": 0.375
+    },
+    "haze": {
+     "auc": 0.681,
+     "det": 0.125
+    },
+    "clicks": {
+     "auc": 0.604,
+     "det": 0.083
+    },
+    "dc_offset": {
+     "auc": 0.503,
+     "det": 0.0
+    },
+    "lead_silence": {
+     "auc": 0.076,
+     "det": 0.0
+    }
+   }
+  },
+  "panns_noise": {
+   "sfx": {
+    "thr_dev_p90_clean": 0.0246,
+    "fpr_test": 0.083,
+    "rumble": {
+     "auc": 0.681,
+     "det": 0.389
+    },
+    "clipping": {
+     "auc": 0.481,
+     "det": 0.083
+    },
+    "hiss": {
+     "auc": 0.822,
+     "det": 0.556
+    },
+    "haze": {
+     "auc": 0.843,
+     "det": 0.528
+    },
+    "clicks": {
+     "auc": 0.527,
+     "det": 0.139
+    },
+    "dc_offset": {
+     "auc": 0.577,
+     "det": 0.167
+    },
+    "lead_silence": {
+     "auc": 0.618,
+     "det": 0.097
+    }
+   },
+   "ambient": {
+    "thr_dev_p90_clean": 0.7264,
+    "fpr_test": 0.143,
+    "rumble": {
+     "auc": 0.556,
+     "det": 0.119
+    },
+    "clipping": {
+     "auc": 0.421,
+     "det": 0.143
+    },
+    "hiss": {
+     "auc": 0.587,
+     "det": 0.143
+    },
+    "haze": {
+     "auc": 0.546,
+     "det": 0.143
+    },
+    "clicks": {
+     "auc": 0.408,
+     "det": 0.048
+    },
+    "dc_offset": {
+     "auc": 0.519,
+     "det": 0.143
+    },
+    "lead_silence": {
+     "auc": 0.7,
+     "det": 0.167
+    }
+   },
+   "music": {
+    "thr_dev_p90_clean": 0.0093,
+    "fpr_test": 0.25,
+    "rumble": {
+     "auc": 0.653,
+     "det": 0.542
+    },
+    "clipping": {
+     "auc": 0.691,
+     "det": 0.542
+    },
+    "hiss": {
+     "auc": 0.59,
+     "det": 0.292
+    },
+    "haze": {
+     "auc": 0.701,
+     "det": 0.458
+    },
+    "clicks": {
+     "auc": 0.503,
+     "det": 0.25
+    },
+    "dc_offset": {
+     "auc": 0.49,
+     "det": 0.25
+    },
+    "lead_silence": {
+     "auc": 0.323,
+     "det": 0.208
+    }
+   }
+  }
+ },
+ "match": {
+  "clap-general": {
+   "sfx": {
+    "auc_match_vs_mismatch": 0.812,
+    "thr_dev": 0.0454,
+    "acc_test": 0.778,
+    "mean_match": 0.125,
+    "mean_mismatch": -0.029,
+    "n": 72
+   },
+   "ambient": {
+    "auc_match_vs_mismatch": 0.832,
+    "thr_dev": -0.0042,
+    "acc_test": 0.738,
+    "mean_match": 0.161,
+    "mean_mismatch": 0.004,
+    "n": 42
+   }
+  },
+  "clap-unfused": {
+   "sfx": {
+    "auc_match_vs_mismatch": 0.832,
+    "thr_dev": 0.1111,
+    "acc_test": 0.792,
+    "mean_match": 0.239,
+    "mean_mismatch": 0.06,
+    "n": 72
+   },
+   "ambient": {
+    "auc_match_vs_mismatch": 0.844,
+    "thr_dev": 0.1517,
+    "acc_test": 0.81,
+    "mean_match": 0.216,
+    "mean_mismatch": 0.032,
+    "n": 42
+   }
+  },
+  "panns_class": {
+   "sfx": {
+    "auc_match_vs_mismatch": 0.691,
+    "thr_dev": 0.001,
+    "acc_test": 0.507,
+    "mean_match": 0.062,
+    "mean_mismatch": 0.004,
+    "n": 67
+   },
+   "ambient": {
+    "auc_match_vs_mismatch": 0.696,
+    "thr_dev": 0.0381,
+    "acc_test": 0.619,
+    "mean_match": 0.087,
+    "mean_mismatch": 0.052,
+    "n": 42
+   }
+  }
+ }
+}

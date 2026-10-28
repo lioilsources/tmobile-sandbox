@@ -1,0 +1,107 @@
+{
+ "uc": "UC24",
+ "what": "krok 5: oprava verdiktu repair + CLAP non-regrese (max pokles 0.05)",
+ "n": 300,
+ "by_defect": {
+  "clean": {
+   "n": 1,
+   "accepted": 0.0,
+   "gate_pass": 1.0,
+   "content_ok": 0.0,
+   "dclap_median": -0.0837,
+   "dclap_min": -0.0837,
+   "ms_median_incl_clap": 733
+  },
+  "dc_offset.mild": {
+   "n": 44,
+   "accepted": 0.841,
+   "gate_pass": 0.977,
+   "content_ok": 0.864,
+   "dclap_median": -0.0143,
+   "dclap_min": -0.1594,
+   "ms_median_incl_clap": 1839
+  },
+  "dc_offset.strong": {
+   "n": 28,
+   "accepted": 0.893,
+   "gate_pass": 0.964,
+   "content_ok": 0.929,
+   "dclap_median": -0.0068,
+   "dclap_min": -0.1593,
+   "ms_median_incl_clap": 991
+  },
+  "haze.mild": {
+   "n": 27,
+   "accepted": 0.296,
+   "gate_pass": 0.407,
+   "content_ok": 0.741,
+   "dclap_median": 0.0002,
+   "dclap_min": -0.1533,
+   "ms_median_incl_clap": 1565
+  },
+  "haze.strong": {
+   "n": 27,
+   "accepted": 0.074,
+   "gate_pass": 0.37,
+   "content_ok": 0.593,
+   "dclap_median": -0.0307,
+   "dclap_min": -0.2213,
+   "ms_median_incl_clap": 1354
+  },
+  "hiss.mild": {
+   "n": 27,
+   "accepted": 0.593,
+   "gate_pass": 0.667,
+   "content_ok": 0.815,
+   "dclap_median": 0.0215,
+   "dclap_min": -0.1547,
+   "ms_median_incl_clap": 1353
+  },
+  "hiss.strong": {
+   "n": 19,
+   "accepted": 0.158,
+   "gate_pass": 0.579,
+   "content_ok": 0.421,
+   "dclap_median": -0.0687,
+   "dclap_min": -0.1584,
+   "ms_median_incl_clap": 1419
+  },
+  "lead_silence.mild": {
+   "n": 40,
+   "accepted": 0.725,
+   "gate_pass": 1.0,
+   "content_ok": 0.725,
+   "dclap_median": -0.0248,
+   "dclap_min": -0.1575,
+   "ms_median_incl_clap": 1445
+  },
+  "lead_silence.strong": {
+   "n": 44,
+   "accepted": 0.727,
+   "gate_pass": 0.977,
+   "content_ok": 0.75,
+   "dclap_median": -0.0105,
+   "dclap_min": -0.1553,
+   "ms_median_incl_clap": 1328
+  },
+  "rumble.mild": {
+   "n": 33,
+   "accepted": 0.727,
+   "gate_pass": 0.939,
+   "content_ok": 0.788,
+   "dclap_median": -0.0034,
+   "dclap_min": -0.1084,
+   "ms_median_incl_clap": 1289
+  },
+  "rumble.strong": {
+   "n": 10,
+   "accepted": 0.7,
+   "gate_pass": 1.0,
+   "content_ok": 0.7,
+   "dclap_median": -0.036,
+   "dclap_min": -0.1701,
+   "ms_median_incl_clap": 1347
+  }
+ },
+ "accepted_total": 0.61
+}

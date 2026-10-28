@@ -1,0 +1,29 @@
+# OpenEvolve nad šablonou promptu (UC24 krok 4). LLM = lokální vLLM na VM (OpenAI-kompatibilní).
+# Qwen3: thinking vypíná evolve/nothink_proxy.py (:8009 → :8000), OpenEvolve neumí poslat chat_template_kwargs
+# a /no_think v system promptu vLLM s --reasoning-parser qwen3 ignoruje (měřeno: content=None).
+max_iterations: 40
+checkpoint_interval: 10
+random_seed: 24
+diff_based_evolution: false
+max_code_length: 3000
+llm:
+  api_base: "http://127.0.0.1:8009/v1"
+  api_key: "none"
+  models:
+    - name: "qwen3-8b"      # profil S; v profilu A přepsat na qwen3-32b (run_evolve.sh to dělá sám)
+      weight: 1.0
+  temperature: 0.7
+  max_tokens: 800
+  timeout: 900
+  system_message: |
+    You improve a Python prompt template for a text-to-audio model (children's story sound effects,
+    played on a phone speaker). The template function build(subject, kind) must keep the subject's meaning
+    and wording, and may add style words. Goal: sounds without low-end rumble, clipping, hiss or clicks.
+    Keep it short (< 60 words per prompt). Return the full program.
+database:
+  population_size: 20
+  num_islands: 2
+evaluator:
+  timeout: 600
+  parallel_evaluations: 1
+  cascade_evaluation: false
