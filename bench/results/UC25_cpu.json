@@ -1,0 +1,399 @@
+{
+ "uc": "UC25",
+ "tag": "cpu",
+ "host": "ubuntu-l40s",
+ "note": "CPU-only (8 vCPU sdílené s běžícím vLLM, load ~12; GPU obsazená jiným během: 45,3/46 GB). 545 obrázků stratifikovaně (50/stratum). Hodnotitelé WD14 + SigLIP 2 + 2 NSFW; Qwen3-VL-8B neběžel (čeká ve frontě).",
+ "gpu": "NVIDIA L40S, 45275 MiB, 46068 MiB",
+ "data": "obrázky vygenerované v sandboxu (UC10 Storyteller, UC7 oči, UC8 objekty, UC5/smoke ComfyUI); žádná uživatelská galerie; kalibrační sada jen pokud existuje",
+ "throughput": {
+  "wd14": {
+   "provider": "CPUExecutionProvider",
+   "images": 545,
+   "wall_s": 887.3,
+   "img_per_h": 2211,
+   "max_rss_mb": 2550
+  },
+  "falconsai": {
+   "device": "cpu",
+   "images": 545,
+   "wall_s": 127.3,
+   "img_per_h": 15411
+  },
+  "adamcodd": {
+   "device": "cpu",
+   "images": 545,
+   "wall_s": 298.0,
+   "img_per_h": 6585
+  },
+  "siglip": {
+   "siglip_device": "cpu",
+   "images": 545,
+   "wall_s": 4600.8,
+   "img_per_h": 426,
+   "max_rss_mb": 4901
+  }
+ },
+ "stats": {
+  "images": 545,
+  "bands": {
+   "safe": 543,
+   "suggestive": 2
+  },
+  "rating_unsure": 5,
+  "rating_unsure_share": 0.0092,
+  "images_with_any_unsure_share": 1.0,
+  "node_unsure_share_overall": 0.77,
+  "per_node": {
+   "subject": {
+    "answered": 545,
+    "agreed": 440,
+    "unsure": 105,
+    "unsure_share": 0.1927
+   },
+   "person.age_group": {
+    "answered": 385,
+    "agreed": 100,
+    "unsure": 285,
+    "unsure_share": 0.7403
+   },
+   "person.gender_presentation": {
+    "answered": 436,
+    "agreed": 261,
+    "unsure": 175,
+    "unsure_share": 0.4014
+   },
+   "person.skin_tone": {
+    "answered": 374,
+    "agreed": 3,
+    "unsure": 371,
+    "unsure_share": 0.992
+   },
+   "person.hair.length": {
+    "answered": 386,
+    "agreed": 134,
+    "unsure": 252,
+    "unsure_share": 0.6528
+   },
+   "person.hair.style": {
+    "answered": 436,
+    "agreed": 14,
+    "unsure": 422,
+    "unsure_share": 0.9679
+   },
+   "person.hair.color": {
+    "answered": 395,
+    "agreed": 113,
+    "unsure": 282,
+    "unsure_share": 0.7139
+   },
+   "person.eyes.color": {
+    "answered": 378,
+    "agreed": 79,
+    "unsure": 299,
+    "unsure_share": 0.791
+   },
+   "person.body_type": {
+    "answered": 369,
+    "agreed": 0,
+    "unsure": 369,
+    "unsure_share": 1.0
+   },
+   "person.clothing.coverage": {
+    "answered": 417,
+    "agreed": 163,
+    "unsure": 254,
+    "unsure_share": 0.6091
+   },
+   "person.clothing.type": {
+    "answered": 436,
+    "agreed": 133,
+    "unsure": 303,
+    "unsure_share": 0.695
+   },
+   "person.expression": {
+    "answered": 387,
+    "agreed": 18,
+    "unsure": 369,
+    "unsure_share": 0.9535
+   },
+   "style.medium": {
+    "answered": 536,
+    "agreed": 99,
+    "unsure": 437,
+    "unsure_share": 0.8153
+   },
+   "style.era": {
+    "answered": 545,
+    "agreed": 8,
+    "unsure": 537,
+    "unsure_share": 0.9853
+   },
+   "style.palette": {
+    "answered": 544,
+    "agreed": 10,
+    "unsure": 534,
+    "unsure_share": 0.9816
+   },
+   "style.lighting": {
+    "answered": 537,
+    "agreed": 3,
+    "unsure": 534,
+    "unsure_share": 0.9944
+   },
+   "style.camera": {
+    "answered": 541,
+    "agreed": 181,
+    "unsure": 360,
+    "unsure_share": 0.6654
+   }
+  },
+  "minor_decisions": {
+   "none": 544,
+   "block": 1
+  },
+  "evaluators": [
+   "wd14",
+   "siglip"
+  ]
+ },
+ "stats_2eval": null,
+ "agreement_wd14_siglip": {
+  "person.age_group": {
+   "n": 107,
+   "agreement": 0.9065
+  },
+  "person.clothing.coverage": {
+   "n": 182,
+   "agreement": 0.8956
+  },
+  "person.clothing.type": {
+   "n": 360,
+   "agreement": 0.297
+  },
+  "person.expression": {
+   "n": 141,
+   "agreement": 0.1277
+  },
+  "person.eyes.color": {
+   "n": 164,
+   "agreement": 0.4817
+  },
+  "person.gender_presentation": {
+   "n": 360,
+   "agreement": 0.6083
+  },
+  "person.hair.color": {
+   "n": 254,
+   "agreement": 0.4449
+  },
+  "person.hair.length": {
+   "n": 168,
+   "agreement": 0.5476
+  },
+  "person.hair.style": {
+   "n": 360,
+   "agreement": 0.0326
+  },
+  "person.skin_tone": {
+   "n": 5,
+   "agreement": 0.2
+  },
+  "style.camera": {
+   "n": 209,
+   "agreement": 0.7943
+  },
+  "style.era": {
+   "n": 8,
+   "agreement": 1.0
+  },
+  "style.lighting": {
+   "n": 13,
+   "agreement": 0.2308
+  },
+  "style.medium": {
+   "n": 144,
+   "agreement": 0.6875
+  },
+  "style.palette": {
+   "n": 30,
+   "agreement": 0.3333
+  },
+  "subject": {
+   "n": 544,
+   "agreement": 0.7088
+  }
+ },
+ "head": {
+  "label_source": "consensus pseudo-labels (re-train on human labels)",
+  "train": {
+   "images": 436,
+   "val": 109,
+   "epochs": 200,
+   "seconds": 8.47
+  },
+  "val_metrics": {
+   "subject": {
+    "n_val": 85,
+    "n_train": 355,
+    "f1_macro_vs_labels": 0.6263888888888889
+   },
+   "person.age_group": {
+    "n_val": 18,
+    "n_train": 82,
+    "f1_macro_vs_labels": 0.4857142857142857
+   },
+   "person.gender_presentation": {
+    "n_val": 56,
+    "n_train": 205,
+    "f1_macro_vs_labels": 0.905628581058308
+   },
+   "person.skin_tone": {
+    "n_val": 0,
+    "n_train": 3
+   },
+   "person.hair.length": {
+    "n_val": 26,
+    "n_train": 108,
+    "f1_macro_vs_labels": 0.7171717171717171
+   },
+   "person.hair.style": {
+    "n_val": 4,
+    "n_train": 10,
+    "f1_macro_vs_labels": 0.0
+   },
+   "person.hair.color": {
+    "n_val": 25,
+    "n_train": 88,
+    "f1_macro_vs_labels": 0.7304761904761904
+   },
+   "person.eyes.color": {
+    "n_val": 12,
+    "n_train": 67,
+    "f1_macro_vs_labels": 0.5555555555555555
+   },
+   "person.body_type": {
+    "n_val": 0,
+    "n_train": 0
+   },
+   "person.clothing.coverage": {
+    "n_val": 31,
+    "n_train": 132,
+    "f1_macro_vs_labels": 1.0
+   },
+   "person.clothing.type": {
+    "n_val": 22,
+    "n_train": 111,
+    "f1_macro_vs_labels": 0.5797297297297297
+   },
+   "person.expression": {
+    "n_val": 5,
+    "n_train": 13,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.medium": {
+    "n_val": 21,
+    "n_train": 78,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.era": {
+    "n_val": 1,
+    "n_train": 7,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.palette": {
+    "n_val": 2,
+    "n_train": 8,
+    "f1_macro_vs_labels": 0.3333333333333333
+   },
+   "style.lighting": {
+    "n_val": 1,
+    "n_train": 2,
+    "f1_macro_vs_labels": 1.0
+   },
+   "style.camera": {
+    "n_val": 37,
+    "n_train": 144,
+    "f1_macro_vs_labels": 0.90625
+   }
+  },
+  "val_temperature_mae": 0.026435699313879013,
+  "dim": 1152,
+  "bench": {
+   "batch1_ms_per_call": 0.1802,
+   "batch1_ms_per_image": 0.1802,
+   "batch64_ms_per_call": 0.5995,
+   "batch64_ms_per_image": 0.0094,
+   "onnx_bytes": 2609664
+  }
+ },
+ "bands_pseudo": {
+  "thresholds": {
+   "safe_max": 0.0926,
+   "suggestive_max": 0.45,
+   "nsfw_max": 0.7,
+   "explicit_guard": null
+  },
+  "source": "pseudo:wd14-argmax",
+  "n": 545,
+  "label_counts": {
+   "safe": 504,
+   "suggestive": 41,
+   "nsfw": 0,
+   "explicit": 0
+  },
+  "valid": false,
+  "explicit_guard_valid": false,
+  "explicit_needed": 299,
+  "calibration": {
+   "explicit_recall_with_guard": null,
+   "safe": {
+    "precision": 0.9919517102615694,
+    "precision_lower": 0.982194523532307,
+    "n_pred_safe": 497
+   },
+   "unsure_share_from_guard": 0.0
+  },
+  "targets": {
+   "explicit_recall": 0.99,
+   "safe_precision": 0.98
+  }
+ },
+ "bands_synth": {
+  "thresholds": {
+   "safe_max": 0.074283,
+   "suggestive_max": 0.420305,
+   "nsfw_max": 0.674671,
+   "explicit_guard": 0.603319
+  },
+  "source": "synthetic",
+  "n": 3000,
+  "label_counts": {
+   "safe": 1630,
+   "suggestive": 602,
+   "nsfw": 369,
+   "explicit": 399
+  },
+  "valid": true,
+  "explicit_guard_valid": true,
+  "explicit_needed": 299,
+  "calibration": {
+   "explicit_recall_with_guard": 0.9974937343358395,
+   "safe": {
+    "precision": 0.9882766705744431,
+    "precision_lower": 0.9804866300175812,
+    "n_pred_safe": 853
+   },
+   "unsure_share_from_guard": 0.029333333333333333
+  },
+  "targets": {
+   "explicit_recall": 0.99,
+   "safe_precision": 0.98
+  },
+  "test": {
+   "explicit_recall": 0.9941245593419507,
+   "safe_precision": 0.9880332986472424,
+   "safe_coverage": 0.5258549931600547,
+   "unsure_share": 0.02835
+  }
+ }
+}

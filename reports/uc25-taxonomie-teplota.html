@@ -1,0 +1,164 @@
+<title>FinetuneGallery: taxonomie a teplota</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~760px) — verdict first, then evidence: numbers, sample, table, errors, limits */
+:root {
+  --bg: #f6f7f8; --surface: #ffffff; --fg: #1b2430; --muted: #5b6676; --line: #dde2e8;
+  --accent: #0f6b74; --accent-soft: #e2f0f1; --good: #2f7d4a; --warn: #a2611a;
+  --display: "IBM Plex Serif", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #12171d; --surface: #1a2129; --fg: #e4e8ed; --muted: #97a2b0; --line: #2c3540;
+  --accent: #5cc2cb; --accent-soft: #173238; --good: #6cc48a; --warn: #e0a35a; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); }
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 48px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 40px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 600 clamp(28px, 5vw, 40px)/1.15 var(--display); margin: 10px 0 14px; text-wrap: balance; }
+h2 { font: 600 22px/1.25 var(--display); margin: 0 0 14px; text-wrap: balance; }
+p { margin: 0 0 12px; max-width: 66ch; }
+.lede { font-size: 18px; color: var(--fg); }
+.muted { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 4px; }
+.stat b { font: 500 28px/1.1 var(--mono); font-variant-numeric: tabular-nums; color: var(--accent); }
+.stat span { font-size: 13px; color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 120px; gap: 12px; align-items: center; font-size: 14px; }
+.bar-lab { font: 13px var(--mono); color: var(--muted); }
+.bar-track { height: 14px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar { height: 100%; background: var(--muted); opacity: .55; }
+.rec .bar { background: var(--accent); opacity: 1; }
+.rec .bar-lab { color: var(--fg); font-weight: 500; }
+.bar-val { font: 500 14px var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.bar-val span { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.sample { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.sample img { width: 100%; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
+.sample figcaption { font-size: 12px; color: var(--muted); margin-top: 6px; }
+dl { margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.kv { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 6px 12px; border-top: 1px solid var(--line); font-size: 14px; }
+.kv:first-child { border-top: 0; }
+dt { color: var(--muted); } dd { margin: 0; font-family: var(--mono); font-size: 13px; display: flex; justify-content: space-between; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.ok { color: var(--good); font-family: var(--body); }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 560px; }
+th, td { padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+th:first-child, td:first-child { text-align: left; }
+tr:last-child td { border-bottom: 0; }
+tr.rec td { background: var(--accent-soft); font-weight: 500; }
+.pill { display: inline-block; font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 4px 7px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+.recs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.rec-card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 6px; }
+.rec-card b { font: 500 20px var(--mono); }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 66ch; }
+code { font: 13px var(--mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 3px; overflow-wrap: anywhere; }
+.err td:nth-child(3) { color: var(--good); } .err td:nth-child(4) { color: var(--warn); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 560px) {
+  .bar-row { grid-template-columns: 1fr auto; } .bar-track { grid-column: 1 / -1; grid-row: 2; }
+  .sample { grid-template-columns: 1fr; } .sample figure { max-width: 220px; }
+  .kv { grid-template-columns: 110px 1fr; }
+}
+.pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.pair { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px; display: grid; gap: 8px; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.duo img { width: 100%; height: auto; display: block; border-radius: 4px; background: #fff; }
+.duo img.mesh { background: #f3f5f6; }
+.pair figcaption { font-size: 13px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.pair figcaption span { font-family: var(--mono); color: var(--muted); font-size: 12px; }
+.cmp { display: grid; gap: 12px; }
+.cmp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cmp-row img, .wide img { width: 100%; height: auto; display: block; border-radius: 4px; }
+.cmp-head { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.cmp-row figcaption { grid-column: 1 / -1; font-size: 12px; color: var(--muted); font-family: var(--mono); overflow-wrap: anywhere; }
+.wide { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px; display: grid; gap: 8px; }
+.wide figcaption { font-size: 13px; color: var(--muted); }
+.gcols { display: grid; grid-template-columns: repeat(3, 1fr); font: 500 12px var(--mono); color: var(--muted); text-align: center; }
+.g5 { display: grid; grid-template-columns: repeat(5, 1fr); font: 500 11px var(--mono); color: var(--muted); text-align: center; }
+.g7 { display: grid; grid-template-columns: repeat(7, 1fr); font: 500 11px var(--mono); color: var(--muted); text-align: center; }
+@media (max-width: 560px) { .g5, .g7 { font-size: 9px; } }
+</style>
+<main class="wrap">
+<header>
+  <div class="eyebrow">UC25 · L40S sandbox · 28. 10. 2026</div>
+  <h1>Taxonomie a teplota obsahu pro FinetuneGallery jsou hotové, ale se dvěma hodnotiteli konsenzus kliky neušetří</h1>
+  <p class="lede">Taxonomie v jednom YAML, tři hodnotitelé ve stejném formátu (WD14, SigLIP 2, Qwen3‑VL‑8B), teplota 0–1 jako ensemble WD14 a dvou NSFW klasifikátorů, multi‑head hlava v ONNX, conformal prahy a v galerii migrace, facety, slider a blok nezletilých za flagem. GPU byla plná (jiný běh držel 45,3 ze 46 GB), takže čísla jsou z CPU na 545 obrázcích ze sandboxu. Běh na L40S, VLM a kalibrační sada čekají ve frontě. Lidské labely zatím nejsou.</p>
+</header>
+
+<section class="stats" aria-label="Klíčová čísla">
+  <div class="stat"><b>0,9 %</b><span>obrázků s unsure teplotou (5/545)</span></div>
+  <div class="stat"><b>77 %</b><span>odpovědí uzlů unsure se 2 hodnotiteli</span></div>
+  <div class="stat"><b>1 / 350</b><span>bezpečných ilustrací tvrdě blokováno</span></div>
+  <div class="stat"><b>0,18 ms</b><span>multi‑head hlava (ONNX, CPU)</span></div>
+</section>
+
+<section>
+  <h2>Propustnost na CPU</h2>
+  <p class="muted">8 sdílených vCPU, load ~12, 545 obrázků (50 na stratum). Na L40S se zatím neměřilo.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Hodnotitel</th><th>obr./h</th><th>s/obr.</th></tr></thead>
+    <tbody>
+      <tr><td>WD14 swinv2 (ONNX)</td><td>2 211</td><td>1,63</td></tr>
+      <tr><td>Falconsai ViT</td><td>15 411</td><td>0,23</td></tr>
+      <tr><td>AdamCodd ViT</td><td>6 585</td><td>0,55</td></tr>
+      <tr><td>SigLIP 2 so400m/512</td><td>426</td><td>8,4</td></tr>
+      <tr class="rec"><td>celá brána bez VLM</td><td>≈ 330</td><td>10,8</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Teplota: ensemble dělá svou práci</h2>
+  <ul>
+    <li>Pásma: 543 safe, 2 suggestive, unsure 5 obrázků.</li>
+    <li>Jednotlivé NSFW klasifikátory se mýlí: Falconsai dal 0,96 výřezu oka, AdamCodd 0,60–0,62 objektu a jedné ilustraci. Ani jeden z těchto případů neskončil jako nsfw, všechny šly do fronty unsure.</li>
+    <li>Conformal na syntetice: recall explicit 0,994 (cíl 0,99), precision safe 0,988 (cíl 0,98), unsure 2,8 %. Potřeba je ≥ 299 lidských „explicit". Fit na pseudo‑labelech je neplatný (0 explicit), server ho odmítne. Platí defaulty 0,20 / 0,45 / 0,70.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Shoda WD14 × SigLIP 2</h2>
+  <p class="muted">Jen tam, kde odpověděli oba. Zero‑shot SigLIP pro jemné uzly nestačí, třetí hodnotitel (VLM) je nutný.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Uzel</th><th>n</th><th>Shoda</th></tr></thead>
+    <tbody>
+      <tr><td>věková skupina</td><td>107</td><td>0,91</td></tr>
+      <tr><td>zakrytí oblečením</td><td>182</td><td>0,90</td></tr>
+      <tr><td>záběr</td><td>209</td><td>0,79</td></tr>
+      <tr><td>námět</td><td>544</td><td>0,71</td></tr>
+      <tr><td>médium</td><td>144</td><td>0,69</td></tr>
+      <tr><td>barva vlasů</td><td>254</td><td>0,44</td></tr>
+      <tr><td>výraz</td><td>141</td><td>0,13</td></tr>
+      <tr><td>účes</td><td>360</td><td>0,03</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:14px">Odpovědi uzlů: shoda 23 %, jediný zdroj 60 %, konflikt 17 %. Obrázků s aspoň jedním unsure uzlem je 100 %.</p>
+</section>
+
+<section>
+  <h2>Blok nezletilých</h2>
+  <ul>
+    <li>Pravidlo: child nebo teen od kteréhokoli hodnotitele + cokoli jiného než jisté safe = blok. Obrázek zmizí ze všech pohledů, blob vrací 451 a vznikne záznam v auditu. Pravidlo běží i bez flagu.</li>
+    <li>Signál dítěte měl 239 z 350 bezpečných ilustrací pro Storyteller. Tvrdě blokovaná je 1 (0,29 %), falešně pozitivně: AdamCodd 0,60, ostatní safe. Kdyby hodnotil jen WD14, bylo by 10 v karanténě (ta je vratná).</li>
+    <li>Testováno jen na syntetických vektorech labelů (16 případů, sdílené Go/Python), žádné obrázky.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ve frontě a čeká na uživatele</h2>
+  <ul>
+    <li><code>uc25/calib_run.sh</code> (profil D): 882 kalibračních obrázků ze 6 checkpointů, tiery jen s dospělými. Guard maže každý obrázek se signálem nezletilosti mimo jisté safe. Výstupy jen na VM.</li>
+    <li><code>PHASES=A uc25/gpu_batch.sh</code> (≥ 8 GB VRAM) → <code>uc25/vllm_vl8b.sh up</code> + <code>PHASES=B</code> (Qwen3‑VL‑8B na :8004, guided JSON) → <code>PHASES=C</code>: F1 hlavy vs VLM.</li>
+    <li>Uživatel: 300 labelů naslepo (<code>taxobench -sample 300 -borderline 60</code>). Potom κ per hodnotitel per uzel a re‑fit prahů.</li>
+  </ul>
+</section>
+
+<footer>Kód: FineTuneGallery větev <code>l40s-w2/uc25</code> (<code>taxo/</code>, <code>server/taxonomy*.go</code>), harness <code>uc25/</code> v repu tmobile-sandbox, čísla <code>bench/results/UC25_cpu.json</code>.</footer>
+</main>
