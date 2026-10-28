@@ -1,4 +1,5 @@
 # GPU služby, rozdělené do VRAM profilů (48 GB neudrží vše naráz). Přepínání: ./switch.sh A|B|C|D|L|O|W|S|off
+# Než změníš nastavení nebo pustíš nový běh: MODEL_NOTES.md (osvědčené parametry, souběh, známé pády).
 # Všechny porty jen na 127.0.0.1 (Docker obchází ufw) → přístup přes SSH tunel.
 name: gpu
 x-vllm: &vllm
