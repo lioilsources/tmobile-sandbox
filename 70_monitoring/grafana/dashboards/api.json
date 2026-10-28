@@ -565,7 +565,7 @@
      }
     },
     {
-     "expr": "vllm:kv_cache_usage_perc{model_name=\"qwen3-30b-a3b\"} * 100",
+     "expr": "max(vllm:kv_cache_usage_perc{job=\"vllm\"}) * 100",
      "legendFormat": "KV cache %",
      "refId": "B",
      "datasource": {

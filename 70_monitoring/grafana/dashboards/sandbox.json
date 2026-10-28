@@ -616,6 +616,15 @@
       "type": "prometheus",
       "uid": "prom"
      }
+    },
+    {
+     "expr": "node_filesystem_avail_bytes{mountpoint=\"/cold\"}",
+     "legendFormat": "/cold",
+     "refId": "C",
+     "datasource": {
+      "type": "prometheus",
+      "uid": "prom"
+     }
     }
    ]
   },
