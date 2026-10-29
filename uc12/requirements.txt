@@ -1,3 +1,5 @@
+# Mac (CPU): pip install jax==0.12.0.1 …; VM L40S: venv /cold/venvs/uc12 s "jax[cuda12]==0.12.0.1"
+# (driver 595.91, CUDA 13.2 — cuda12 pip wheels jedou, ověřeno jax.devices() = [CudaDevice(id=0)] 2026-10-29)
 flax==0.12.12
 jax==0.12.0.1
 jaxlib==0.12.0.1
