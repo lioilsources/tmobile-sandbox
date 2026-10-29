@@ -22,5 +22,5 @@ scrape_configs:
     static_configs:
       - { targets: ["http://${L40S_VLAN_IP}:8000/health"], labels: { service: vllm } }
       - { targets: ["http://${L40S_VLAN_IP}:8188/system_stats"], labels: { service: comfyui } }
-      - { targets: ["http://${L40S_VLAN_IP}:8080/healthz"], labels: { service: ai-gateway } }
+      - { targets: ["http://${L40S_VLAN_IP}:8080/health"], labels: { service: ai-gateway } }
     relabel_configs: *bb
