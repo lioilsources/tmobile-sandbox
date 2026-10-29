@@ -30,13 +30,16 @@ install -d -m 700 -o ol1n -g ol1n /home/ol1n/.ssh
 grep -qF "${SSH_PUBKEY}" /home/ol1n/.ssh/authorized_keys 2>/dev/null || echo "${SSH_PUBKEY}" >> /home/ol1n/.ssh/authorized_keys
 chown ol1n:ol1n /home/ol1n/.ssh/authorized_keys; chmod 600 /home/ol1n/.ssh/authorized_keys
 echo 'ol1n ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/90-ol1n; chmod 440 /etc/sudoers.d/90-ol1n
-passwd -l ol1n >/dev/null
+# heslo '*' = nepřihlásitelné heslem, ale účet NENÍ zamčený: `passwd -l` (heslo '!…') sshd s UsePAM no
+# bere jako zakázaný účet i pro klíč → 29. 10. se tím witness zamkl
+usermod -p '*' ol1n
 
 cat > /etc/ssh/sshd_config.d/10-witness.conf <<EOF
 PermitRootLogin no
 PasswordAuthentication no
 KbdInteractiveAuthentication no
-AllowUsers ol1n
+# cloudsigma = účet šablony s klíčem z portálu, zůstává jako záložní vstup
+AllowUsers ol1n cloudsigma
 AllowTcpForwarding yes
 X11Forwarding no
 AllowAgentForwarding no
@@ -70,6 +73,12 @@ systemctl restart ssh
 systemctl is-active --quiet ssh
 systemctl enable --now docker fail2ban unattended-upgrades
 echo "witness bootstrap hotový: $(hostname)"
+
+if [ "${1:-}" != "--network" ]; then
+  echo "Teď ověř z jiného okna:  ssh -o IdentitiesOnly=yes -i ~/.ssh/id_ed25519_witness ol1n@$(hostname -I | awk '{print $1}')"
+  echo "Teprve když projde:      sudo bash bootstrap.sh --network   (přepne na ${WITNESS_VLAN_IP})"
+  exit 0
+fi
 
 # --- síť až na konec: přepnutí z DHCP na statickou adresu přeruší SSH, které skript spustilo.
 # Rozhraní = první ne-lo (ifupdown, Debian default).
