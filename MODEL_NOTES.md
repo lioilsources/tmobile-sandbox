@@ -12,6 +12,7 @@ uvedená nastavení znovu.
 
 | Pravidlo | Proč (co se stalo) |
 |---|---|
+| Fronta nesmí vyschnout: na konci každé fronty mít zařazenou další přerušitelnou GPU úlohu (resume), i když se čeká na rozhodnutí uživatele. Rozhodnutí řešit souběžně, ne místo práce. | 29. 10.: po UC25 (06:33) GPU 3,5 h stála, protože se čekalo na odpověď k witness migraci. |
 | Souběh LLM klientů dimenzovat podle `num_requests_waiting`, ne odhadem. Cíl: waiting ≈ 0, KV < 90 %, preempce 0. | UC11 na Qwen3-32B se 48 simulacemi: 67 běží, 173 čeká, 902 preempcí → rozhodnutí vypršela po 180 s, 62 % náhradních tahů, 2,5 h GPU k ničemu (2026-10-28). |
 | Každý běh hlídat podílem fallbacků / chyb **během** prvních minut, ne až na konci. | Tamtéž; a UC25 VLM: 3 037 / 3 037 requestů HTTP 400, běh „skončil úspěšně“. |
 | Klient vždy loguje **tělo** chybové odpovědi a první chybu hned na stderr. | UC25: hláška jen `400 Bad Request`, příčina zjištěna až offline. |
