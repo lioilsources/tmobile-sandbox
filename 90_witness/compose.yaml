@@ -30,6 +30,13 @@ services:
     command: ["--config.file=/etc/bb/blackbox.yml"]
     volumes: ["./blackbox.yml:/etc/bb/blackbox.yml:ro"]
     mem_limit: 64m
+  node:
+    image: prom/node-exporter:v1.8.2
+    restart: unless-stopped
+    pid: host
+    command: ["--path.rootfs=/host"]
+    volumes: ["/:/host:ro,rslave"]
+    mem_limit: 64m
   grafana:
     image: grafana/grafana:11.3.0
     restart: unless-stopped

@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-# Witness (Debian 12, klon disku bez cloud-init): jednorázové nastavení, idempotentní.
+# Witness (Debian 12, klon šablony s cloud-init): jednorázové nastavení, idempotentní.
 # Šablona: ${...} doplní render.py z witness.env → out/bootstrap.sh. Spouštět jako root na witness:
 #   sudo bash bootstrap.sh
 # Witness nemá veřejnou IP: jen VLAN ${WITNESS_VLAN_IP}/${VLAN_PREFIX}, brána = router ${VLAN_GW},
 # přístup z VPN (${VPN_NET}) přes router. Bastion dělá router → witness je jen monitoring.
 set -euo pipefail
+
+# --- hostname do /etc/hosts (klon šablony má jiné jméno → sudo hlásí "unable to resolve host")
+grep -qE "\\s$(hostname)(\\s|$)" /etc/hosts || echo "127.0.1.1 $(hostname)" >> /etc/hosts
 
 # --- balíky (odchozí provoz z LAN povolený routerem)
 export DEBIAN_FRONTEND=noninteractive
@@ -44,6 +47,8 @@ enabled = true
 backend = systemd
 maxretry = 5
 bantime = 1h
+# vlastní sítě nikdy nebanovat (jinak se po sérii neúspěšných pokusů zamkne L40S i VPN)
+ignoreip = 127.0.0.1/8 ${VLAN_NET} ${VPN_NET}
 EOF
 cat > /etc/apt/apt.conf.d/20auto-upgrades <<EOF
 APT::Periodic::Update-Package-Lists "1";
@@ -60,7 +65,9 @@ for net in "${VLAN_NET}" "${VPN_NET}"; do
 done
 ufw --force enable
 
+sshd -t   # chybná konfigurace = konec skriptu dřív, než se ssh restartuje
 systemctl restart ssh
+systemctl is-active --quiet ssh
 systemctl enable --now docker fail2ban unattended-upgrades
 echo "witness bootstrap hotový: $(hostname)"
 
@@ -78,6 +85,10 @@ iface $IF inet static
     address ${WITNESS_VLAN_IP}/${VLAN_PREFIX}
     gateway ${VLAN_GW}
 EOF
+  # cloud-init by při každém startu znovu zapsal DHCP do interfaces.d/50-cloud-init
+  mkdir -p /etc/cloud/cloud.cfg.d
+  echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+  rm -f /etc/network/interfaces.d/50-cloud-init
   printf 'nameserver %s\nnameserver 1.1.1.1\n' "${DNS}" > /etc/resolv.conf
   echo "síť: $IF → ${WITNESS_VLAN_IP} (spojení z DHCP adresy se teď přeruší, připoj se na ${WITNESS_VLAN_IP})"
   systemctl restart networking || { ifdown "$IF"; ifup "$IF"; }

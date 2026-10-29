@@ -4,6 +4,9 @@ scrape_configs:
   - { job_name: node, static_configs: [{ targets: ["${L40S_VLAN_IP}:9100"], labels: { host: ubuntu-l40s } }] }
   - { job_name: dcgm, static_configs: [{ targets: ["${L40S_VLAN_IP}:9400"], labels: { host: ubuntu-l40s } }] }
   - { job_name: vllm, static_configs: [{ targets: ["${L40S_VLAN_IP}:8000"], labels: { host: ubuntu-l40s } }] }
+  # witness sám (node_exporter v compose) + VictoriaMetrics/vmalert/Alertmanager
+  - { job_name: witness, static_configs: [{ targets: ["node:9100"], labels: { host: witness } }] }
+  - { job_name: witness-stack, static_configs: [{ targets: ["vm:8428", "vmalert:8880", "alertmanager:9093"], labels: { host: witness } }] }
   # dostupnost: ICMP ping VM a TCP/HTTP na služby (blackbox běží na witness)
   - job_name: ping
     metrics_path: /probe

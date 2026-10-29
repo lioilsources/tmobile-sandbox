@@ -34,5 +34,10 @@ g = out / "grafana"
     "apiVersion: 1\ndatasources:\n  - { name: VictoriaMetrics, uid: prom, type: prometheus, url: http://vm:8428, isDefault: true }\n")
 (g / "provisioning/dashboards/files.yaml").write_text(
     "apiVersion: 1\nproviders:\n  - { name: files, type: file, options: { path: /var/lib/grafana/dashboards } }\n")
-shutil.copy(H.parent / "70_monitoring/grafana/dashboards/sandbox.json", g / "dashboards/sandbox.json")
+# dashboard L40S: node_* metriky omezit na L40S (witness má vlastní node_exporter a dashboard)
+sb = (H.parent / "70_monitoring/grafana/dashboards/sandbox.json").read_text()
+sb = re.sub(r'(node_[A-Za-z0-9_]+)\{', r'\1{host=\\"ubuntu-l40s\\",', sb)
+sb = re.sub(r'(node_[A-Za-z0-9_]+)(?![A-Za-z0-9_{])', r'\1{host=\\"ubuntu-l40s\\"}', sb)
+(g / "dashboards/sandbox.json").write_text(sb)
+shutil.copy(H / "witness_dashboard.json", g / "dashboards/witness.json")
 print(f"hotovo → {out}")
