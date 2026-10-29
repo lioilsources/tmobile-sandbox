@@ -1,5 +1,5 @@
 # Monitoring na witness (2 vCPU / 4 GB): VictoriaMetrics + vmalert + Alertmanager + Grafana + blackbox.
-# Vše jen na 127.0.0.1 → přístup SSH tunelem přes witness. Limity paměti dohromady ~2,2 GB.
+# Vše na 127.0.0.1 kromě Grafany na VLAN IP (přístup z VPN). Witness nemá veřejnou IP. Limity paměti dohromady ~2,2 GB.
 name: witness
 services:
   vm:
@@ -38,6 +38,6 @@ services:
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/sandbox.json
     volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro", "./grafana/dashboards:/var/lib/grafana/dashboards:ro", "grafana:/var/lib/grafana"]
-    ports: ["127.0.0.1:3001:3000"]
+    ports: ["${WITNESS_VLAN_IP:?nastav v witness.env}:3000:3000"]   # jen VLAN → z VPN přes router
     mem_limit: 400m
 volumes: { vm: {}, am: {}, grafana: {} }
