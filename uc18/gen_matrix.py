@@ -121,7 +121,7 @@ def main(argv=None) -> int:
     ap.add_argument("--comfy-prefix", default="uc18")
     ap.add_argument("--depth", type=int, default=6)
     ap.add_argument("--health-s", type=float, default=300)
-    ap.add_argument("--min-util", type=float, default=60, help="abort below this mean GPU util %% in the health window")
+    ap.add_argument("--min-util", type=float, default=35, help="abort below this mean GPU util %% in the health window (SDXL přes ComfyUI běží na 52–64 %, 29. 10.; skutečnou kontrolou je rychlost)")
     ap.add_argument("--min-speed", type=float, default=0.5, help="abort below this × expected images/min")
     ap.add_argument("--max-err", type=float, default=0.2, help="abort above this error share")
     ap.add_argument("--stall-s", type=float, default=600)
