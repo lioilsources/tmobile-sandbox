@@ -20,8 +20,8 @@ services:
   alertmanager:
     image: prom/alertmanager:v0.27.0
     restart: unless-stopped
-    command: ["--config.file=/etc/am/alertmanager.yml", "--storage.path=/data"]
-    volumes: ["./alertmanager.yml:/etc/am/alertmanager.yml:ro", "am:/data"]
+    command: ["--config.file=/etc/am/alertmanager.yml", "--storage.path=/alertmanager"]  # image dir owned by nobody; /data would be created root-owned
+    volumes: ["./alertmanager.yml:/etc/am/alertmanager.yml:ro", "am:/alertmanager"]
     ports: ["127.0.0.1:9093:9093"]
     mem_limit: 100m
   blackbox:
