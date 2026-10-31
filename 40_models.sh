@@ -70,6 +70,8 @@ elif [ "$TIER" = w2img ]; then   # Prompts/04 §0.1 #23
   comfy Laxhar/noobai-XL-1.1              checkpoints NoobAI-XL-v1.1.safetensors 7
   comfy cagliostrolab/animagine-xl-4.0    checkpoints animagine-xl-4.0.safetensors 7
   comfy RunDiffusion/Juggernaut-XL-v9     checkpoints Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors 8
+  comfy OnomaAIResearch/Illustrious-XL-v2.0 checkpoints Illustrious-XL-v2.0.safetensors 7
+  comfy cagliostrolab/animagine-xl-4.0  checkpoints animagine-xl-4.0-opt.safetensors 7
   comfy Comfy-Org/Flux-1-Dev              checkpoints flux1-dev-fp8.safetensors 18
 elif [ "$TIER" = w2gate ]; then   # Prompts/04 §0.1 #31 (UC24 audio) + #32 (UC25 SFW/taxonomie); PANNs/NISQA bere venv
   llm facebook/audiobox-aesthetics           1
