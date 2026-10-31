@@ -100,6 +100,9 @@ EOF
   rm -f /etc/network/interfaces.d/50-cloud-init
   printf 'nameserver %s\nnameserver 1.1.1.1\n' "${DNS}" > /etc/resolv.conf
   echo "síť: $IF → ${WITNESS_VLAN_IP} (spojení z DHCP adresy se teď přeruší, připoj se na ${WITNESS_VLAN_IP})"
+  # dhclient ze startu by jinak běžel dál a při obnově leasu přepsal statickou adresu tou z DHCP
+  pkill -x dhclient || true
+  ip -4 addr flush dev "$IF"
   systemctl restart networking || { ifdown "$IF"; ifup "$IF"; }
 fi
 
