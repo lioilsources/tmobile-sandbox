@@ -1,0 +1,6 @@
+# UC26 - Mac: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# VM L40S (batch only): /cold/venvs/uc26
+numpy
+pandas
+scikit-learn
+pytest

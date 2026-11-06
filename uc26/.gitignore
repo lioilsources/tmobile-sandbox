@@ -1,0 +1,13 @@
+# UC26: nothing scraped, priced or private is ever committed.
+.venv/
+data/
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-journal
+*.sqlite-wal
+# generated reports may contain real numbers from scraped data -> keep local
+reports/*
+!reports/.gitkeep
+.pytest_cache/
+__pycache__/
