@@ -41,3 +41,16 @@ func TestValidate(t *testing.T) {
 		}
 	}
 }
+
+func TestEligibleNotBefore(t *testing.T) {
+	now := time.Date(2026, 11, 6, 19, 0, 0, 0, time.UTC)
+	js := []*Job{
+		{Name: "party", NotBefore: now.Add(30 * time.Minute)},
+		{Name: "now", NotBefore: now},
+		{Name: "any"},
+	}
+	got := eligible(js, now)
+	if len(got) != 2 || got[0].Name != "now" || got[1].Name != "any" {
+		t.Fatalf("got %v", got)
+	}
+}

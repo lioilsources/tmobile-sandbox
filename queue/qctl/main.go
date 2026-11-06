@@ -42,6 +42,10 @@ type Job struct {
 	Done     string `json:"done,omitempty"`   // window: marker file name in QCTL_DIR
 	Health   string `json:"health,omitempty"` // window: URL polled before READY
 	GuardMin int    `json:"guard_min,omitempty"`
+	// NotBefore keeps the job out of scheduling until this time (e.g. an evening window).
+	NotBefore time.Time `json:"not_before,omitempty"`
+	// Cleanup runs (bash, logged to logs/<name>.log) after a window closes, e.g. deleting guest photos.
+	Cleanup string `json:"cleanup,omitempty"`
 
 	Submitted time.Time `json:"submitted"`
 	Started   time.Time `json:"started,omitempty"`
@@ -210,8 +214,12 @@ func ls() {
 			if j.Exit != nil {
 				ex = " exit=" + strconv.Itoa(*j.Exit)
 			}
-			fmt.Printf("%-8s %-28s %-6s %-6s %4d min  %s%s %s\n", s, j.Name, j.Kind, cls, j.EstMin,
-				t.Format("01-02 15:04"), ex, j.Note)
+			nb := ""
+			if s == "pending" && !j.NotBefore.IsZero() {
+				nb = " not before " + j.NotBefore.Format("01-02 15:04")
+			}
+			fmt.Printf("%-8s %-28s %-6s %-6s %4d min  %s%s%s %s\n", s, j.Name, j.Kind, cls, j.EstMin,
+				t.Format("01-02 15:04"), ex, nb, j.Note)
 		}
 	}
 	if _, err := os.Stat(filepath.Join(dir, "HOLD")); err == nil {
@@ -315,7 +323,7 @@ func daemon() {
 }
 
 func step(held *bool) {
-	pending := load("pending")
+	pending := eligible(load("pending"), time.Now())
 	sortQueue(pending)
 	running := load("running")
 
@@ -339,6 +347,17 @@ func step(held *bool) {
 	}
 	*held = false
 	start(pending[0])
+}
+
+// eligible drops jobs whose not_before is still in the future.
+func eligible(js []*Job, now time.Time) []*Job {
+	var out []*Job
+	for _, j := range js {
+		if j.NotBefore.IsZero() || !now.Before(j.NotBefore) {
+			out = append(out, j)
+		}
+	}
+	return out
 }
 
 func alive(pid int) bool { return pid > 0 && syscall.Kill(pid, 0) == nil }
@@ -403,6 +422,13 @@ func checkWindow(j *Job) {
 	_ = os.Remove(filepath.Join(dir, j.Ready))
 	_ = os.Remove(donePath)
 	logf("window %s closed (%s)", j.Name, j.Note)
+	if j.Cleanup != "" {
+		if err := runLogged(j.Name, j.Cleanup); err != nil {
+			j.Note += "; cleanup failed: " + err.Error()
+			code = 1
+		}
+		logf("window %s cleanup done (%s)", j.Name, j.Note)
+	}
 	to := "done"
 	if code != 0 {
 		to = "failed"
@@ -502,6 +528,20 @@ func start(j *Job) {
 		must(os.WriteFile(filepath.Join(dir, j.Ready), nil, 0o644))
 		logf("window %s READY (%s, profile %s, guard %d min)", j.Name, j.Ready, j.Profile, j.GuardMin)
 	}
+}
+
+func runLogged(name, cmd string) error {
+	lf, err := os.OpenFile(logPath(name), os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
+	if err != nil {
+		return fmt.Errorf("open log: %w", err)
+	}
+	defer lf.Close()
+	c := exec.Command("bash", "-c", cmd)
+	c.Dir, c.Stdout, c.Stderr = os.Getenv("HOME"), lf, lf
+	if err := c.Run(); err != nil {
+		return fmt.Errorf("cleanup: %w", err)
+	}
+	return nil
 }
 
 func shellQuote(s string) string { return "'" + strings.ReplaceAll(s, "'", `'\''`) + "'" }

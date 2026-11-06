@@ -8,7 +8,8 @@ Nahrazuje ruční `dayNN.sh` skripty. Pravidlo priority:
 ## Druhy úloh
 
 - `cmd`: qctl přepne profil (`50_vllm/switch.sh`) a spustí `cmd` v bash. Výstup jde do `logs/<name>.log`, exit 0 znamená done, jinak failed.
-- `window`: okno pro jinou session. qctl přepne profil, počká na `health`, zapíše marker `ready` a čeká, až session zapíše marker `done` nebo vyprší `guard_min` (výchozí 2× `est_min`). Markery jsou kompatibilní s dosavadními (`RESTYLER_READY` / `RESTYLER_DONE`).
+- `window`: okno pro jinou session. qctl přepne profil, počká na `health`, zapíše marker `ready` a čeká, až session zapíše marker `done` nebo vyprší `guard_min` (výchozí 2× `est_min`). Markery jsou kompatibilní s dosavadními (`RESTYLER_READY` / `RESTYLER_DONE`). Volitelný `cleanup` (bash) se spustí po zavření okna, třeba smazání fotek hostů.
+- Libovolná úloha může mít `not_before` (RFC 3339). Do té doby se neplánuje ani nepřerušuje výplň.
 
 ## Použití (na VM)
 
