@@ -28,6 +28,17 @@ SHOP_OPS = 8         # 0 odlet, 1 upgrade přední zbraně, 2 další přední z
 SHOP_OBS = 3 + 4 * 4 + SHOP_OPS
 
 
+MAX_LOADOUT = {"front": [3, 25], "left": [3, 25], "right": [3, 25], "gen": 25, "unlock": 3}
+
+
+def random_loadout(rng):
+    """Iterace 2: náhodná výbava na začátku epizody, ať pilot umí každou loď (od základní po maximální)."""
+    lvl = lambda: int(25 * rng.random() ** 2)  # víc nízkých úrovní: úroveň 25 stojí přes 10^9 kreditu
+    def gun(p_empty):
+        return [-1, 0] if rng.random() < p_empty else [int(rng.integers(0, 4)), lvl()]
+    return {"front": gun(0.0), "left": gun(0.35), "right": gun(0.35), "gen": lvl(), "unlock": 3}
+
+
 def kstats(o):
     """(sestřeleno, celkem, skončených formací, formací, uletělo) z o["k"] = [kills, count, cleared, finished, fleets, escaped]."""
     k = o.get("k") or [0] * 6
@@ -117,6 +128,10 @@ def reward(prev, o, mode, max_t):
     else:
         dk = kills - kstats(prev)[0]; de = esc - kstats(prev)[4]
         r = 0.3 * dk - 0.3 * de + (o["score"] - prev["score"]) / 400 - max(dmg, 0) / 20 - 0.003
+        if mode == "campaign_dmg" and len(o["h"]) == len(prev["h"]):
+            # iterace 3: odměna za poškození, ať pilot střílí i do odolných nepřátel (falconx 1 000 HP v sektoru 2
+            # neodlétá a bez sestřelení sektor nikdy neskončí); jen když se počet nepřátel nezměnil (žádný spawn/odlet)
+            r += max(sum(h[2] for h in prev["h"]) - sum(h[2] for h in o["h"]), 0) / 1000
     end = None
     if o["over"]: r -= 5; end = "smrt"
     elif o["done"]:
@@ -131,8 +146,10 @@ def reward(prev, o, mode, max_t):
 class VecKirian:
     """N serverů; automatický reset po konci epizody. Sektor epizody: náhodně z `sectors`."""
 
-    def __init__(self, repo, n, sectors, base_port=7000, frame_skip=4, max_t=150.0, seed=0, mode="survive", **kw):
-        self.mode, self.v2 = mode, mode == "clear"
+    def __init__(self, repo, n, sectors, base_port=7000, frame_skip=4, max_t=150.0, seed=0, mode="survive", v3=False,
+                 loadout=None, **kw):
+        """loadout: None (nová loď), "random" (random_loadout) nebo "max" (MAX_LOADOUT); v3 = pozorování s výbavou."""
+        self.mode, self.v2, self.v3, self.loadout = mode, mode == "clear" or v3, v3, loadout
         self.envs = []
         for i in range(n):  # postupně, ať se kompilace testů nepřetahují
             self.envs.append(KirianProc(repo, base_port + i, **kw))
@@ -144,9 +161,12 @@ class VecKirian:
 
     def _reset(self, i, sector=None):
         s = int(self.rng.choice(self.sectors)) if sector is None else sector
-        o = self.envs[i].req({"cmd": "reset", "sector": s})
-        self.last[i] = o; self.ep_info[i] = {"sector": s, "ret": 0.0, "steps": 0, "hits": []}
-        return encode(o, self.n_sectors, self.v2)
+        o = self.envs[i].req({"cmd": "reset", "sector": s}); lo = None
+        if self.loadout:
+            lo = random_loadout(self.rng) if self.loadout == "random" else MAX_LOADOUT
+            o = self.envs[i].req({"cmd": "loadout", **lo})
+        self.last[i] = o; self.ep_info[i] = {"sector": s, "ret": 0.0, "steps": 0, "hits": [], "loadout": lo}
+        return encode(o, self.n_sectors, self.v2, self.v3)
 
     def reset(self):
         return np.stack([self._reset(i) for i in range(len(self.envs))])
@@ -170,7 +190,7 @@ class VecKirian:
                             death=(o["v"][0] / o["field"][0], o["v"][1] / o["field"][1]) if end == "smrt" else None)
                 infos.append(info); obs.append(self._reset(i)); dones.append(1.0)
             else:
-                obs.append(encode(o, self.n_sectors, self.v2)); dones.append(0.0)
+                obs.append(encode(o, self.n_sectors, self.v2, self.v3)); dones.append(0.0)
             rews.append(r)
         return np.stack(obs), np.asarray(rews, np.float32), np.asarray(dones, np.float32), infos
 

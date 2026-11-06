@@ -10,22 +10,23 @@ a pro srovnání náhodný hráč. Výstup: eval.json (po sektorech), deaths.jso
 import argparse, json, pathlib
 import numpy as np
 import torch
-from kirian_env import DIRS, OBS, OBS_V2, KirianProc, encode, kstats
+from kirian_env import DIRS, MAX_LOADOUT, OBS, OBS_V2, OBS_V3, KirianProc, encode, kstats
 from ppo import Agent
 
 
-def run(envs, sectors, policy, max_t, replay_sector=None, v2=False):
+def run(envs, sectors, policy, max_t, replay_sector=None, v2=False, v3=False, loadout=None):
     """Každé prostředí hraje svoje epizody; vrací seznam výsledků epizod."""
     queue = list(sectors); res = []; live = {}
     rep = None
     def start(i):
         if not queue: return
         s = queue.pop(0); o = envs[i].req({"cmd": "reset", "sector": s})
+        if loadout: o = envs[i].req({"cmd": "loadout", **loadout})
         live[i] = {"s": s, "o": o, "hits": [], "hp0": o["v"][2], "frames": [] if (s == replay_sector and rep is None) else None}
     for i in range(len(envs)): start(i)
     while live:
         ids = list(live)
-        obs = np.stack([encode(live[i]["o"], 18, v2) for i in ids])
+        obs = np.stack([encode(live[i]["o"], 18, v2, v3) for i in ids])
         acts = policy(obs)
         for i, a in zip(ids, acts):
             d = DIRS[a % 9]; envs[i].send({"cmd": "step", "a": [d[0], d[1], int(a // 9)], "k": 4})
@@ -69,12 +70,15 @@ def main():
     ap.add_argument("--sectors", default="0-17"); ap.add_argument("--flutter", default="flutter"); ap.add_argument("--base-port", type=int, default=7100)
     ap.add_argument("--max-t", type=float, default=150.0)
     ap.add_argument("--mode", default="survive", choices=["survive", "clear"], help="clear = agent kola 2 (rozšířené pozorování)")
+    ap.add_argument("--v3", action="store_true", help="agent s pozorováním výbavy (kolo 3, iterace 2)")
+    ap.add_argument("--loadout", choices=["max"], help="max = každý sektor s plně vylepšenou lodí (dá se vůbec vyčistit?)")
+    ap.add_argument("--no-random", action="store_true", help="bez srovnání s náhodným hráčem")
     a = ap.parse_args()
     lo, hi = map(int, a.sectors.split("-")); secs = list(range(lo, hi + 1))
     out = pathlib.Path(a.out); (out / "replays").mkdir(parents=True, exist_ok=True)
     envs = [KirianProc(a.repo, a.base_port + i, flutter=a.flutter, log_dir=str(out)) for i in range(a.envs)]
-    v2 = a.mode == "clear"
-    agent = Agent(obs=OBS_V2 if v2 else OBS); agent.load_state_dict(torch.load(a.agent, map_location="cpu")); agent.eval()
+    v2, v3 = a.mode == "clear" or a.v3, a.v3; lo_ = MAX_LOADOUT if a.loadout == "max" else None
+    agent = Agent(obs=OBS_V3 if v3 else OBS_V2 if v2 else OBS); agent.load_state_dict(torch.load(a.agent, map_location="cpu")); agent.eval()
 
     def pol(obs):
         with torch.no_grad():
@@ -82,17 +86,17 @@ def main():
     rng = np.random.default_rng(0)
     rnd = lambda obs: rng.integers(0, 18, len(obs))
     result = {}
-    for name, p in (("agent", pol), ("nahodny", rnd)):
-        res, _ = run(envs, [s for s in secs for _ in range(a.episodes)], p, a.max_t, v2=v2)
+    for name, p in (("agent", pol),) + (() if a.no_random else (("nahodny", rnd),)):
+        res, _ = run(envs, [s for s in secs for _ in range(a.episodes)], p, a.max_t, v2=v2, v3=v3, loadout=lo_)
         result[name] = summarize(res)
         (out / f"episodes_{name}.json").write_text(json.dumps(res))
     # replay: jedna epizoda agenta pro každý sektor
     for s in secs:
-        _, rep = run(envs, [s], pol, a.max_t, replay_sector=s, v2=v2)
+        _, rep = run(envs, [s], pol, a.max_t, replay_sector=s, v2=v2, v3=v3, loadout=lo_)
         if rep: (out / "replays" / f"sector_{s:02d}.json").write_text(json.dumps(rep))
     (out / "eval.json").write_text(json.dumps(result, ensure_ascii=False, indent=1))
     for e in envs: e.close()
-    print(json.dumps({s: (result["agent"][s]["uspesnost_%"], result["agent"][s]["vycisteno_%"], result["nahodny"][s]["uspesnost_%"]) for s in result["agent"]}))
+    print(json.dumps({s: (result["agent"][s]["uspesnost_%"], result["agent"][s]["vycisteno_%"], result["agent"][s]["sestreleno_%"]) for s in result["agent"]}))
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ import argparse, json, pathlib, time
 import numpy as np
 import torch, torch.nn as nn
 from torch.distributions import Categorical
-from kirian_env import N_ACT, OBS, OBS_V2, VecKirian
+from kirian_env import N_ACT, OBS, OBS_V2, OBS_V3, VecKirian
 
 
 def layer(i, o, std=np.sqrt(2)):
@@ -45,13 +45,16 @@ def main():
     ap.add_argument("--mode", default="survive", choices=["survive", "clear"], help="odměna kola 1 / kola 2 (viz kirian_env)")
     ap.add_argument("--init", help="agent.pt z předchozího kola; nové vstupy dostanou nulové váhy")
     ap.add_argument("--focus", default="", help="sektory losované dvakrát častěji, např. 2,4,5")
+    ap.add_argument("--v3", action="store_true", help="pozorování s výbavou lodi (OBS_V3, jako pilot kola 3)")
+    ap.add_argument("--loadout", choices=["random", "max"], help="výbava na začátku epizody (iterace 2)")
     a = ap.parse_args()
     lo, hi = map(int, a.sectors.split("-"))
     out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
     dev = torch.device(a.device); torch.set_num_threads(2)
     sectors = list(range(lo, hi + 1)) + [int(x) for x in a.focus.split(",") if x]
-    env = VecKirian(a.repo, a.envs, sectors, base_port=a.base_port, flutter=a.flutter, log_dir=str(out), mode=a.mode)
-    OBS_N = OBS_V2 if a.mode == "clear" else OBS
+    env = VecKirian(a.repo, a.envs, sectors, base_port=a.base_port, flutter=a.flutter, log_dir=str(out), mode=a.mode,
+                     v3=a.v3, loadout=a.loadout)
+    OBS_N = OBS_V3 if a.v3 else OBS_V2 if a.mode == "clear" else OBS
     agent = Agent(obs=OBS_N)
     if a.init:
         sd = torch.load(a.init, map_location="cpu"); w = sd["body.0.weight"]

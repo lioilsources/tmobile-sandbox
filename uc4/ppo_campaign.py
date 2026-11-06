@@ -42,9 +42,11 @@ class Campaign:
     nákupy mezi sektory dělá `shop_policy` uvnitř step() a hotové návštěvy se sbírají v self.shop_done."""
 
     def __init__(self, repo, n, shop_policy, start=0, last=17, base_port=7000, flutter="flutter", log_dir="/tmp",
-                 frame_skip=4, max_t=150.0):
+                 frame_skip=4, max_t=150.0, start_credit=0, reward_mode="campaign"):
         self.envs = [KirianProc(repo, base_port + i, flutter=flutter, log_dir=log_dir) for i in range(n)]
         self.shop_policy, self.start, self.last, self.k, self.max_t = shop_policy, start, last, frame_skip, max_t
+        self.reward_mode = reward_mode
+        self.start_credit = start_credit  # iterace 3: kredit navíc na začátku kampaně (první nákup po sektoru 0)
         self.n_sectors = last + 1
         self.o = [None] * n; self.ep = [None] * n; self.run = [None] * n
         self.shop_done = []   # [(x, mask, a, logp, v, G)]
@@ -52,6 +54,7 @@ class Campaign:
 
     def _new_run(self, i):
         o = self.envs[i].req({"cmd": "reset", "sector": self.start})
+        if self.start_credit: o = self.envs[i].req({"cmd": "loadout", "credit": self.start_credit})
         self.run[i] = {"sectors": [], "visits": [], "R": [], "spent": 0, "bought": []}
         return self._new_sector(i, o)
 
@@ -94,7 +97,7 @@ class Campaign:
         obs, rews, dones, infos = [], [], [], []
         for i in range(len(self.envs)):
             prev, o = self.o[i], self.envs[i].recv(); self.o[i] = o
-            r, end, _ = reward(prev, o, "campaign", self.max_t)
+            r, end, _ = reward(prev, o, self.reward_mode, self.max_t)
             ep = self.ep[i]; ep["ret"] += r; ep["steps"] += 1
             if end:
                 kills, count, _, _, esc = kstats(o)
@@ -156,7 +159,9 @@ def evaluate(a):
     out = pathlib.Path(a.eval); pilot = load_pilot(out / "agent.pt"); pilot.eval()
     shop = ShopAgent()
     if (out / "shop.pt").exists(): shop.load_state_dict(torch.load(out / "shop.pt", map_location="cpu"))
-    env = Campaign(a.repo, a.envs, make_shop_policy(a.shop, shop), base_port=a.base_port, flutter=a.flutter, log_dir=str(out))
+    env = Campaign(a.repo, a.envs, make_shop_policy(a.shop, shop), base_port=a.base_port, flutter=a.flutter, log_dir=str(out),
+                   start_credit=a.start_credit, max_t=a.max_t,
+                   reward_mode="campaign_dmg" if a.damage_reward else "campaign")
     obs = env.reset()
     while len(env.runs_done) < a.runs:
         with torch.no_grad():
@@ -178,13 +183,18 @@ def main():
     ap.add_argument("--shop-lr", type=float, default=3e-4); ap.add_argument("--shop-batch", type=int, default=512)
     ap.add_argument("--flutter", default="flutter"); ap.add_argument("--base-port", type=int, default=7000)
     ap.add_argument("--eval", help="adresář s agent.pt a shop.pt → jen vyhodnocení kampaní")
+    ap.add_argument("--start-credit", type=int, default=0, help="kredit na začátku kampaně (iterace 3)")
+    ap.add_argument("--damage-reward", action="store_true", help="odměna za ubrané HP nepřátel (iterace 3)")
+    ap.add_argument("--max-t", type=float, default=150.0, help="limit sektoru v s; hra sama žádný nemá (iterace 3: 300)")
     ap.add_argument("--shop", default="learn", choices=["learn", "greedy", "none"]); ap.add_argument("--runs", type=int, default=30)
     a = ap.parse_args()
     if a.eval: return evaluate(a)
     out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True); torch.set_num_threads(2)
     pilot = load_pilot(a.init); shop = ShopAgent()
     opt = torch.optim.Adam(pilot.parameters(), lr=a.lr, eps=1e-5); sopt = torch.optim.Adam(shop.parameters(), lr=a.shop_lr, eps=1e-5)
-    env = Campaign(a.repo, a.envs, make_shop_policy("learn", shop), base_port=a.base_port, flutter=a.flutter, log_dir=str(out))
+    env = Campaign(a.repo, a.envs, make_shop_policy("learn", shop), base_port=a.base_port, flutter=a.flutter, log_dir=str(out),
+                   start_credit=a.start_credit, max_t=a.max_t,
+                   reward_mode="campaign_dmg" if a.damage_reward else "campaign")
     T, N = a.rollout, a.envs
     obs_b = torch.zeros((T, N, OBS_V3)); act_b = torch.zeros((T, N), dtype=torch.long)
     logp_b, rew_b, done_b, val_b = (torch.zeros((T, N)) for _ in range(4))
