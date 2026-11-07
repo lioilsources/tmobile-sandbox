@@ -80,8 +80,9 @@ def gen(a):
 
 
 def cut(a):
-    import torch
+    import numpy as np, torch
     from PIL import Image
+    from scipy import ndimage
     from torchvision import transforms
     from transformers import AutoModelForImageSegmentation
     net = AutoModelForImageSegmentation.from_pretrained("ZhengPeng7/BiRefNet", trust_remote_code=True).cuda().eval().half()
@@ -95,8 +96,16 @@ def cut(a):
         im = Image.open(p).convert("RGB")
         with torch.no_grad():
             mask = net(tf(im).unsqueeze(0).cuda().half())[-1].sigmoid()[0, 0].float().cpu()
-        alpha = transforms.functional.to_pil_image(mask).resize(im.size, Image.LANCZOS)
-        rgba = im.copy(); rgba.putalpha(alpha)
+        a_ = np.asarray(transforms.functional.to_pil_image(mask).resize(im.size, Image.LANCZOS), np.float32) / 255
+        # BiRefNet leaves dark cell interiors semi-transparent: force the hole-filled core opaque
+        rgb = np.asarray(im, np.float32)
+        lit = rgb.max(axis=2) > 16  # black background enclosed between pseudopodia stays transparent
+        core = ndimage.binary_erosion(ndimage.binary_fill_holes(a_ > 0.5) & lit, iterations=3)
+        a_ = np.maximum(a_, core.astype(np.float32))
+        # background is pure black, so edge pixels are alpha * colour: un-premultiply to drop the dark halo
+        rgb = np.where(a_[..., None] > 0.05, np.clip(rgb / np.maximum(a_[..., None], 1e-3), 0, 255), 0)
+        alpha = Image.fromarray((a_ * 255).astype(np.uint8))
+        rgba = Image.fromarray(rgb.astype(np.uint8)); rgba.putalpha(alpha)
         bbox = alpha.point(lambda v: 255 if v > 24 else 0).getbbox()
         if not bbox:
             print(f"EMPTY mask {p.name}", flush=True); continue
