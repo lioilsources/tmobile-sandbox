@@ -106,6 +106,9 @@ def cut(a):
         rgb = np.where(a_[..., None] > 0.05, np.clip(rgb / np.maximum(a_[..., None], 1e-3), 0, 255), 0)
         alpha = Image.fromarray((a_ * 255).astype(np.uint8))
         rgba = Image.fromarray(rgb.astype(np.uint8)); rgba.putalpha(alpha)
+        edge = np.concatenate([a_[:3].ravel(), a_[-3:].ravel(), a_[:, :3].ravel(), a_[:, -3:].ravel()])
+        if (edge > 0.5).mean() > 0.002:  # object touches the frame = cut off (BRIEF: whole object visible)
+            print(f"EDGE {p.name}", flush=True)
         bbox = alpha.point(lambda v: 255 if v > 24 else 0).getbbox()
         if not bbox:
             print(f"EMPTY mask {p.name}", flush=True); continue
