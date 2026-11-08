@@ -52,16 +52,22 @@ def gen(a):
             call("/system_stats"); break
         except OSError:
             time.sleep(5)
-    pending = {}
-    for ic, seed, prompt in jobs(m, a.ids, a.k, a.retry):
-        dst = out / f'{ic["id"]}_{seed}.png'
-        if dst.exists():
-            continue
-        pid = call("/prompt", {"prompt": graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}', ic.get("size", m["size"]))})["prompt_id"]
-        pending[pid] = (dst, time.time())
-    print(f"queued {len(pending)}", flush=True)
-    t0, times = time.time(), []
-    while pending:
+    todo = [(ic, seed, prompt) for ic, seed, prompt in jobs(m, a.ids, a.k, a.retry)
+            if not (out / f'{ic["id"]}_{seed}.png').exists()]
+    print(f"todo {len(todo)}{' (serial)' if a.serial else ''}", flush=True)
+    pending, t0, times = {}, time.time(), []
+
+    def submit(ic, seed, prompt):
+        g = graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}', ic.get("size", m["size"]))
+        pending[call("/prompt", {"prompt": g})["prompt_id"]] = (out / f'{ic["id"]}_{seed}.png', time.time())
+
+    if not a.serial:  # serial: one prompt in the shared ComfyUI queue at a time, so other users' jobs interleave
+        for job in todo:
+            submit(*job)
+        todo = []
+    while pending or todo:
+        if not pending:
+            submit(*todo.pop(0))
         time.sleep(2)
         for pid in list(pending):
             h = call(f"/history/{pid}").get(pid)
@@ -90,9 +96,9 @@ def cut(a):
     tf = transforms.Compose([transforms.Resize((1024, 1024)), transforms.ToTensor(),
                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
     src = Path(a.out); dst = src / "cut"; dst.mkdir(exist_ok=True)
-    for p in sorted(src.glob("*.png")):
+    for p in sorted(src.glob(a.only or "*.png")):
         o = dst / p.name
-        if o.exists():
+        if o.exists() and not a.only:
             continue
         im = Image.open(p).convert("RGB")
         with torch.no_grad():
@@ -101,10 +107,16 @@ def cut(a):
         # BiRefNet leaves dark cell interiors semi-transparent: force the hole-filled core opaque
         rgb = np.asarray(im, np.float32)
         lit = rgb.max(axis=2) > 16  # black background enclosed between pseudopodia stays transparent
-        core = ndimage.binary_erosion(ndimage.binary_fill_holes(a_ > 0.5) & lit, iterations=3)
+        # --fill-all: a dark nucleus inside the cell is not background (cytotoxin), so fill it too
+        core = ndimage.binary_erosion(ndimage.binary_fill_holes(a_ > 0.5) & (True if a.fill_all else lit), iterations=3)
         a_ = np.maximum(a_, core.astype(np.float32))
         # background is pure black, so edge pixels are alpha * colour: un-premultiply to drop the dark halo
         rgb = np.where(a_[..., None] > 0.05, np.clip(rgb / np.maximum(a_[..., None], 1e-3), 0, 255), 0)
+        if a.drop_dark:  # black background caught between loose particles (pyrogen droplets): only for bright subjects
+            # soft luminance key on neutral/warm pixels only (the cyan cell body keeps its dark shading):
+            # fully gone below N, fades in up to 2.5 N, so warm droplets lose their dark rims
+            key = np.clip((rgb.max(axis=2) - a.drop_dark) / (1.5 * a.drop_dark), 0, 1)
+            a_ = np.where(rgb[..., 0] >= rgb[..., 2] - 6, a_ * key, a_)
         alpha = Image.fromarray((a_ * 255).astype(np.uint8))
         rgba = Image.fromarray(rgb.astype(np.uint8)); rgba.putalpha(alpha)
         edge = np.concatenate([a_[:3].ravel(), a_[-3:].ravel(), a_[:, :3].ravel(), a_[:, -3:].ravel()])
@@ -171,6 +183,10 @@ if __name__ == "__main__":
     ap.add_argument("--k", type=lambda s: [int(x) for x in s.split(",")], default=[0, 1, 2, 3])
     ap.add_argument("--out", default="/cold/biodefense/icons/drafts")
     ap.add_argument("--sheets")
+    ap.add_argument("--only", help="cut: glob of drafts to (re)cut, overwrites existing cutouts")
+    ap.add_argument("--fill-all", action="store_true", help="cut: fill every enclosed hole, also dark ones")
+    ap.add_argument("--drop-dark", type=int, default=0, help="cut: make every pixel darker than N transparent (bright subjects only)")
+    ap.add_argument("--serial", action="store_true", help="submit the next prompt only after the previous one finished")
     ap.add_argument("--retry", action="store_true", help="use each icon's retry_seeds instead of --k")
     a = ap.parse_args()
     {"gen": gen, "cut": cut, "sheet": sheet}[a.cmd](a)
