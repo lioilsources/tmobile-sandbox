@@ -1,0 +1,11 @@
+# Token-checking proxy in front of ComfyUI; exposed on the tailnet only via `tailscale serve --tcp 18188`.
+[Unit]
+Description=comfy_relay (127.0.0.1:18188 -> ComfyUI)
+After=comfyui.service
+
+[Service]
+ExecStart=%h/.local/opt/comfy-relay/comfy_relay -listen 127.0.0.1:18188 -upstream http://127.0.0.1:8188 -token-file %h/.config/comfy-relay/token
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

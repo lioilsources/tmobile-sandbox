@@ -1,0 +1,11 @@
+# User-mode Tailscale on the L40S VM (no root, no TUN). Login: tailscale --socket=... up --hostname=l40s-comfy
+[Unit]
+Description=Tailscale (userspace networking)
+After=network-online.target
+
+[Service]
+ExecStart=%h/.local/opt/tailscale/tailscaled --tun=userspace-networking --statedir=%h/.local/share/tailscale --socket=%h/.local/share/tailscale/tailscaled.sock
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

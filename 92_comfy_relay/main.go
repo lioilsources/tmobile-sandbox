@@ -1,4 +1,4 @@
-// comfy_relay: token-checking reverse proxy from the home LAN to the ComfyUI tunnel on M2.
+// comfy_relay: token-checking reverse proxy in front of ComfyUI (on the L40S VM, exposed via tailscale serve).
 //
 // Only the ComfyUI endpoints PartyCockpit needs are forwarded; every request must carry
 // `Authorization: Bearer <token>`, where the token is read from RELAY_TOKEN_FILE.
