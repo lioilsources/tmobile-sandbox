@@ -20,27 +20,28 @@ def call(path, data=None):
         return json.load(r)
 
 
-def graph(pos, neg, seed, prefix):
+def graph(pos, neg, seed, prefix, size=(1024, 1024)):
     enc = lambda t: {"class_type": "CLIPTextEncode", "inputs": {"clip": ["c", 0], "text": t}}
     return {"u": {"class_type": "UNETLoader", "inputs": {"unet_name": "qwen_image_fp8_e4m3fn.safetensors", "weight_dtype": "default"}},
             "c": {"class_type": "CLIPLoader", "inputs": {"clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors", "type": "qwen_image"}},
             "v": {"class_type": "VAELoader", "inputs": {"vae_name": "qwen_image_vae.safetensors"}},
             "ms": {"class_type": "ModelSamplingAuraFlow", "inputs": {"model": ["u", 0], "shift": 3.1}},
             "p": enc(pos), "n": enc(neg),
-            "l": {"class_type": "EmptySD3LatentImage", "inputs": {"width": 1024, "height": 1024, "batch_size": 1}},
+            "l": {"class_type": "EmptySD3LatentImage", "inputs": {"width": size[0], "height": size[1], "batch_size": 1}},
             "k": {"class_type": "KSampler", "inputs": {"model": ["ms", 0], "positive": ["p", 0], "negative": ["n", 0], "latent_image": ["l", 0],
                   "seed": seed, "steps": 20, "cfg": 2.5, "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0}},
             "d": {"class_type": "VAEDecode", "inputs": {"samples": ["k", 0], "vae": ["v", 0]}},
             "s": {"class_type": "SaveImage", "inputs": {"images": ["d", 0], "filename_prefix": prefix}}}
 
 
-def jobs(m, ids, ks):
+def jobs(m, ids, ks, retry=False):
     order = [ic["id"] for ic in m["icons"]]
     for iid in ids:
         ic = m["icons"][order.index(iid)]
         prompt = f'{m["styles"][ic["style"]]}, {m["tones"][ic["tone"]]}, {ic["subject"]}'
-        for k in ks:
-            yield ic, 3000 + 10 * order.index(iid) + k, prompt
+        seeds = ic["retry_seeds"] if retry else [3000 + 10 * order.index(iid) + k for k in ks]
+        for seed in seeds:
+            yield ic, seed, prompt
 
 
 def gen(a):
@@ -52,11 +53,11 @@ def gen(a):
         except OSError:
             time.sleep(5)
     pending = {}
-    for ic, seed, prompt in jobs(m, a.ids, a.k):
+    for ic, seed, prompt in jobs(m, a.ids, a.k, a.retry):
         dst = out / f'{ic["id"]}_{seed}.png'
         if dst.exists():
             continue
-        pid = call("/prompt", {"prompt": graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}')})["prompt_id"]
+        pid = call("/prompt", {"prompt": graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}', ic.get("size", m["size"]))})["prompt_id"]
         pending[pid] = (dst, time.time())
     print(f"queued {len(pending)}", flush=True)
     t0, times = time.time(), []
@@ -140,14 +141,15 @@ def sheet(a):
     except OSError:
         font = ImageFont.load_default()
     by = {}
-    for ic, seed, _ in jobs(m, a.ids, a.k):
+    for ic, seed, _ in jobs(m, a.ids, a.k, a.retry):
         by.setdefault(ic["id"], []).append(seed)
     for iid, seeds in by.items():
         seeds = [s for s in seeds if (out / f"{iid}_{s}.png").exists()]
         rows = 2 if any((out / "cut" / f"{iid}_{s}.png").exists() for s in seeds) else 1
         W = Image.new("RGB", (T * len(seeds), rows * T + L), (24, 24, 24)); d = ImageDraw.Draw(W)
         for i, s in enumerate(seeds):
-            W.paste(Image.open(out / f"{iid}_{s}.png").convert("RGB").resize((T, T), Image.LANCZOS), (i * T, 0))
+            raw = Image.open(out / f"{iid}_{s}.png").convert("RGB"); raw.thumbnail((T, T), Image.LANCZOS)  # portrait drafts keep aspect
+            W.paste(raw, (i * T + (T - raw.width) // 2, (T - raw.height) // 2))
             d.text((i * T + 8, T + 4), f"seed {s}", fill=(230, 230, 230), font=font)
             c = out / "cut" / f"{iid}_{s}.png"
             if c.exists():
@@ -169,5 +171,6 @@ if __name__ == "__main__":
     ap.add_argument("--k", type=lambda s: [int(x) for x in s.split(",")], default=[0, 1, 2, 3])
     ap.add_argument("--out", default="/cold/biodefense/icons/drafts")
     ap.add_argument("--sheets")
+    ap.add_argument("--retry", action="store_true", help="use each icon's retry_seeds instead of --k")
     a = ap.parse_args()
     {"gen": gen, "cut": cut, "sheet": sheet}[a.cmd](a)
