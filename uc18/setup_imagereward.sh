@@ -13,10 +13,16 @@ set -euo pipefail
 V=/cold/venvs/uc18-ir; D=/cold/hf/imagereward
 export UV_CACHE_DIR=${UV_CACHE_DIR:-/cold/pipcache/uv} UV_LINK_MODE=hardlink HF_HOME=/cold/hf
 mkdir -p "$D"
-command -v uv >/dev/null || { echo "uv missing"; exit 1; }
-[ -x $V/bin/python ] || uv venv -p 3.12 $V
-uv pip install -p $V/bin/python --index-url https://download.pytorch.org/whl/cu128 torch torchvision
-uv pip install -p $V/bin/python "image-reward==1.5" "transformers==4.44.2" "timm==0.6.13" "fairscale==0.4.13" pillow numpy requests
+if command -v uv >/dev/null; then
+  [ -x $V/bin/python ] || uv venv -p 3.12 $V
+  PIP=(uv pip install -p $V/bin/python)
+else  # no uv on the VM: stdlib venv + pip, cache on /cold
+  [ -x $V/bin/python ] || python3.12 -m venv $V
+  export PIP_CACHE_DIR=/cold/pipcache/pip; PIP=($V/bin/pip install -q)
+fi
+"${PIP[@]}" --index-url https://download.pytorch.org/whl/cu128 torch torchvision
+"${PIP[@]}" "image-reward==1.5" "transformers==4.44.2" "timm==0.6.13" "fairscale==0.4.13" pillow numpy requests huggingface_hub \
+    openai-clip ftfy regex "diffusers==0.30.3"   # image-reward imports clip + diffusers; newer diffusers needs transformers ≥ 4.47
 $V/bin/python - <<'EOF'
 from huggingface_hub import hf_hub_download
 for f in ("ImageReward.pt", "med_config.json"):
