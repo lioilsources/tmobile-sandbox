@@ -14,7 +14,8 @@ UV_WARP = r"\buv\s*[-+*/]?=\s*[^;]*(sin|cos|atan|pow|length)\s*\("
 FAMILIES = {
     "mozaika": dict(
         desc="pixel mosaic filter: the selfie is quantized into square, hexagonal or voronoi cells with one flat color each",
-        must=[[r"floor\s*\(", r"voronoi", r"hex", r"\bround\s*\(", r"\bmod\s*\("]], forbid=[r"\batan\s*\("], face=0.80, max_keep=0.98),  # raindrop overlays (c0086) kept the face at 0.986–0.989, mosaics ≤ 0.972
+        must=[[r"floor\s*\(", r"voronoi", r"hex", r"\bround\s*\(", r"\bmod\s*\("]], forbid=[r"\batan\s*\("], face=0.80, max_keep=0.98,
+        min_valid=0.5, min_quant=0.5),  # probe: real mosaics quant 0.65–0.99, sketch c0066 valid 0, c0095 quant 0.02  # raindrop overlays (c0086) kept the face at 0.986–0.989, mosaics ≤ 0.972
     "polotón": dict(
         desc="halftone and dither print filter: the selfie is rendered as a raster of dots or lines whose size follows brightness",
         must=[[r"\b(step|smoothstep)\s*\("], [r"\b(fract|mod)\s*\("]], forbid=[], face=0.88),
@@ -24,7 +25,9 @@ FAMILIES = {
     "optika": dict(
         desc="lens distortion filter: fisheye, bulge, twirl or glass refraction centered on the face",
         must=[[r"uFaceCenter", r"\blength\s*\(", r"max\s*\(\s*abs"]], forbid=[r"segment", r"sector", r"kaleid"], face=0.70,
-        max_hist=0.9),  # optics moves pixels, keeps colours: duotone children had colour-histogram distance 0.97–1.0
+        max_hist=0.9,  # optics moves pixels, keeps colours: duotone children had colour-histogram distance 0.97–1.0
+        # UV probe (uc2/probe.py, trial 6): near-unchanged alien children valid 0.06–0.12, glitch blocks quant 0.99
+        min_valid=0.5, min_deform=0.05, max_quant=0.3),
     "dlaždice": dict(
         desc="tiled mirror filter: the selfie repeated in a grid with cartesian mirroring and shifted rows",
         must=[[r"\babs\s*\(", r"\bfract\s*\(", r"\bmod\s*\("]], forbid=[r"\batan\s*\("], face=0.80),
@@ -66,11 +69,26 @@ HINTS = [
 
 
 # render gates for every family (trial 5, 11. 11.): near-unchanged selfies had CLIP keep 0.999–1.0
-GATE_DEFAULTS = dict(max_keep=0.998, min_strength=0.03, max_hist=None)
+GATE_DEFAULTS = dict(max_keep=0.998, min_strength=0.03, max_hist=None,
+                     min_valid=None, min_deform=None, max_quant=None, min_quant=None)  # probe gates off unless set
 
 
 def gate(family, key):
     return FAMILIES[family].get(key, GATE_DEFAULTS[key])
+
+
+def probe_errors(family, pr):
+    """UV-probe gates (uc2/probe.py) for a family; [] = passes. A probe that failed to run never rejects."""
+    if "probe_error" in pr:
+        return []
+    errs = []
+    if gate(family, "min_valid") is not None and pr["valid"] < gate(family, "min_valid"):
+        errs.append(f"sonda: platných {pr['valid']} (přebarvuje, nevzorkuje uTexture)")
+    for key, field, cmp in (("min_deform", "deform", "<"), ("max_quant", "quant", ">"), ("min_quant", "quant", "<")):
+        lim, v = gate(family, key), pr.get(field)
+        if lim is not None and v is not None and ((v < lim) if cmp == "<" else (v > lim)):
+            errs.append(f"sonda: {field} {v} {cmp} {lim}")
+    return errs
 
 
 def strip_comments(code):

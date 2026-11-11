@@ -18,7 +18,8 @@ import numpy as np
 
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import evolve as E  # noqa: E402
-from families import FAMILIES, assign_seeds, card_text, check_card, gate, strip_comments  # noqa: E402
+import probe as P  # noqa: E402
+from families import FAMILIES, assign_seeds, card_text, check_card, gate, probe_errors, strip_comments  # noqa: E402
 
 MOTION_BINS = [0.005, 0.02, 0.05, 0.1]          # → 5 sloupců
 STRENGTH_BINS = [0.03, 0.08, 0.15, 0.25]        # průměrná |render − selfie| (0..1) → 5 řádků
@@ -99,12 +100,17 @@ class Scorer2(E.Scorer):
             frames.append(r.frames[0])
         emb = self._img(frames)
         text = self._txt(family)
+        try:
+            pr = P.probe(code, self.ctx)
+        except Exception as e:  # noqa: BLE001
+            pr = {"probe_error": str(e)[:200]}
         pick = float((self.model.logit_scale.exp() * emb @ text.T).mean())
         keep = float((emb * self.in_emb).sum(-1).mean())
         motion = float(np.mean(big)) if big else 0.0
         return {"pick": round(pick, 3), "theme_cos": round(pick / float(self.model.logit_scale.exp()), 4), "face_keep": round(keep, 3),
                 "motion": round(motion, 4), "strength": round(float(np.mean(diff)), 4), "hist": round(float(np.mean(hist)), 3),
                 "flicker": round(float(np.mean(small) / (np.mean(big) + 1e-3)) if big else 0.0, 3), "errors": sorted(set(errs)),
+                "probe": pr,
                 # effect embedding = render − source per selfie: whole-frame CLIP is dominated by the face
                 # (trial 4, 11. 11.: different seed shaders had cos 0.95–0.997), so dedup/novelty compare the change only
                 "frame": frames[0], "emb": (emb - self.in_emb).float().mean(0).cpu().numpy()}
@@ -125,7 +131,7 @@ class Island:
         self.dir = out / family; (self.dir / "shaders").mkdir(parents=True, exist_ok=True); (self.dir / "frames").mkdir(exist_ok=True)
         self.archive, self.embs, self.recs, self.hashes = {}, {}, {}, set()
         self.ban_until, self.stats, self.next_i, self.rss = {}, {"deti": 0, "kontrakt": 0, "karta": 0, "kompilace": 0, "impellerc": 0,
-                                                              "render": 0, "face": 0, "sila": 0, "dup": 0, "platne": 0}, 0, []
+                                                              "render": 0, "face": 0, "sila": 0, "sonda": 0, "dup": 0, "platne": 0}, 0, []
         self.ops = {o: 0 for o in OPERATORS}
         E.THEMES[family] = FAMILIES[family]["desc"]
         self.t0 = time.time()
@@ -181,6 +187,9 @@ class Island:
         mh = gate(self.f, "max_hist")
         if not seed and (sc["face_keep"] > gate(self.f, "max_keep") or sc["strength"] < gate(self.f, "min_strength") or (mh and sc["hist"] > mh)):
             return {**rec, **sc, "stage": "sila"}
+        pe = probe_errors(self.f, sc["probe"])
+        if pe and not seed:
+            return {**rec, **sc, "stage": "sonda", "errors": pe}
         near = max(((float(emb @ e / (np.linalg.norm(emb) * np.linalg.norm(e) + 1e-9)), k) for k, e in self.embs.items()),
                    default=(0.0, ""))
         sc["near_cos"] = round(near[0], 4)
@@ -327,11 +336,17 @@ class Island:
         (MirrorBooth 11. 11.: the 20 % quota applies to parent choice and to the export, not to the archive)."""
         n = self.a.export_n; cap = max(1, int(self.a.export_lineage * n))
         elite = {r["id"] for r in self.archive.values()}
-        pool = sorted(self.recs.values(), key=lambda r: (r["id"] not in elite, -r.get("score", 0)))
+        # seeds stay out (the app already has them); near-duplicate effects (cos > --export-dup) too
+        pool = sorted((r for r in self.recs.values() if r["parent"] is not None),
+                      key=lambda r: (r["id"] not in elite, -r.get("score", 0)))
         out, per = [], {}
         for r in pool:
             if len(out) >= n: break
             if per.get(r["lineage"], 0) >= cap: continue
+            e = self.embs[r["id"]]
+            if any(float(e @ self.embs[o["id"]] / (np.linalg.norm(e) * np.linalg.norm(self.embs[o["id"]]) + 1e-9)) > self.a.export_dup
+                   for o in out):
+                continue
             per[r["lineage"]] = per.get(r["lineage"], 0) + 1; out.append(r)
         return out
 
@@ -394,6 +409,7 @@ def main():
     ap.add_argument("--max-flicker", dest="max_flicker", type=float, default=0.6)
     ap.add_argument("--export-n", dest="export_n", type=int, default=25)
     ap.add_argument("--export-lineage", dest="export_lineage", type=float, default=0.2)
+    ap.add_argument("--export-dup", dest="export_dup", type=float, default=0.93, help="export: drop effects with cos above this to a chosen one")
     ap.add_argument("--dup-cos", dest="dup_cos", type=float, default=0.97, help="dedup: cosine of effect embeddings (render − source)")
     ap.add_argument("--ban-n", dest="ban_n", type=int, default=40); ap.add_argument("--restart-every", dest="restart_every", type=int, default=150)
     ap.add_argument("--seed", type=int, default=2)
