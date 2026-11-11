@@ -13,7 +13,8 @@ services:
     restart: unless-stopped
     pid: host
     volumes: ["/:/host:ro,rslave"]
-    command: ["--path.rootfs=/host"]
+    # textfile: gpu_profile.prom (z 50_vllm/switch.sh) → witness alertuje jen služby aktivního GPU profilu
+    command: ["--path.rootfs=/host", "--collector.textfile.directory=/host/srv/work/metrics"]
     ports: ["127.0.0.1:9100:9100"]
     networks: [tms]
   prometheus:

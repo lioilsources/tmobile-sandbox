@@ -13,4 +13,5 @@ case $P in
   *)     echo "neznámý profil $P"; exit 1 ;;
 esac
 echo "$P${OCR_MODEL:+ $OCR_MODEL}${L_SEQS:+ seqs=$L_SEQS}" > /srv/work/.gpu_profile
+"$(dirname "$0")/../70_monitoring/gpu_profile.sh" || true   # textfile metrika pro witness (ServiceDown jen u aktivního profilu)
 nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader
