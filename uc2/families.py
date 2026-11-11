@@ -15,7 +15,7 @@ FAMILIES = {
     "mozaika": dict(
         desc="pixel mosaic filter: the selfie is quantized into square, hexagonal or voronoi cells with one flat color each",
         must=[[r"floor\s*\(", r"voronoi", r"hex", r"\bround\s*\(", r"\bmod\s*\("]], forbid=[r"\batan\s*\("], face=0.80, max_keep=0.98,
-        min_valid=0.5, min_quant=0.5),  # probe: real mosaics quant 0.65–0.99, sketch c0066 valid 0, c0095 quant 0.02  # raindrop overlays (c0086) kept the face at 0.986–0.989, mosaics ≤ 0.972
+        min_valid=0.5, min_quant=0.5, max_cell_px=60),  # cell_px (weighted): c0034 109, c0025 119 lose the face; good children 9–39, seed labGlass 34; probe: real mosaics quant 0.65–0.99, sketch c0066 valid 0, c0095 quant 0.02  # raindrop overlays (c0086) kept the face at 0.986–0.989, mosaics ≤ 0.972
     "polotón": dict(
         desc="halftone and dither print filter: the selfie is rendered as a raster of dots or lines whose size follows brightness",
         must=[[r"\b(step|smoothstep)\s*\("], [r"\b(fract|mod)\s*\("]], forbid=[], face=0.88),
@@ -70,7 +70,7 @@ HINTS = [
 
 # render gates for every family (trial 5, 11. 11.): near-unchanged selfies had CLIP keep 0.999–1.0
 GATE_DEFAULTS = dict(max_keep=0.998, min_strength=0.03, max_hist=None,
-                     min_valid=None, min_deform=None, max_quant=None, min_quant=None)  # probe gates off unless set
+                     min_valid=None, min_deform=None, max_quant=None, min_quant=None, max_cell_px=None)  # probe gates off unless set
 
 
 def gate(family, key):
@@ -84,7 +84,8 @@ def probe_errors(family, pr):
     errs = []
     if gate(family, "min_valid") is not None and pr["valid"] < gate(family, "min_valid"):
         errs.append(f"sonda: platných {pr['valid']} (přebarvuje, nevzorkuje uTexture)")
-    for key, field, cmp in (("min_deform", "deform", "<"), ("max_quant", "quant", ">"), ("min_quant", "quant", "<")):
+    for key, field, cmp in (("min_deform", "deform", "<"), ("max_quant", "quant", ">"), ("min_quant", "quant", "<"),
+                            ("max_cell_px", "cell_px", ">")):
         lim, v = gate(family, key), pr.get(field)
         if lim is not None and v is not None and ((v < lim) if cmp == "<" else (v > lim)):
             errs.append(f"sonda: {field} {v} {cmp} {lim}")
@@ -131,10 +132,10 @@ def guess_families(name, code):
 # Ruční zařazení seedů (MirrorBooth, 2026-11-10); bez položky = seed se nepoužije (cyborg ani děti z kola 1 do žádné rodiny).
 SEED_MAP = {
     "mozaika": "labMosaic labHex labGlass labLed", "polotón": "labHalftone labDither labGameboy labAscii",
-    "skica": "labSketch labEmboss labEngrave", "optika": "labFisheye labTwirl labBlackHole labTunnel big_nose alien chibi",
+    "skica": "labSketch labEmboss labEngrave", "optika": "labFisheye labTwirl labBlackHole labTunnel big_nose chibi",
     "dlaždice": "labTiles labQuad labBlinds", "glitch": "labBlocks glitch", "vhs": "labVhs labNight crt",
     "malba": "labKuwahara labAquarelle oil", "barva": "labDuotone labCutout thermal pop_art", "světlo": "labRays labTilt glow neon",
-    "obličej": "slim doll lips big_ears long_neck", "vrstvy": "labRain labSnow labMatrix",
+    "obličej": "slim doll lips big_ears long_neck alien", "vrstvy": "labRain labSnow labMatrix",
 }
 
 

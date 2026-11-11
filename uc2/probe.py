@@ -5,6 +5,7 @@ nearest filtering and a float framebuffer, so the output .rg is the UV map the s
   deform = p90 of |out.rg − pixel uv| over valid pixels      optics: high, colour/light: ~0
   quant  = share of pixels whose out.rg equals the right or lower neighbour   mosaic: high, smooth warp: ~0
   gray   = median |out − 0.5| on a constant 0.5 texture      recolouring independent of geometry
+  cell_px = mosaic cell width (face band), for the ≥ 8 cells across the face gate
   valid  = share of pixels with |B| < 0.05 and rg inside [0, 1] (the shader sampled uTexture there)
 
 The probe texture is PROBE_SCALE× the render size, so magnifying warps (fisheye ≤ 4×) do not repeat texels and
@@ -65,7 +66,20 @@ def probe(code, ctx, t=0.7):
     return {"valid": round(float(ok.mean()), 3),
             "deform": round(float(np.percentile(dev[ok], 90)), 4) if ok.any() else None,  # p90: local warps (nose, bulge)
             "quant": round(float((eq_r | eq_d)[okq].mean()), 3) if okq.any() else None,
-            "gray": round(float(np.median(np.abs(gray - 0.5))), 4)}
+            "gray": round(float(np.median(np.abs(gray - 0.5))), 4),
+            "cell_px": cell_px(rg, ok)}
+
+
+def cell_px(rg, ok):
+    """Mosaic cell size in px: sqrt of the pixel-weighted mean area of equal-UV groups in the face band (rows 30–70 %)."""
+    b = slice(int(H * 0.3), int(H * 0.7))
+    m = ok[b]
+    if m.mean() < 0.5:
+        return None
+    q = np.round(rg[b][m] * 4096).astype(np.int64)  # probe texels are 1/1536 × 1/2048 → 4096 keeps them apart
+    _, cnt = np.unique(q[:, 0] * 8192 + q[:, 1], return_counts=True)
+    # pixel-weighted mean area of equal-UV groups: big flat cells dominate, dot shading and borders do not
+    return round(float(np.sqrt((cnt.astype(np.float64) ** 2).sum() / cnt.sum())), 1)
 
 
 if __name__ == "__main__":
