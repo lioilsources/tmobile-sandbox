@@ -5,7 +5,8 @@
   icons.py cut   --out /cold/biodefense/icons/drafts          # BiRefNet RGBA cutouts (ComfyUI venv)
   icons.py sheet --manifest manifest.json --ids ... --out ... --sheets <repo>/art/icons/sheets
 
-Model: Qwen-Image fp8 (Apache-2.0) in ComfyUI; seeds = 3000 + 10*index + k.
+Model: Qwen-Image fp8 (Apache-2.0) in ComfyUI; seeds = 3000 + 10*index + k (--base).
+Also art/fx (G3, G4): manifest "items" instead of "icons", --base 5000; tile items get a seam fix (../uc31/seam.py).
 """
 import argparse, io, json, os, shutil, sys, time, urllib.request
 from pathlib import Path
@@ -34,12 +35,13 @@ def graph(pos, neg, seed, prefix, size=(1024, 1024)):
             "s": {"class_type": "SaveImage", "inputs": {"images": ["d", 0], "filename_prefix": prefix}}}
 
 
-def jobs(m, ids, ks, retry=False):
-    order = [ic["id"] for ic in m["icons"]]
+def jobs(m, ids, ks, retry=False, base=3000):
+    items = m.get("icons") or m["items"]
+    order = [ic["id"] for ic in items]
     for iid in ids:
-        ic = m["icons"][order.index(iid)]
+        ic = items[order.index(iid)]
         prompt = f'{m["styles"][ic["style"]]}, {m["tones"][ic["tone"]]}, {ic["subject"]}'
-        seeds = ic["retry_seeds"] if retry else [3000 + 10 * order.index(iid) + k for k in ks]
+        seeds = ic["retry_seeds"] if retry else [base + 10 * order.index(iid) + k for k in ks]
         for seed in seeds:
             yield ic, seed, prompt
 
@@ -52,13 +54,13 @@ def gen(a):
             call("/system_stats"); break
         except OSError:
             time.sleep(5)
-    todo = [(ic, seed, prompt) for ic, seed, prompt in jobs(m, a.ids, a.k, a.retry)
+    todo = [(ic, seed, prompt) for ic, seed, prompt in jobs(m, a.ids, a.k, a.retry, a.base)
             if not (out / f'{ic["id"]}_{seed}.png').exists()]
     print(f"todo {len(todo)}{' (serial)' if a.serial else ''}", flush=True)
     pending, t0, times = {}, time.time(), []
 
     def submit(ic, seed, prompt):
-        g = graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}', ic.get("size", m["size"]))
+        g = graph(prompt, m.get("negative", ""), seed, f'biodefense/{ic["id"]}_{seed}', ic.get("size") or m["size"])
         pending[call("/prompt", {"prompt": g})["prompt_id"]] = (out / f'{ic["id"]}_{seed}.png', time.time())
 
     if not a.serial:  # serial: one prompt in the shared ComfyUI queue at a time, so other users' jobs interleave
@@ -86,13 +88,42 @@ def gen(a):
         print(f"median s/img warm: {gaps[len(gaps) // 2]:.1f}", flush=True)
 
 
+def clear_holes(rgb, a_, ctol, bg, below=70, above=4, min_px=400):
+    """Gaps inside the object (donut hole, padlock shackle, OK ring) still show the light grey background after
+    --fill-all: clear enclosed, opaque, neutral-grey regions whose rim is opaque all round. A gap is the background
+    or its shadow, never brighter: white parts of the object (plaster, mirror tiles, eye whites) stay."""
+    import numpy as np
+    from scipy import ndimage
+    lum, bg_lum = rgb.mean(axis=2), float(np.mean(bg))
+    grey = ((rgb.max(axis=2) - rgb.min(axis=2) <= ctol) & (lum >= bg_lum - below) & (lum <= bg_lum + above)
+            & (a_ > 0.5))
+    lab, n = ndimage.label(grey)
+    sizes = ndimage.sum(np.ones_like(lab), lab, range(n + 1))
+    for i in range(1, n + 1):
+        if sizes[i] < min_px:
+            continue
+        m = lab == i
+        if lum[m].mean() > bg_lum - 3:  # as bright as the backdrop or brighter: a white or grey part of the object
+            continue
+        rim = ndimage.binary_dilation(m, iterations=3) & ~m
+        # Mostly framed by white, neutral material = the shaded side of that material (plaster, mirror tile), keep it.
+        white = (rgb.max(axis=2) - rgb.min(axis=2) <= ctol) & (lum > bg_lum + above)
+        if white[rim].mean() > 0.5:
+            continue
+        if (a_[rim] > 0.5).mean() > 0.97:  # touches the transparent outside = a grey part of the object, keep it
+            a_ = np.where(ndimage.binary_dilation(m, iterations=2), 0, a_)
+    return a_
+
+
 def cut(a):
     import numpy as np, torch
     from PIL import Image
     from scipy import ndimage
     from torchvision import transforms
     from transformers import AutoModelForImageSegmentation
-    net = AutoModelForImageSegmentation.from_pretrained("ZhengPeng7/BiRefNet", trust_remote_code=True).cuda().eval().half()
+    dev = "cpu" if a.cpu else "cuda"
+    net = AutoModelForImageSegmentation.from_pretrained("ZhengPeng7/BiRefNet", trust_remote_code=True).to(dev).eval()
+    net = net.half() if dev == "cuda" else net
     tf = transforms.Compose([transforms.Resize((1024, 1024)), transforms.ToTensor(),
                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
     src = Path(a.out); dst = src / "cut"; dst.mkdir(exist_ok=True)
@@ -102,7 +133,7 @@ def cut(a):
             continue
         im = Image.open(p).convert("RGB")
         with torch.no_grad():
-            mask = net(tf(im).unsqueeze(0).cuda().half())[-1].sigmoid()[0, 0].float().cpu()
+            mask = net(tf(im).unsqueeze(0).to(dev).to(next(net.parameters()).dtype))[-1].sigmoid()[0, 0].float().cpu()
         a_ = np.asarray(transforms.functional.to_pil_image(mask).resize(im.size, Image.LANCZOS), np.float32) / 255
         # BiRefNet leaves dark cell interiors semi-transparent: force the hole-filled core opaque
         rgb = np.asarray(im, np.float32)
@@ -110,13 +141,18 @@ def cut(a):
         # --fill-all: a dark nucleus inside the cell is not background (cytotoxin), so fill it too
         core = ndimage.binary_erosion(ndimage.binary_fill_holes(a_ > 0.5) & (True if a.fill_all else lit), iterations=3)
         a_ = np.maximum(a_, core.astype(np.float32))
-        # background is pure black, so edge pixels are alpha * colour: un-premultiply to drop the dark halo
-        rgb = np.where(a_[..., None] > 0.05, np.clip(rgb / np.maximum(a_[..., None], 1e-3), 0, 255), 0)
+        # edge pixels are alpha * colour + (1 - alpha) * background: un-mix to drop the halo
+        # (UC28 background is pure black; --bg auto takes the median border colour, e.g. the light grey of UC29 emoji)
+        bg = np.median(np.concatenate([rgb[:8].reshape(-1, 3), rgb[-8:].reshape(-1, 3)]), axis=0) if a.bg == "auto" else np.zeros(3)
+        am = np.maximum(a_[..., None], 1e-3)
+        rgb = np.where(a_[..., None] > 0.05, np.clip((rgb - (1 - am) * bg) / am, 0, 255), 0)
         if a.drop_dark:  # black background caught between loose particles (pyrogen droplets): only for bright subjects
             # soft luminance key on neutral/warm pixels only (the cyan cell body keeps its dark shading):
             # fully gone below N, fades in up to 2.5 N, so warm droplets lose their dark rims
             key = np.clip((rgb.max(axis=2) - a.drop_dark) / (1.5 * a.drop_dark), 0, 1)
             a_ = np.where(rgb[..., 0] >= rgb[..., 2] - 6, a_ * key, a_)
+        if a.clear_bg_holes:
+            a_ = clear_holes(rgb, a_, a.clear_bg_holes, bg)
         alpha = Image.fromarray((a_ * 255).astype(np.uint8))
         rgba = Image.fromarray(rgb.astype(np.uint8)); rgba.putalpha(alpha)
         edge = np.concatenate([a_[:3].ravel(), a_[-3:].ravel(), a_[:, :3].ravel(), a_[:, -3:].ravel()])
@@ -153,11 +189,15 @@ def sheet(a):
     except OSError:
         font = ImageFont.load_default()
     by = {}
-    for ic, seed, _ in jobs(m, a.ids, a.k, a.retry):
-        by.setdefault(ic["id"], []).append(seed)
+    kind = {}
+    for ic, seed, _ in jobs(m, a.ids, a.k, a.retry, a.base):
+        by.setdefault(ic["id"], []).append(seed); kind[ic["id"]] = ic.get("kind")
     for iid, seeds in by.items():
         seeds = [s for s in seeds if (out / f"{iid}_{s}.png").exists()]
-        rows = 2 if any((out / "cut" / f"{iid}_{s}.png").exists() for s in seeds) else 1
+        cut = any((out / "cut" / f"{iid}_{s}.png").exists() for s in seeds)
+        tile = kind[iid] == "tile"  # 2x2 repeat below each draft so a seam shows
+        S = 24 if cut else 0  # fx: the cutout shrunk to 24 px (in game 12-20 px), next to the seed label
+        rows = 2 if cut or tile else 1
         W = Image.new("RGB", (T * len(seeds), rows * T + L), (24, 24, 24)); d = ImageDraw.Draw(W)
         for i, s in enumerate(seeds):
             raw = Image.open(out / f"{iid}_{s}.png").convert("RGB"); raw.thumbnail((T, T), Image.LANCZOS)  # portrait drafts keep aspect
@@ -167,6 +207,12 @@ def sheet(a):
             if c.exists():
                 bg = checker(T); fg = Image.open(c).resize((T, T), Image.LANCZOS)
                 bg.paste(fg, (0, 0), fg); W.paste(bg, (i * T, T + L))
+                th = Image.new("RGB", (S, S), (24, 24, 24)); sm = Image.open(c).resize((S, S), Image.LANCZOS)
+                th.paste(sm, (0, 0), sm); W.paste(th, (i * T + T - S - 4, T + 2))
+            if tile:
+                h = T // 2; q4 = Image.open(out / f"{iid}_{s}.png").convert("RGB").resize((h, h), Image.LANCZOS)
+                for dx, dy in ((0, 0), (h, 0), (0, h), (h, h)):
+                    W.paste(q4, (i * T + dx, T + L + dy))
         for q in (88, 80, 72, 64):
             buf = io.BytesIO(); W.save(buf, "JPEG", quality=q, optimize=True)
             if buf.tell() <= 400_000:
@@ -185,8 +231,13 @@ if __name__ == "__main__":
     ap.add_argument("--sheets")
     ap.add_argument("--only", help="cut: glob of drafts to (re)cut, overwrites existing cutouts")
     ap.add_argument("--fill-all", action="store_true", help="cut: fill every enclosed hole, also dark ones")
+    ap.add_argument("--clear-bg-holes", type=int, default=0, metavar="TOL",
+                    help="cut: make enclosed neutral-grey regions (chroma <= TOL, >= 400 px) transparent: background showing through gaps")
+    ap.add_argument("--cpu", action="store_true", help="cut: BiRefNet on the CPU (slow; for tests while the GPU is busy)")
     ap.add_argument("--drop-dark", type=int, default=0, help="cut: make every pixel darker than N transparent (bright subjects only)")
+    ap.add_argument("--bg", choices=["black", "auto"], default="black", help="cut: background colour to un-mix from edge pixels")
     ap.add_argument("--serial", action="store_true", help="submit the next prompt only after the previous one finished")
     ap.add_argument("--retry", action="store_true", help="use each icon's retry_seeds instead of --k")
+    ap.add_argument("--base", type=int, default=3000, help="seed = base + 10 * index + k (art/fx: 5000)")
     a = ap.parse_args()
     {"gen": gen, "cut": cut, "sheet": sheet}[a.cmd](a)
