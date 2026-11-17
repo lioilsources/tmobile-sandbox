@@ -66,6 +66,17 @@ services:
       --max-model-len ${L_MAXLEN:-4096} --gpu-memory-utilization ${L_GPU:-0.93} --kv-cache-dtype fp8
       --max-num-seqs ${L_SEQS:-256} --max-num-batched-tokens ${L_BATCHTOK:-16384} --enable-prefix-caching ${L_ARGS:-}
 
+  # --- K „Korpus“: MoE 30B-A3B samotný s 32k kontextem a velkou KV cache (WorldLibraryProject, souhrny kapitol ~32k)
+  llm-k:
+    <<: *vllm
+    profiles: [K]
+    container_name: vllm
+    ports: ["127.0.0.1:8000:8000"]
+    command: >-
+      --model Qwen/Qwen3-30B-A3B-Instruct-2507-FP8 --served-model-name qwen3-30b-a3b
+      --max-model-len 32768 --gpu-memory-utilization 0.92 --kv-cache-dtype fp8
+      --max-num-seqs 256 --max-num-batched-tokens 16384 --enable-prefix-caching
+
   # --- W „coder“: Qwen3-Coder-30B-A3B FP8 pro OpenCode swarm (UC15); 8001 drží whisper, proto 8003
   coder-w:
     <<: *vllm
