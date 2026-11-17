@@ -148,3 +148,16 @@ uvedená nastavení znovu.
 - **Flutter headless (Kirian, `flutter test`)**: hru načíst přes `game.load()` + `game.mount()`, ne `onLoad()`/`onMount()` — jinak `ConcurrentModificationError` ve Flame `updateTree`. Simulace ~150–400× rychleji než reálný čas (26. 10.).
 - **uv venvy per engine** (UC6): konfliktní závislosti TTS enginů → každý vlastní venv, `UV_CACHE_DIR` sdílený s `UV_LINK_MODE=hardlink` (torch na disku jednou); i tak venvy + cache 14 GB.
 - **Tailscale vedle full-tunnel VPN** (party 6. 11.): s firemní VPN (routy 0/1 + 128/1) se Mac s tunelem nedostane na koordinační server Tailscale (status „offline“, netcheck bez UDP i DERP), i když HTTPS přes VPN projde. Peery ve stejné LAN jdou dál napřímo, ale zařízení na jiné síti se nespojí → restyle z party na cizí wifi selhal. Oprava: odpojit VPN, nechat Tailscale přihlásit, VPN znovu připojit — před odchodem z domu ověřit `tailscale ping` na party stroj.
+
+## UC32 RAG nad českými zákony (2026-11-16)
+- Profil B: Qwen3-Embedding-0.6B + bge-reranker-v2-m3 (transformers fp16 vedle vLLM, vejde se) + Qwen3-30B-A3B. 200 Q/A z 4394 § (e-Sbírka API, stdlib).
+- Retrieval R@1/R@5: embedding 0,47/0,73, + reranker 0,63/0,81. Rerank top 50 = 0,34 s.
+- Odpovědi, soudce Qwen3-32B: bez kontextu 32 % správně, emb top 5 68 %, rerank top 5 75 %. Soudce 30B (= generátor Q/A) nadsazuje o 7–24 b. — soudce brát z jiného modelu.
+- Latence p50 1,4 s sériově, 0,02 Kč/dotaz. Celý běh 13 min + rejudge 1 min.
+
+## UC27 agenttune trénink (2026-11-17)
+- Unsloth 2026.11.5 + TRL 1.15 + torch 2.14 cu130, venv /cold/venvs/agenttune, base unsloth/Qwen3-Coder-30B-A3B-Instruct (bf16, 57 GB v /srv/hf) načtený 4bit.
+- LoRA i na expertech MoE (gate_up/down, 642 M param.) = OOM na L40S i při 4k kontextu. Attention-only r16 (13 M) při 8k + packing: 43,8 GB, ~17 s/krok.
+- TRL 1.x: max_length (ne max_seq_length), processing_class (ne tokenizer). Qwen3-Coder šablona chce tool_call.arguments jako dict.
+- SFT 821 řádků (packing → 284), 2 ep., 72 kroků, 20 min, loss 2,12 → 1,50.
+- DPO 284 párů ≤ 8k, beta 0,1, lr 5e-6, 1 ep., 12 min: accuracies ~0,7, margins ~0,1 → slabé, příště lr ~5e-5 nebo 2–3 epochy.
