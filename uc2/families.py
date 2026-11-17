@@ -6,7 +6,7 @@ kartu splňuje; nejdřív se zkouší rodina z názvu (HINTS).
 
   python3 families.py <adresář-s-.frag> ...     # vypíše zařazení seedů do rodin a počty
 """
-import pathlib, re, sys
+import os, pathlib, re, sys
 
 # Deformace UV před čtením textury: uv se přepíše výrazem se sin/cos/atan/pow/length.
 UV_WARP = r"\buv\s*[-+*/]?=\s*[^;]*(sin|cos|atan|pow|length)\s*\("
@@ -31,6 +31,10 @@ FAMILIES = {
     "dlaždice": dict(
         desc="tiled mirror filter: the selfie repeated in a grid with cartesian mirroring and shifted rows",
         must=[[r"\babs\s*\(", r"\bfract\s*\(", r"\bmod\s*\("]], forbid=[r"\batan\s*\("], face=0.80),
+    "kaleido": dict(
+        desc="kaleidoscope filter: the selfie folded into mirrored wedge segments around the face, polar angle repeated",
+        # the only family where polar warp (atan) is the point; seeds are Olin's liked kaleido children from evo1 (11. 11.)
+        must=[[r"\batan\s*\("], [r"\babs\s*\(", r"\bmod\s*\(", r"\bfract\s*\("]], forbid=[], face=0.75),
     "glitch": dict(
         desc="digital glitch filter: shifted blocks and rows, split RGB channels, noise that jumps in time",
         must=[[r"\bfloor\s*\("], [r"hash|rand|noise|fract\s*\(\s*sin"]], forbid=[r"wave|ripple|swirl"], face=0.80),
@@ -59,7 +63,7 @@ HINTS = [
     (r"mosaic|hex|voronoi|pixel|led|blocks", "mozaika"), (r"halftone|dither|comic|pop_art|bayer|ascii", "polotón"),
     (r"sketch|pencil|edge|hatch|emboss|engrave", "skica"),
     (r"fisheye|bulge|twirl|lens|big_nose|glass|tunnel|blackhole|melt|tilt", "optika"),
-    (r"tile|mirror|grid|blinds|quad", "dlaždice"), (r"glitch", "glitch"), (r"vhs|crt|scan", "vhs"),
+    (r"kaleido", "kaleido"), (r"tile|mirror|grid|blinds|quad", "dlaždice"), (r"glitch", "glitch"), (r"vhs|crt|scan", "vhs"),
     (r"paint|oil|kuwahara|water|aquarelle", "malba"),
     (r"duotone|poster|thermal|negative|gradient|frozen|vampire|zombie|gameboy|cutout|night", "barva"),
     (r"bloom|glow|ray|bokeh|vignette|ghost|neon", "světlo"),
@@ -70,7 +74,8 @@ HINTS = [
 
 # render gates for every family (trial 5, 11. 11.): near-unchanged selfies had CLIP keep 0.999–1.0
 GATE_DEFAULTS = dict(max_keep=0.998, min_strength=0.03, max_hist=None,
-                     min_valid=None, min_deform=None, max_quant=None, min_quant=None, max_cell_px=None)  # probe gates off unless set
+                     min_valid=None, min_deform=None, max_quant=None, min_quant=None, max_cell_px=None,  # probe gates off unless set
+                     min_local=None)  # round 3: share of the change inside the head ellipse
 
 
 def gate(family, key):
@@ -99,7 +104,7 @@ def strip_comments(code):
 def check_card(code, family):
     """Prázdný seznam = kód je v kartě. Jinak důvody (české, krátké)."""
     c, s = FAMILIES[family], strip_comments(code)
-    errs = ["zakázáno (globálně): atan (polární warp)"] if family != "optika" and re.search(r"\batan\s*\(", s) else []
+    errs = ["zakázáno (globálně): atan (polární warp)"] if not c.get("atan", family in ("optika", "kaleido")) and re.search(r"\batan\s*\(", s) else []
     errs += [f"chybí: {'|'.join(g)}" for g in c["must"] if not any(re.search(p, s) for p in g)]
     reads = len(re.findall(r"\btexture\s*\(", s))
     if reads and re.search(r"\bfor\s*\(", s): reads += 9       # čtení ve smyčce se počítá jako 9 vzorků okolí
@@ -131,12 +136,18 @@ def guess_families(name, code):
 
 # Ruční zařazení seedů (MirrorBooth, 2026-11-10); bez položky = seed se nepoužije (cyborg ani děti z kola 1 do žádné rodiny).
 SEED_MAP = {
-    "mozaika": "labMosaic labHex labGlass labLed", "polotón": "labHalftone labDither labGameboy labAscii",
+    "mozaika": "labMosaic labHex labGlass", "polotón": "labHalftone labDither labGameboy labAscii",
     "skica": "labSketch labEmboss labEngrave", "optika": "labFisheye labTwirl labBlackHole labTunnel big_nose chibi",
     "dlaždice": "labTiles labQuad labBlinds", "glitch": "labBlocks glitch", "vhs": "labVhs labNight crt",
     "malba": "labKuwahara labAquarelle oil", "barva": "labDuotone labCutout thermal pop_art", "světlo": "labRays labTilt glow neon",
     "obličej": "slim doll lips big_ears long_neck alien", "vrstvy": "labRain labSnow labMatrix",
+    "kaleido": " ".join(f"kaleido_{c}" for c in "c1642 c1938 c1011 c0012 c1304 c1062 c1632 c0108 c1091 c1861 c0242 c0094 c1485 "
+                                                 "c0297 c0026 c1357 c1470 c0825 c0035".split()),
 }
+
+
+if os.environ.get("UC2_SET") == "r3":   # round 3 (Pretty/Ugly face families), see families3.py
+    from families3 import FAMILIES, HINTS, SEED_MAP  # noqa: E402,F811
 
 
 def assign_seeds(paths, mapping=SEED_MAP):

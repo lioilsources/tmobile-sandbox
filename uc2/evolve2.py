@@ -83,9 +83,29 @@ def hist_dist(a, b):
 class Scorer2(E.Scorer):
     """Render + CLIP embedding. PickScore vrací embedding obrázku i cosine k textu rodiny; GL i model patří jednomu vláknu."""
 
+    # round 3 (UC2_SET=r3): selfies are center-cropped to 3:4 instead of stretched, and each gets its real face anchor
+    # (checked with marker renders 12. 11.; the renderer's fixed (0.5, 0.5) put lipstick on the phone in selfie_0)
+    FACES = [((0.745, 0.37), 0.33), ((0.475, 0.47), 0.32)]
+
+    def __init__(self, mb, selfies):
+        super().__init__(mb, selfies)
+        self.faces = None
+        if os.environ.get("UC2_SET") == "r3":
+            from PIL import Image
+            ims = [Image.open(p).convert("RGB") for p in sorted(selfies.glob("*.png"))[:2]]
+            self.inputs = [np.asarray(im.crop(((im.width - im.height * 3 // 4) // 2, 0, (im.width + im.height * 3 // 4) // 2, im.height))
+                                      .resize((384, 512)), dtype=np.uint8) for im in ims]
+            self.in_emb = self._img(self.inputs); self.faces = self.FACES
+
+    def _anchor(self, i):
+        """Set the renderer's face uniforms for selfie i (module globals read at render time)."""
+        if self.faces:
+            R = sys.modules["preview.render"]; R.FACE_CENTER, R.FACE_SCALE = self.faces[i]
+
     def score2(self, code, family, needs_time, needs_face):
-        frames, big, small, diff, errs, hist = [], [], [], [], [], []
-        for img in self.inputs:
+        frames, big, small, diff, errs, hist, local = [], [], [], [], [], [], []
+        for k, img in enumerate(self.inputs):
+            self._anchor(k)
             try:
                 r = self.render(code, img, needs_time, needs_face, times=E.TIMES, ctx=self.ctx)
             except Exception as e:
@@ -93,8 +113,14 @@ class Scorer2(E.Scorer):
             f = [x.astype(np.float32) for x in r.frames]
             if (r.frames[0].max(axis=2) <= 8).mean() > 0.3: errs.append("black")
             d0 = float(np.abs(f[0] - img.astype(np.float32)).mean() / 255)
-            if (np.abs(f[0] - img.astype(np.float32)).max(axis=2) <= 2).mean() > 0.98: errs.append("identity")
+            same = np.abs(f[0] - img.astype(np.float32)).max(axis=2) <= 2
+            if FAMILIES[family].get("identity_head"):     # round 3: a lip or eye effect changes ~1 % of the frame
+                hm = self._head(same.shape, k); same = (same * hm).sum() / hm.sum()
+            else:
+                same = same.mean()
+            if same > 0.98: errs.append("identity")
             diff.append(d0); hist.append(hist_dist(r.frames[0], img))
+            dm = np.abs(f[0] - img.astype(np.float32)).mean(axis=2); local.append(float((dm * self._head(dm.shape, k)).sum() / (dm.sum() + 1e-6)))
             if len(f) == 3:
                 big.append(float(np.abs(f[1] - f[0]).mean() / 255)); small.append(float(np.abs(f[2] - f[1]).mean() / 255))
             frames.append(r.frames[0])
@@ -108,16 +134,25 @@ class Scorer2(E.Scorer):
         keep = float((emb * self.in_emb).sum(-1).mean())
         motion = float(np.mean(big)) if big else 0.0
         return {"pick": round(pick, 3), "theme_cos": round(pick / float(self.model.logit_scale.exp()), 4), "face_keep": round(keep, 3),
-                "motion": round(motion, 4), "strength": round(float(np.mean(diff)), 4), "hist": round(float(np.mean(hist)), 3),
+                "motion": round(motion, 4), "strength": round(float(np.mean(diff)), 4), "hist": round(float(np.mean(hist)), 3), "local": round(float(np.mean(local)), 3),
                 "flicker": round(float(np.mean(small) / (np.mean(big) + 1e-3)) if big else 0.0, 3), "errors": sorted(set(errs)),
                 "probe": pr,
                 # effect embedding = render − source per selfie: whole-frame CLIP is dominated by the face
                 # (trial 4, 11. 11.: different seed shaders had cos 0.95–0.997), so dedup/novelty compare the change only
                 "frame": frames[0], "emb": (emb - self.in_emb).float().mean(0).cpu().numpy()}
 
+    def _head(self, shape, k=0):
+        """Soft head ellipse at the face anchor of selfie k (renderer default (0.5, 0.5), 0.35 without anchors):
+        face coords q = (uv - c) / s, head ~ |q.x| < 0.8, q.y from -1.05 to 1.15 (chin and forehead)."""
+        (cx, cy), sc = self.faces[k] if self.faces else ((0.5, 0.5), 0.35)
+        h, w = shape; y, x = np.mgrid[0:h, 0:w]
+        qx = (x / w - cx) / sc * (w / h); qy = (y / h - cy) / sc
+        r = np.sqrt((qx / 0.8) ** 2 + ((qy - 0.05) / 1.1) ** 2)
+        return np.clip((1.15 - r) / 0.3, 0.0, 1.0)
+
     def preview(self, code, needs_time, needs_face, path):
         from PIL import Image
-        sel = self.inputs[0]; times = tuple(i * 2 / 12 for i in range(12)) if needs_time else (0.0,)
+        self._anchor(0); sel = self.inputs[0]; times = tuple(i * 2 / 12 for i in range(12)) if needs_time else (0.0,)
         res = self.render(code, sel, needs_time, needs_face, times=times, ctx=self.ctx)
         fr = [Image.fromarray(f) for f in res.frames]
         fr[0].save(path, save_all=True, append_images=fr[1:], duration=167, loop=0, quality=70)
@@ -131,7 +166,7 @@ class Island:
         self.dir = out / family; (self.dir / "shaders").mkdir(parents=True, exist_ok=True); (self.dir / "frames").mkdir(exist_ok=True)
         self.archive, self.embs, self.recs, self.hashes = {}, {}, {}, set()
         self.ban_until, self.stats, self.next_i, self.rss = {}, {"deti": 0, "kontrakt": 0, "karta": 0, "kompilace": 0, "impellerc": 0,
-                                                              "render": 0, "face": 0, "sila": 0, "sonda": 0, "dup": 0, "platne": 0}, 0, []
+                                                              "render": 0, "face": 0, "sila": 0, "lokalita": 0, "sonda": 0, "dup": 0, "platne": 0}, 0, []
         self.ops = {o: 0 for o in OPERATORS}
         E.THEMES[family] = FAMILIES[family]["desc"]
         self.t0 = time.time()
@@ -182,11 +217,14 @@ class Island:
         if "render_error" in sc or sc["errors"]:
             return {**rec, "stage": "render", "errors": sc.get("errors") or [sc.get("render_error")]}
         emb = sc.pop("emb"); frame = sc.pop("frame")
-        if sc["face_keep"] < FAMILIES[self.f]["face"] or sc["flicker"] > self.a.max_flicker:
+        if sc["face_keep"] < (self.a.face_floor if self.a.face_floor is not None else FAMILIES[self.f]["face"]) or sc["flicker"] > self.a.max_flicker:
             return {**rec, **sc, "stage": "face"}
         mh = gate(self.f, "max_hist")
         if not seed and (sc["face_keep"] > gate(self.f, "max_keep") or sc["strength"] < gate(self.f, "min_strength") or (mh and sc["hist"] > mh)):
             return {**rec, **sc, "stage": "sila"}
+        ml = gate(self.f, "min_local")
+        if ml and not seed and sc["local"] < ml:
+            return {**rec, **sc, "stage": "lokalita"}
         pe = probe_errors(self.f, sc["probe"])
         if pe and not seed:
             return {**rec, **sc, "stage": "sonda", "errors": pe}
@@ -207,7 +245,7 @@ class Island:
         return 0.5 * min(1.0, (1 - mc) * 10) + 0.5 * (1 - mj) if self.embs else 0.5
 
     def score(self, rec):
-        z = (rec["theme_cos"] * 100 - self.ref[0]) / max(self.ref[1], 0.3)
+        z = (rec["theme_cos"] * 100 - self.ref[0]) / max(self.ref[1], self.a.theme_floor)
         a = self.a
         return round(a.w_theme * z + a.w_novel * self.novelty(rec) + a.w_pick * (rec["pick"] - 20) / 2 + 0.5 * (rec["composite"] / 100 - 0.9), 3)
 
@@ -241,9 +279,14 @@ class Island:
         return sorted(w for w, u in self.ban_until.items() if u >= i)
 
     def pick_parent(self, locked, exclude=None):
-        cells = [r for r in self.archive.values() if r["lineage"] not in locked and r["id"] != exclude]
-        if not cells: cells = [r for r in self.archive.values() if r["id"] != exclude] or list(self.archive.values())
-        return random.choice(cells)      # rovnoměrně přes buňky: každá buňka má jednoho zástupce
+        # lineage first, then a cell elite of it (full run 11. 11.: seeds sharing a cell were displaced at start and
+        # their lineages never got a child: polotón 186/186 kids from labDither); a lineage without an elite uses its best rec
+        recs = [r for r in self.recs.values() if r["id"] != exclude]
+        lins = sorted({r["lineage"] for r in recs} - set(locked)) or sorted({r["lineage"] for r in recs})
+        if not lins: return random.choice(list(self.archive.values()))
+        lin = random.choice(lins)
+        cells = [r for r in self.archive.values() if r["lineage"] == lin and r["id"] != exclude]
+        return random.choice(cells) if cells else max((r for r in recs if r["lineage"] == lin), key=lambda r: r.get("score", 0))
 
     def code(self, rid):
         return (self.dir / "shaders" / f"{rid}.frag").read_text()
@@ -334,7 +377,7 @@ class Island:
     def export_set(self):
         """Archive elites first, then the best other valid children; no lineage above --export-lineage of the export
         (MirrorBooth 11. 11.: the 20 % quota applies to parent choice and to the export, not to the archive)."""
-        n = self.a.export_n; cap = max(1, int(self.a.export_lineage * n))
+        n = self.a.export_n; cap = self.a.export_cap or max(2, int(self.a.export_lineage * n))  # ≥ 2: families with 3–4 seeds still fill 8 slots
         elite = {r["id"] for r in self.archive.values()}
         # seeds stay out (the app already has them); near-duplicate effects (cos > --export-dup) too
         pool = sorted((r for r in self.recs.values() if r["parent"] is not None),
@@ -367,7 +410,7 @@ class Island:
         techs = {tuple(r["blt"]) for r in self.recs.values()}
         summ = {"rodina": self.f, "export": len(meta), "export_linie": dict(Counter(r["lineage"] for r in meta)), "sekund": round(time.time() - self.t0), **self.stats, "operatory_platne": self.ops, "bunek": len(self.archive),
                 "linie_max_pct": round(100 * max(sh.values()), 1) if sh else 0, "linie_podily": {k: round(v, 3) for k, v in sorted(sh.items(), key=lambda x: -x[1])[:6]},
-                "ruznych_technik": len(techs), "polarni_warp": sum(bool(re.search(r"\batan\s*\(", self.code(r["id"]))) for r in kids),
+                "ruznych_technik": len(techs), "lokalita_export_pct": round(100 * sum(r.get("local", 0) >= 0.6 for r in meta) / max(len(meta), 1)), "polarni_warp": sum(bool(re.search(r"\batan\s*\(", self.code(r["id"]))) for r in kids),
                 "rss_max_self_mb": max((x["self"] for x in self.rss), default=0), "rss_max_evaluator_mb": max((x.get("swarm-evaluator", 0) for x in self.rss), default=0)}
         (self.dir / "summary.json").write_text(json.dumps(summ, ensure_ascii=False, indent=1))
         print(json.dumps(summ, ensure_ascii=False), flush=True)
@@ -387,7 +430,8 @@ async def main_async(a):
             isl = Island(f, a, out, scorer, pool, http)
             others = [(p.stem, p.read_text()) for g, l in assigned.items() if g not in (f, "nezařazeno") for p in l]
             try:
-                await isl.run(assigned[f], others, a.children)
+                cm = dict(x.split("=") for x in a.children_map.split(",") if x)
+                await isl.run(assigned[f], others, int(cm.get(f, a.children)))
                 res.append(json.loads((isl.dir / "summary.json").read_text()))
             except BaseException as e:          # pád jedné rodiny nezahodí ostatní; checkpoint už je na disku
                 print(f"[{f}] PÁD: {e!r}", flush=True)
@@ -401,14 +445,21 @@ def main():
     ap.add_argument("--flutter-root", required=True); ap.add_argument("--seeds", action="append", required=True)
     ap.add_argument("--out", required=True); ap.add_argument("--families", default=",".join(FAMILIES))
     ap.add_argument("--children", type=int, default=100, help="celkem dětí na rodinu")
+    ap.add_argument("--children-map", dest="children_map", default="", help="per-family override, e.g. malba=200,barva=200")
     ap.add_argument("--concurrency", type=int, default=32); ap.add_argument("--llm", default="http://127.0.0.1:8000")
     ap.add_argument("--model", default="qwen3-30b-a3b")
-    ap.add_argument("--w-theme", dest="w_theme", type=float, default=1.0); ap.add_argument("--w-novel", dest="w_novel", type=float, default=1.0)
-    ap.add_argument("--w-pick", dest="w_pick", type=float, default=0.2)
+    ap.add_argument("--w-theme", dest="w_theme", type=float, default=1.0); ap.add_argument("--w-novel", dest="w_novel", type=float, default=0.5)
+    ap.add_argument("--w-pick", dest="w_pick", type=float, default=0.5)
+    # calib2 on Olin's like/dislike table (11. 11.): seed spread of theme_cos is 0.2–1.0, a 0.3 floor turned tiny
+    # differences into z ±6; floor 1.0 + w_novel 0.5 + w_pick 0.5 lifted AUC 0.60 → 0.64 (all) and 0.61 → 0.79 (past gates)
+    ap.add_argument("--theme-floor", dest="theme_floor", type=float, default=1.0)
     ap.add_argument("--max-frame-ms", dest="max_frame_ms", type=float, default=16.0); ap.add_argument("--max-alu", dest="max_alu", type=int, default=8000)
     ap.add_argument("--max-flicker", dest="max_flicker", type=float, default=0.6)
     ap.add_argument("--export-n", dest="export_n", type=int, default=25)
     ap.add_argument("--export-lineage", dest="export_lineage", type=float, default=0.2)
+    ap.add_argument("--export-cap", dest="export_cap", type=int, default=0, help="max children per lineage in the export (0 = from --export-lineage)")
+    # Olin 11. 11.: a recognisable face is not important; the face gate is then only a guard against a broken image
+    ap.add_argument("--face-floor", dest="face_floor", type=float, default=None, help="face_keep gate for every family instead of the card value")
     ap.add_argument("--export-dup", dest="export_dup", type=float, default=0.93, help="export: drop effects with cos above this to a chosen one")
     ap.add_argument("--dup-cos", dest="dup_cos", type=float, default=0.97, help="dedup: cosine of effect embeddings (render − source)")
     ap.add_argument("--ban-n", dest="ban_n", type=int, default=40); ap.add_argument("--restart-every", dest="restart_every", type=int, default=150)

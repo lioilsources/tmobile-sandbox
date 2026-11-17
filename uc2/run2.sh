@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # UC2 kolo 2: evoluce shaderů po rodinách (evolve2.py). LLM Qwen3-30B-A3B (profil L) + ShaderBattle evaluátor.
-#   run2.sh <rodiny čárkou> <dětí na rodinu> [out=/srv/work/uc2/runs/r2]
+#   [UC2_SET=r3] [CHILDREN_MAP=malba=200,...] [EXPORT_N=25] [EXPORT_CAP=0] [FACE_FLOOR=] [MAX_FLICKER=0.6] run2.sh <rodiny čárkou> <dětí na rodinu> [out=/srv/work/uc2/runs/r2]
 # Zkouška: run2.sh mozaika,optika 100. Navazuje z checkpointu, když už out/<rodina>/state.json existuje.
 set -euo pipefail
 cd "$(dirname "$0")"; W=/srv/work/uc2; FAM=${1:?rodiny}; N=${2:-100}; OUT=${3:-$W/runs/r2}; PY=/srv/work/uc1/ft-venv/bin/python
@@ -17,5 +17,5 @@ mkdir -p "$OUT"
 ../bench/memguard.sh evolve2.py 1500 &
 MG=$!; trap 'kill $MG 2>/dev/null' EXIT
 $PY evolve2.py --mirrorbooth $W/MirrorBooth --selfies $W/selfies --flutter-root /srv/work/uc4/flutter \
-  --seeds $W/MirrorBooth/mirrorbooth/shaders --seeds $W/roundb --out "$OUT" --families "$FAM" --children "$N" --concurrency 32 2>&1 \
+  --seeds $W/MirrorBooth/mirrorbooth/shaders --seeds $W/roundb --seeds $W/seeds-kaleido ${UC2_SET:+--seeds $W/seeds-$UC2_SET} --out "$OUT" --families "$FAM" --children "$N" --children-map "${CHILDREN_MAP:-}" --export-n "${EXPORT_N:-25}" --export-cap "${EXPORT_CAP:-0}" ${FACE_FLOOR:+--face-floor "$FACE_FLOOR"} --max-flicker "${MAX_FLICKER:-0.6}" --concurrency 32 2>&1 \
   | grep --line-buffered -v -E "Warning|W1026|warn|Loading weights" | tee -a "$OUT/run.log"
