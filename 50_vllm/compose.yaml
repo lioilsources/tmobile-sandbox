@@ -89,6 +89,20 @@ services:
       --max-num-seqs ${W_SEQS:-32} --enable-prefix-caching
       --enable-auto-tool-choice --tool-call-parser qwen3_coder
 
+  # --- X „coder + LoRA“: W s adaptéry UC27 (base / sft / dpo v jednom serveru), stejný port :8003
+  coder-x:
+    <<: *vllm
+    profiles: [X]
+    container_name: vllm-coder
+    ports: ["127.0.0.1:8003:8000"]
+    command: >-
+      --model Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8 --served-model-name qwen3-coder
+      --max-model-len ${W_MAXLEN:-65536} --gpu-memory-utilization ${W_GPU:-0.92} --kv-cache-dtype fp8
+      --max-num-seqs ${W_SEQS:-32} --enable-prefix-caching
+      --enable-auto-tool-choice --tool-call-parser qwen3_coder
+      --enable-lora --max-lora-rank 16 --max-loras 2
+      --lora-modules ${X_LORAS:-qwen3-coder-sft=/cold/agenttune/ckpt_r3/sft/final qwen3-coder-dpo=/cold/agenttune/ckpt_r3/dpo/final}
+
   # --- S „small“: Qwen3-8B FP8, velký batch (UC11 model vs model, UC16/19 levné role)
   llm-s:
     <<: *vllm
