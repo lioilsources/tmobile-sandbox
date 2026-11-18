@@ -4,7 +4,7 @@
 The prompts come unchanged from the Kiran pipeline (`go run ./cmd/generate -asset-type background -dry-run`);
 this only swaps the image model, which the pipeline's flux/pony workflows cannot do.
 
-  render.py --dry-run-log <file> --model qwen|schnell --out <dir> [--skins axelay,ikaruga] [--assets layer_0_z0,layer_2] [--seed 1]
+  render.py --dry-run-log <file> --model qwen|schnell --out <dir> [--skins axelay,ikaruga] [--assets layer_0_z0,layer_2] [--pairs galaga/layer_0_z3,...] [--extra "..."] [--seed 1]
 
 Output: <out>/<skin>/backgrounds/<asset>_v1.jpg, the layout `cmd/postprocess -input` reads.
 COMFY (default http://127.0.0.1:18190) is the ComfyUI API through the ssh tunnel.
@@ -72,17 +72,20 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--assets", type=lambda s: s.split(","), default=[])
     ap.add_argument("--skins", type=lambda s: s.split(","), default=[])
+    ap.add_argument("--pairs", type=lambda s: set(s.split(",")), default=set(), help="exact skin/asset items, overrides --skins/--assets")
+    ap.add_argument("--extra", default="", help="appended to every positive prompt")
     ap.add_argument("--seed", type=int, default=1)
     a = ap.parse_args()
     from PIL import Image
     jobs = [j for j in parse(a.dry_run_log)
-            if (not a.assets or j["asset"] in a.assets) and (not a.skins or j["skin"] in a.skins)]
+            if (f'{j["skin"]}/{j["asset"]}' in a.pairs) if a.pairs else
+            ((not a.assets or j["asset"] in a.assets) and (not a.skins or j["skin"] in a.skins))]
     for j in jobs:
         o = Path(a.out) / j["skin"] / "backgrounds" / f'{j["asset"]}_v1.jpg'
         if o.exists():
             continue
         w, h = SIZES[(j["ratio"], j["res"])]
-        pid = json.loads(call("/prompt", {"prompt": graph(a.model, j["prompt"], a.seed, w, h)}))["prompt_id"]
+        pid = json.loads(call("/prompt", {"prompt": graph(a.model, j["prompt"] + (", " + a.extra if a.extra else ""), a.seed, w, h)}))["prompt_id"]
         t = time.time()
         while True:
             hist = json.loads(call(f"/history/{pid}")).get(pid)
