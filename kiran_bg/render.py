@@ -78,8 +78,8 @@ def main():
     a = ap.parse_args()
     from PIL import Image
     jobs = [j for j in parse(a.dry_run_log)
-            if (f'{j["skin"]}/{j["asset"]}' in a.pairs) if a.pairs else
-            ((not a.assets or j["asset"] in a.assets) and (not a.skins or j["skin"] in a.skins))]
+            if ((j["skin"] + "/" + j["asset"] in a.pairs) if a.pairs else
+                ((not a.assets or j["asset"] in a.assets) and (not a.skins or j["skin"] in a.skins)))]
     for j in jobs:
         o = Path(a.out) / j["skin"] / "backgrounds" / f'{j["asset"]}_v1.jpg'
         if o.exists():
